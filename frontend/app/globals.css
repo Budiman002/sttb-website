@@ -6,18 +6,32 @@
 
 @theme inline {
   /* STTB Brand Colors */
-  --color-sttb-navy: #003F8A;
-  --color-sttb-navy-dark: #00276B;
-  --color-sttb-navy-darker: #001A4D;
-  --color-sttb-navy-accent: #0056B3;
-  --color-sttb-red: #C41E3A;
-  --color-sttb-red-hover: #E63950;
-  --color-sttb-offwhite: #F8F7F4;
+  --color-sttb-navy: #003f8a;
+  --color-sttb-navy-dark: #00276b;
+  --color-sttb-navy-darker: #001a4d;
+  --color-sttb-navy-accent: #0056b3;
+  --color-sttb-red: #c41e3a;
+  --color-sttb-red-hover: #e63950;
+  --color-sttb-offwhite: #f8f7f4;
 
   /* STTB Brand Fonts */
   --font-display: var(--font-playfair);
   --font-heading: var(--font-dm-serif);
   --font-body: var(--font-jakarta);
+
+  /* Legacy CSS variables for Figma components */
+  --red-main: #c41e3a;
+  --red-light: #e63950;
+  --red-pale: #f8e8eb;
+  --blue-main: #003f8a;
+  --blue-dark: #00276b;
+  --blue-light: #0056b3;
+  --blue-pale: #e8f1fb;
+  --gray-50: #f8f7f4;
+  --gray-400: #a1a1a1;
+  --gray-500: #737373;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
 
   /* shadcn/ui Theme */
   --color-background: var(--background);
