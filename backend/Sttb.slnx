@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="F:/Coding/test/codingan/Project/Sttb/backend/Sttb.Commons/Sttb.Commons.csproj" />
+  <Project Path="F:/Coding/test/codingan/Project/Sttb/backend/Sttb.Contracts/Sttb.Contracts.csproj" />
+  <Project Path="F:/Coding/test/codingan/Project/Sttb/backend/Sttb.Entities/Sttb.Entities.csproj" />
+  <Project Path="F:/Coding/test/codingan/Project/Sttb/backend/Sttb.WebAPI/Sttb.WebAPI.csproj" />
+</Solution>
