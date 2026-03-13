@@ -1,1 +1,1 @@
-# sttb-website-frontend
+# STTB Website - Full Stack Monorepo

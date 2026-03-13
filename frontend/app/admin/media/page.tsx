@@ -1,0 +1,28 @@
+import type { Metadata } from "next";
+import { CmsMedia } from "@/components/admin/CmsMedia";
+import { getMediaList } from "@/lib/api";
+import { formatDate } from "@/lib/utils";
+
+export const metadata: Metadata = {
+  title: "Kelola Media — STTB CMS",
+  description: "Manajemen artikel dan konten media STTB Bandung",
+};
+
+export default async function AdminMediaPage() {
+  try {
+    const data = await getMediaList(1, 10, "artikel");
+    const initialItems = data.items.map((item) => ({
+      id: item.id,
+      slug: item.slug,
+      thumbnail: item.thumbnailUrl ?? "",
+      judul: item.judul,
+      kategori: item.kategori,
+      penulis: item.penulis,
+      tanggal: formatDate(item.tanggalPublish),
+      status: item.isPublished ? "Published" : "Draft",
+    }));
+    return <CmsMedia initialItems={initialItems} />;
+  } catch {
+    return <CmsMedia />;
+  }
+}

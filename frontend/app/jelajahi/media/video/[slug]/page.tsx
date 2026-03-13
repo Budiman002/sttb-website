@@ -1,12 +1,14 @@
-"use client";
-
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, Clock, Play } from "lucide-react";
+import { Clock, Play } from "lucide-react";
+import { notFound } from "next/navigation";
+import { getMediaVideoDetail, getMediaList } from "@/lib/api";
+import { BackButton } from "@/components/shared/BackButton";
+import { formatDate } from "@/lib/utils";
+import type { MediaVideoDetail } from "@/types/api";
 
-// Same image used for this video in the media listing page
-const HERO_IMAGE =
+const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1697057406467-60340e993e6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1cmJhbiUyMGNpdHklMjBtaXNzaW9ufGVufDF8fHx8MTc3MzI5MDg4Nnww&ixlib=rb-4.1.0&q=80&w=1080";
 
 const relatedVideos = [
@@ -36,8 +38,48 @@ const relatedVideos = [
   },
 ];
 
-export default function VideoDetailPage() {
-  const router = useRouter();
+export async function generateStaticParams() {
+  try {
+    const data = await getMediaList(1, 100, "video");
+    return data.items.map((item) => ({ slug: item.slug }));
+  } catch {
+    return [];
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const data = await getMediaVideoDetail(slug);
+    return {
+      title: `${data.judul} — Media STTB Bandung`,
+      description: data.deskripsi.slice(0, 160),
+    };
+  } catch {
+    return { title: "Video — STTB Bandung" };
+  }
+}
+
+export default async function VideoDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  let data: MediaVideoDetail | undefined;
+  try {
+    data = await getMediaVideoDetail(slug);
+  } catch {
+    notFound();
+  }
+  if (!data) notFound();
+
+  const heroImage = data.thumbnailUrl ?? FALLBACK_IMAGE;
+  const durasi = data.durasi ?? "—";
 
   return (
     <main className="min-h-screen" style={{ fontFamily: "var(--font-sans)" }}>
@@ -81,7 +123,7 @@ export default function VideoDetailPage() {
                 letterSpacing: "0.08em",
               }}
             >
-              VIDEO • LEAD
+              VIDEO • {data.kategori}
             </span>
             <span
               style={{
@@ -90,7 +132,7 @@ export default function VideoDetailPage() {
                 color: "rgba(255, 255, 255, 0.5)",
               }}
             >
-              • 20 April 2023
+              • {formatDate(data.tanggalPublish)}
             </span>
           </div>
 
@@ -106,10 +148,10 @@ export default function VideoDetailPage() {
               lineHeight: 1.2,
             }}
           >
-            City TransForMission #2: Fokus Strategis Misi Urban
+            {data.judul}
           </h1>
 
-          {/* Author Row */}
+          {/* Author Row — generic placeholder, no penulis in API */}
           <div className="flex justify-center items-center gap-3 mb-4">
             <div
               className="rounded-full flex items-center justify-center flex-shrink-0"
@@ -124,7 +166,7 @@ export default function VideoDetailPage() {
                 color: "#FFFFFF",
               }}
             >
-              RS
+              ST
             </div>
             <div className="text-left">
               <p
@@ -135,7 +177,7 @@ export default function VideoDetailPage() {
                   color: "#FFFFFF",
                 }}
               >
-                Oleh Reinhardt Sirait, M.Th.
+                Tim STTB Bandung
               </p>
               <p
                 style={{
@@ -144,7 +186,7 @@ export default function VideoDetailPage() {
                   color: "rgba(255, 255, 255, 0.6)",
                 }}
               >
-                Dosen Studi Misi STTB
+                Sekolah Tinggi Teologi Bandung
               </p>
             </div>
           </div>
@@ -172,7 +214,7 @@ export default function VideoDetailPage() {
               }}
             >
               <Clock className="w-4 h-4" />
-              <span>Durasi: 18 menit</span>
+              <span>Durasi: {durasi}</span>
             </div>
           </div>
         </div>
@@ -188,8 +230,8 @@ export default function VideoDetailPage() {
           <div className="relative rounded-lg overflow-hidden mb-5 aspect-video">
             {/* Thumbnail */}
             <Image
-              src={HERO_IMAGE}
-              alt="City TransForMission #2: Fokus Strategis Misi Urban"
+              src={heroImage}
+              alt={data.judul}
               fill
               className="object-cover"
               sizes="(max-width: 900px) 100vw, 900px"
@@ -225,18 +267,20 @@ export default function VideoDetailPage() {
             </div>
 
             {/* Duration Overlay Bottom-Left */}
-            <div
-              className="absolute bottom-4 left-4 px-3 py-1 rounded"
-              style={{
-                background: "rgba(0, 0, 0, 0.7)",
-                fontFamily: "var(--font-sans)",
-                fontSize: "12px",
-                fontWeight: 600,
-                color: "#FFFFFF",
-              }}
-            >
-              18:24
-            </div>
+            {data.durasi && (
+              <div
+                className="absolute bottom-4 left-4 px-3 py-1 rounded"
+                style={{
+                  background: "rgba(0, 0, 0, 0.7)",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  color: "#FFFFFF",
+                }}
+              >
+                {data.durasi}
+              </div>
+            )}
           </div>
 
           {/* Video Title Below Player */}
@@ -249,7 +293,7 @@ export default function VideoDetailPage() {
               color: "#00276B",
             }}
           >
-            City TransForMission #2: Fokus Strategis Misi Urban
+            {data.judul}
           </h2>
 
           {/* Meta Row */}
@@ -260,7 +304,7 @@ export default function VideoDetailPage() {
               color: "#6B7280",
             }}
           >
-            20 April 2023 • 18 menit • LEAD
+            {formatDate(data.tanggalPublish)} • {durasi} • {data.kategori}
           </p>
         </div>
       </section>
@@ -291,49 +335,16 @@ export default function VideoDetailPage() {
             }}
           />
 
-          {/* Lead Paragraph */}
-          <p
-            className="mb-6"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "17px",
-              fontWeight: 500,
-              color: "#003F8A",
-              lineHeight: 1.8,
-            }}
-          >
-            City TransForMission adalah seri video pelayanan STTB yang membahas
-            strategi misi kontekstual di kawasan urban.
-          </p>
-
-          {/* Body Paragraph 1 */}
-          <p
-            className="mb-6"
+          {/* Description */}
+          <div
             style={{
               fontFamily: "var(--font-sans)",
               fontSize: "16px",
               color: "#374151",
               lineHeight: 1.9,
             }}
-          >
-            Sesi kedua ini berfokus pada tiga fokus strategis misi urban:
-            pemberdayaan komunitas, pendampingan gereja kota, dan pembentukan
-            pemimpin transformatif.
-          </p>
-
-          {/* Body Paragraph 2 */}
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "16px",
-              color: "#374151",
-              lineHeight: 1.9,
-            }}
-          >
-            Dipresentasikan oleh Reinhardt Sirait, M.Th., video ini merupakan
-            bagian dari program LEAD STTB Bandung yang mendorong keterlibatan
-            aktif mahasiswa dalam pelayanan dan transformasi kota.
-          </p>
+            dangerouslySetInnerHTML={{ __html: data.deskripsi }}
+          />
         </div>
       </section>
 
@@ -488,32 +499,7 @@ export default function VideoDetailPage() {
       </section>
 
       {/* SECTION 5 — BACK NAVIGATION */}
-      <section className="py-8 text-center" style={{ background: "#FFFFFF" }}>
-        <button
-          className="inline-flex items-center gap-2 px-8 py-3 rounded-lg transition-all"
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: "14px",
-            fontWeight: 600,
-            color: "#00276B",
-            border: "1px solid #00276B",
-            background: "transparent",
-            cursor: "pointer",
-          }}
-          onClick={() => router.back()}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#00276B";
-            e.currentTarget.style.color = "#FFFFFF";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "#00276B";
-          }}
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Kembali ke Media
-        </button>
-      </section>
+      <BackButton label="Kembali ke Media" bgSection="#FFFFFF" />
     </main>
   );
 }

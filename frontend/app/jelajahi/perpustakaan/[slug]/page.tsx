@@ -1,10 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import {
-  ArrowLeft,
   BookOpen,
   Globe,
   ChevronLeft,
@@ -16,10 +13,14 @@ import {
   Expand,
   MoreVertical,
 } from "lucide-react";
+import { getPerpustakaanDetail, getPerpustakaanList } from "@/lib/api";
+import { BackButton } from "@/components/shared/BackButton";
+import type { Metadata } from "next";
 
-// Same image as in the listing page for this book
-const BOOK_IMAGE =
-  "https://images.unsplash.com/photo-1630197158266-bfe9ce8ed653?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYWl0aCUyMGxlYXJuaW5nJTIwaW50ZWdyYXRpb258ZW58MXx8fHwxNzczMjkyNTQ1fDA&ixlib=rb-4.1.0&q=80&w=1080";
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1630197158266-bfe9ce8ed653?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
+
+const toolbarIcons = [Grid3x3, ZoomOut, ZoomIn, Maximize, Expand, MoreVertical];
 
 const relatedBooks = [
   {
@@ -29,7 +30,7 @@ const relatedBooks = [
     author: "Tim Redaksi STTB",
     year: "2022",
     image:
-      "https://images.unsplash.com/photo-1621912498418-99cc5b7f7775?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0aGVvbG9neSUyMGpvdXJuYWwlMjBhY2FkZW1pY3xlbnwxfHx8fDE3NzMyOTI1NDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1621912498418-99cc5b7f7775?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
     slug: "jurnal-teologi-berita-hidup-vol-4",
   },
   {
@@ -39,7 +40,7 @@ const relatedBooks = [
     author: "Wayne Grudem",
     year: "2018",
     image:
-      "https://images.unsplash.com/photo-1637969732183-671049493fc3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzeXN0ZW1hdGljJTIwdGhlb2xvZ3klMjBib29rc3xlbnwxfHx8fDE3NzMyOTI1NDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1637969732183-671049493fc3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
     slug: "teologi-sistematika-pengantar-komprehensif",
   },
   {
@@ -49,7 +50,7 @@ const relatedBooks = [
     author: "Andreas Santoso",
     year: "2023",
     image:
-      "https://images.unsplash.com/photo-1710002580784-6e4f0eaf4fc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1cmJhbiUyMGNodXJjaCUyMGNvbW11bml0eXxlbnwxfHx8fDE3NzMyOTI1NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1710002580784-6e4f0eaf4fc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
     slug: "peran-gereja-dalam-transformasi-masyarakat-urban",
   },
   {
@@ -59,15 +60,49 @@ const relatedBooks = [
     author: "Robert W. Pazmiño",
     year: "2019",
     image:
-      "https://images.unsplash.com/photo-1626897559266-d529d0389421?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaHJpc3RpYW4lMjBlZHVjYXRpb24lMjB0ZWFjaGluZ3xlbnwxfHx8fDE3NzMyOTI1NDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1626897559266-d529d0389421?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
     slug: "dasar-dasar-pendidikan-kristen",
   },
 ];
 
-const toolbarIcons = [Grid3x3, ZoomOut, ZoomIn, Maximize, Expand, MoreVertical];
+export async function generateStaticParams() {
+  try {
+    const data = await getPerpustakaanList(1, 100);
+    return data.items.map((item) => ({ slug: item.slug }));
+  } catch {
+    return [];
+  }
+}
 
-export default function PerpustakaanDetailPage() {
-  const router = useRouter();
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const data = await getPerpustakaanDetail(slug);
+    return { title: `${data.judul} — Perpustakaan STTB Bandung` };
+  } catch {
+    return { title: "Perpustakaan — STTB Bandung" };
+  }
+}
+
+export default async function PerpustakaanDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  let data;
+  try {
+    data = await getPerpustakaanDetail(slug);
+  } catch {
+    notFound();
+  }
+
+  const bookImageSrc = data.thumbnailUrl ?? FALLBACK_IMAGE;
 
   return (
     <main className="min-h-screen" style={{ fontFamily: "var(--font-sans)" }}>
@@ -110,17 +145,19 @@ export default function PerpustakaanDetailPage() {
                 letterSpacing: "0.08em",
               }}
             >
-              MONOGRAF
+              {data.kategori.toUpperCase()}
             </span>
-            <span
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "13px",
-                color: "rgba(255, 255, 255, 0.5)",
-              }}
-            >
-              • 2022
-            </span>
+            {data.tahunTerbit && (
+              <span
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "13px",
+                  color: "rgba(255, 255, 255, 0.5)",
+                }}
+              >
+                • {data.tahunTerbit}
+              </span>
+            )}
           </div>
 
           {/* Title */}
@@ -134,7 +171,7 @@ export default function PerpustakaanDetailPage() {
               lineHeight: 1.2,
             }}
           >
-            Integrasi Iman dan Ilmu dalam Pendidikan Kristen
+            {data.judul}
           </h1>
 
           {/* Author Row */}
@@ -152,7 +189,12 @@ export default function PerpustakaanDetailPage() {
                 color: "#FFFFFF",
               }}
             >
-              SL
+              {data.penulis
+                .split(" ")
+                .slice(0, 2)
+                .map((w) => w[0])
+                .join("")
+                .toUpperCase()}
             </div>
             <div className="text-left">
               <p
@@ -163,17 +205,19 @@ export default function PerpustakaanDetailPage() {
                   color: "#FFFFFF",
                 }}
               >
-                Sarinah Lo, Ph.D.
+                {data.penulis}
               </p>
-              <p
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "12px",
-                  color: "rgba(255, 255, 255, 0.6)",
-                }}
-              >
-                Dosen Tetap Studi Magister Pendidikan Kristen
-              </p>
+              {data.penerbit && (
+                <p
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "12px",
+                    color: "rgba(255, 255, 255, 0.6)",
+                  }}
+                >
+                  {data.penerbit}
+                </p>
+              )}
             </div>
           </div>
 
@@ -200,7 +244,7 @@ export default function PerpustakaanDetailPage() {
               }}
             >
               <BookOpen className="w-4 h-4" />
-              <span>Monograf • 156 halaman</span>
+              <span>{data.kategori}</span>
             </div>
             <div
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
@@ -281,6 +325,7 @@ export default function PerpustakaanDetailPage() {
                       height: "32px",
                       cursor: "pointer",
                     }}
+                    aria-label="Toolbar action"
                   >
                     <Icon className="w-4 h-4" style={{ color: "#6B7280" }} />
                   </button>
@@ -298,8 +343,8 @@ export default function PerpustakaanDetailPage() {
             >
               {/* Book cover as background */}
               <Image
-                src={BOOK_IMAGE}
-                alt="Integrasi Iman dan Ilmu"
+                src={bookImageSrc}
+                alt={data.judul}
                 fill
                 className="object-cover opacity-20"
                 sizes="(max-width: 900px) 100vw, 900px"
@@ -315,7 +360,6 @@ export default function PerpustakaanDetailPage() {
                   padding: "40px 30px",
                 }}
               >
-                {/* Simulated Text Lines */}
                 <div className="space-y-6">
                   {[1, 2, 3].map((block) => (
                     <div key={block} className="space-y-1.5">
@@ -354,17 +398,33 @@ export default function PerpustakaanDetailPage() {
               >
                 Pratinjau terbatas. Login untuk akses penuh.
               </p>
-              <a
-                href="#"
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  color: "#00276B",
-                }}
-              >
-                Masuk dengan akun mahasiswa
-              </a>
+              {data.fileUrl ? (
+                <a
+                  href={data.fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "#00276B",
+                  }}
+                >
+                  Buka dokumen lengkap
+                </a>
+              ) : (
+                <a
+                  href="#"
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "#00276B",
+                  }}
+                >
+                  Masuk dengan akun mahasiswa
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -373,7 +433,6 @@ export default function PerpustakaanDetailPage() {
       {/* SECTION 3 — DESKRIPSI KOLEKSI */}
       <section className="py-12" style={{ background: "#FFFFFF" }}>
         <div className="max-w-[680px] mx-auto px-12">
-          {/* Section Heading */}
           <h2
             className="mb-3"
             style={{
@@ -386,7 +445,6 @@ export default function PerpustakaanDetailPage() {
             Tentang Koleksi Ini
           </h2>
 
-          {/* Red Accent Underline */}
           <div
             className="mb-6"
             style={{
@@ -396,45 +454,27 @@ export default function PerpustakaanDetailPage() {
             }}
           />
 
-          {/* Lead Paragraph */}
-          <p
-            className="mb-6"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "17px",
-              fontWeight: 500,
-              color: "#003F8A",
-              lineHeight: 1.8,
-            }}
-          >
-            Monograf ini membahas konsep integrasi iman dan ilmu sebagai fondasi
-            pendidikan Kristen yang holistik.
-          </p>
-
-          {/* Body Paragraph */}
-          <p
-            className="mb-8"
+          <div
+            className="prose-content mb-8"
             style={{
               fontFamily: "var(--font-sans)",
               fontSize: "16px",
               color: "#374151",
               lineHeight: 1.9,
             }}
-          >
-            Ditulis oleh Sarinah Lo, Ph.D., buku ini mengeksplorasi empat model
-            integrasi yang kerap digunakan pendidik Kristen, mulai dari
-            pendekatan Arthur Holmes hingga perspektif kontekstual Asia. Setiap
-            model dibahas secara mendalam dengan contoh implementasi praktis di
-            kelas maupun lembaga pendidikan.
-          </p>
+            dangerouslySetInnerHTML={{ __html: data.deskripsi }}
+          />
 
           {/* Detail Grid */}
           <div className="grid grid-cols-2 gap-6">
             {[
-              { label: "PENULIS", value: "Sarinah Lo, Ph.D." },
-              { label: "TAHUN TERBIT", value: "2022" },
-              { label: "HALAMAN", value: "156 halaman" },
-              { label: "BAHASA", value: "Indonesia" },
+              { label: "PENULIS", value: data.penulis },
+              {
+                label: "TAHUN TERBIT",
+                value: data.tahunTerbit ? String(data.tahunTerbit) : "—",
+              },
+              { label: "PENERBIT", value: data.penerbit ?? "—" },
+              { label: "ISBN", value: data.isbn ?? "—" },
             ].map((item) => (
               <div key={item.label}>
                 <p
@@ -496,7 +536,7 @@ export default function PerpustakaanDetailPage() {
 
           <div className="flex flex-col sm:flex-row justify-center items-center gap-3">
             <button
-              className="px-8 py-3.5 rounded-lg transition-all"
+              className="px-8 py-3.5 rounded-lg transition-all hover:bg-[#003F8A]"
               style={{
                 fontFamily: "var(--font-sans)",
                 fontSize: "14px",
@@ -505,17 +545,11 @@ export default function PerpustakaanDetailPage() {
                 background: "#00276B",
                 cursor: "pointer",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#003F8A";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#00276B";
-              }}
             >
               Masuk dengan Akun STTB
             </button>
             <button
-              className="px-8 py-3.5 rounded-lg transition-all"
+              className="px-8 py-3.5 rounded-lg transition-all hover:bg-[#00276B] hover:text-white"
               style={{
                 fontFamily: "var(--font-sans)",
                 fontSize: "14px",
@@ -524,14 +558,6 @@ export default function PerpustakaanDetailPage() {
                 background: "#FFFFFF",
                 border: "1px solid #00276B",
                 cursor: "pointer",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#00276B";
-                e.currentTarget.style.color = "#FFFFFF";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#FFFFFF";
-                e.currentTarget.style.color = "#00276B";
               }}
             >
               Hubungi Perpustakaan
@@ -543,7 +569,6 @@ export default function PerpustakaanDetailPage() {
       {/* SECTION 5 — KOLEKSI LAINNYA */}
       <section className="py-16" style={{ background: "#FFFFFF" }}>
         <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
-          {/* Section Header */}
           <div className="mb-12">
             <p
               className="uppercase font-bold mb-4"
@@ -568,7 +593,6 @@ export default function PerpustakaanDetailPage() {
             </h2>
           </div>
 
-          {/* 4-Column Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {relatedBooks.map((card, idx) => (
               <div
@@ -578,7 +602,6 @@ export default function PerpustakaanDetailPage() {
                   boxShadow: "0 4px 16px rgba(0, 39, 107, 0.08)",
                 }}
               >
-                {/* Book Cover Area */}
                 <div
                   className="relative overflow-hidden"
                   style={{ aspectRatio: "3/4" }}
@@ -591,7 +614,6 @@ export default function PerpustakaanDetailPage() {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1400px) 33vw, 25vw"
                   />
 
-                  {/* Category Badge (Top-Right) */}
                   <div
                     className="absolute top-3 right-3 px-2.5 py-1 rounded-full"
                     style={{
@@ -608,7 +630,6 @@ export default function PerpustakaanDetailPage() {
                   </div>
                 </div>
 
-                {/* Card Body */}
                 <div className="p-4">
                   <h3
                     className="mb-2"
@@ -668,32 +689,7 @@ export default function PerpustakaanDetailPage() {
       </section>
 
       {/* SECTION 6 — BACK NAVIGATION */}
-      <section className="py-8 text-center" style={{ background: "#FFFFFF" }}>
-        <button
-          className="inline-flex items-center gap-2 px-8 py-3 rounded-lg transition-all"
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: "14px",
-            fontWeight: 600,
-            color: "#00276B",
-            border: "1px solid #00276B",
-            background: "transparent",
-            cursor: "pointer",
-          }}
-          onClick={() => router.back()}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#00276B";
-            e.currentTarget.style.color = "#FFFFFF";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "#00276B";
-          }}
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Kembali ke Perpustakaan
-        </button>
-      </section>
+      <BackButton label="Kembali ke Perpustakaan" />
     </main>
   );
 }

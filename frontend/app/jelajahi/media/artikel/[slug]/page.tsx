@@ -1,22 +1,15 @@
-"use client";
-
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import {
-  ArrowLeft,
-  Clock,
-  Twitter,
-  Facebook,
-  MessageCircle,
-} from "lucide-react";
+import { Clock, Twitter, Facebook, MessageCircle } from "lucide-react";
+import { notFound } from "next/navigation";
+import { getMediaArtikelDetail, getMediaList } from "@/lib/api";
+import { BackButton } from "@/components/shared/BackButton";
+import { formatDate } from "@/lib/utils";
+import type { MediaArtikelDetail } from "@/types/api";
 
-// Same image used for this article in the media listing page
-const HERO_IMAGE =
+const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1736066330610-c102cab4e942?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjbGFzc3Jvb20lMjBsZWN0dXJlJTIwdGVhY2hpbmd8ZW58MXx8fHwxNzczMjkwODkwfDA&ixlib=rb-4.1.0&q=80&w=1080";
-
-const BODY_IMAGE =
-  "https://images.unsplash.com/photo-1626118711692-716dae857f6d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhY2FkZW1pYyUyMHdyaXRpbmclMjBib29rc3xlbnwxfHx8fDE3NzMyOTA4ODd8MA&ixlib=rb-4.1.0&q=80&w=1080";
 
 const relatedArticles = [
   {
@@ -51,8 +44,54 @@ const relatedArticles = [
   },
 ];
 
-export default function ArtikelDetailPage() {
-  const router = useRouter();
+export async function generateStaticParams() {
+  try {
+    const data = await getMediaList(1, 100, "artikel");
+    return data.items.map((item) => ({ slug: item.slug }));
+  } catch {
+    return [];
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const data = await getMediaArtikelDetail(slug);
+    return {
+      title: `${data.judul} — Media STTB Bandung`,
+      description: data.excerpt,
+    };
+  } catch {
+    return { title: "Artikel — STTB Bandung" };
+  }
+}
+
+export default async function ArtikelDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  let data: MediaArtikelDetail | undefined;
+  try {
+    data = await getMediaArtikelDetail(slug);
+  } catch {
+    notFound();
+  }
+  if (!data) notFound();
+
+  const heroImage = data.thumbnailUrl ?? FALLBACK_IMAGE;
+  const nameParts = data.penulis
+    .replace(/[^a-zA-Z ]/g, " ")
+    .split(" ")
+    .filter(Boolean);
+  const initials = (
+    (nameParts[0]?.[0] ?? "") + (nameParts[1]?.[0] ?? "")
+  ).toUpperCase();
 
   return (
     <main className="min-h-screen" style={{ fontFamily: "var(--font-sans)" }}>
@@ -93,7 +132,7 @@ export default function ArtikelDetailPage() {
                 letterSpacing: "0.08em",
               }}
             >
-              PENDIDIKAN KRISTEN
+              {data.kategori}
             </span>
             <span
               style={{
@@ -102,7 +141,7 @@ export default function ArtikelDetailPage() {
                 color: "#6B7280",
               }}
             >
-              • 22 Maret 2022
+              • {formatDate(data.tanggalPublish)}
             </span>
           </div>
 
@@ -117,20 +156,26 @@ export default function ArtikelDetailPage() {
               lineHeight: 1.3,
             }}
           >
-            Integrasi Iman dan Ilmu: Menuju Pendekatan yang Lebih Holistik
+            {data.judul}
           </h1>
 
           {/* Author Row */}
           <div className="flex flex-col items-center mb-8">
             <div className="flex items-center gap-3 mb-2">
               <div
-                className="rounded-full flex-shrink-0"
+                className="rounded-full flex-shrink-0 flex items-center justify-center"
                 style={{
                   width: "40px",
                   height: "40px",
                   background: "#00276B",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "13px",
+                  fontWeight: 700,
+                  color: "#FFFFFF",
                 }}
-              />
+              >
+                {initials}
+              </div>
               <div>
                 <p
                   style={{
@@ -140,16 +185,7 @@ export default function ArtikelDetailPage() {
                     color: "#00276B",
                   }}
                 >
-                  Oleh Sarinah Lo, Ph.D.
-                </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "13px",
-                    color: "#6B7280",
-                  }}
-                >
-                  Dosen Tetap Studi Magister Pendidikan Kristen
+                  Oleh {data.penulis}
                 </p>
               </div>
             </div>
@@ -176,7 +212,7 @@ export default function ArtikelDetailPage() {
                 color: "#6B7280",
               }}
             >
-              Estimasi baca: 8 menit
+              Estimasi baca: 5 menit
             </p>
           </div>
         </div>
@@ -191,163 +227,31 @@ export default function ArtikelDetailPage() {
             style={{ aspectRatio: "16/9" }}
           >
             <Image
-              src={HERO_IMAGE}
-              alt="Integrasi Iman dan Ilmu"
+              src={heroImage}
+              alt={data.judul}
               fill
               className="object-cover"
               sizes="(max-width: 800px) 100vw, 800px"
               priority
             />
           </div>
-
-          {/* Caption */}
-          <p
-            className="text-center italic"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "13px",
-              color: "#6B7280",
-            }}
-          >
-            Diagram Being, Doing, Knowing — Model Integrasi Iman dan Ilmu
-          </p>
         </div>
       </section>
 
       {/* SECTION 3 — ARTICLE BODY */}
       <section className="py-12" style={{ background: "#FFFFFF" }}>
         <div className="max-w-[680px] mx-auto px-6">
-          {/* Lead Paragraph */}
-          <p
-            className="mb-7"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "19px",
-              fontWeight: 500,
-              color: "#00276B",
-              lineHeight: 1.9,
-            }}
-          >
-            Integrasi iman dan ilmu adalah sebuah topik yang sedang dibicarakan
-            oleh tokoh-tokoh pendidikan Kristen dengan mengaitkan integrasi iman
-            dan learning (integration of faith and learning) sebagai sebuah
-            agenda baik yang populer di kalangan pendidik Kristen.
-          </p>
-
-          {/* Regular Paragraph 1 */}
-          <p
-            className="mb-7"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "18px",
-              color: "#1F2937",
-              lineHeight: 1.9,
-            }}
-          >
-            Ada yang memahami integrasi sebagai sebuah metode penyampaian bahan
-            ajar. Ada yang merasa integrasi iman-ilmu adalah sebuah disposisi
-            atau cara pandang. Apakah sebenarnya integrasi itu? Bagaimana model
-            integrasi yang ada, dan bagaimana kita mengimplementasikannya dalam
-            pendidikan Kristen?
-          </p>
-
-          {/* Pull Quote */}
+          {/* Article Content */}
           <div
-            className="my-12 py-8 px-10 rounded-r-lg"
-            style={{
-              background: "#F8F7F4",
-              borderLeft: "6px solid #C41E3A",
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                fontSize: "22px",
-                color: "#00276B",
-                lineHeight: 1.7,
-              }}
-            >
-              &ldquo;Iman dan ilmu sesungguhnya bukan dua hal yang saling
-              bertentangan — melainkan dua sisi dari satu kebenaran yang
-              sama.&rdquo;
-            </p>
-          </div>
-
-          {/* Regular Paragraph 2 */}
-          <p
-            className="mb-7"
+            className="prose prose-lg max-w-none mb-12"
             style={{
               fontFamily: "var(--font-sans)",
               fontSize: "18px",
               color: "#1F2937",
               lineHeight: 1.9,
             }}
-          >
-            Di Amerika, framing dan proses integrasi tidak saja terkait dalam
-            komunitas akademisi Kristen, namun demikian sudah menjadi suatu
-            agenda bagi lembaga-lembaga Kristen dalam upaya mempersiapkan
-            tenaga-tenaga pendidikan bersama Amerika seperti ACSI, RHEA, Kumon,
-            Institute dan De Vos Institute.
-          </p>
-
-          {/* Section Subheading */}
-          <h3
-            className="mt-12 mb-4"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "24px",
-              fontWeight: 700,
-              color: "#00276B",
-            }}
-          >
-            Model Integrasi dalam Literatur
-          </h3>
-
-          {/* Regular Paragraph 3 */}
-          <p
-            className="mb-7"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "18px",
-              color: "#1F2937",
-              lineHeight: 1.9,
-            }}
-          >
-            Menurut model yang dikembangkan oleh Arthur Holmes (1987), terdapat
-            empat pendekatan utama dalam integrasi iman dan ilmu yang kerap
-            digunakan para pendidik Kristen dalam praktik pengajaran mereka
-            sehari-hari.
-          </p>
-
-          {/* Inline Image */}
-          <div
-            className="relative my-8 rounded-lg overflow-hidden"
-            style={{ aspectRatio: "3/2" }}
-          >
-            <Image
-              src={BODY_IMAGE}
-              alt="Model Integrasi dalam Literatur"
-              fill
-              className="object-cover"
-              sizes="(max-width: 680px) 100vw, 680px"
-            />
-          </div>
-
-          {/* Regular Paragraph 4 */}
-          <p
-            className="mb-7"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "18px",
-              color: "#1F2937",
-              lineHeight: 1.9,
-            }}
-          >
-            Implementasi menurut literatur dan riset integrasi adalah munculnya
-            para pendidik Kristen terdidik yang mampu mengintegrasikan iman dan
-            ilmu dalam pengajaran mereka kepada para peserta didik.
-          </p>
+            dangerouslySetInnerHTML={{ __html: data.konten }}
+          />
 
           {/* Tags Row */}
           <div className="flex flex-wrap items-center gap-3 mt-12">
@@ -360,12 +264,7 @@ export default function ArtikelDetailPage() {
             >
               Topik:
             </span>
-            {[
-              "Pendidikan Kristen",
-              "Integrasi Iman",
-              "Akademik",
-              "Teologi",
-            ].map((tag, idx) => (
+            {[data.kategori, "Akademik", "Teologi"].map((tag, idx) => (
               <span
                 key={idx}
                 className="rounded-full px-4 py-1"
@@ -552,32 +451,7 @@ export default function ArtikelDetailPage() {
       </section>
 
       {/* SECTION 5 — BACK NAVIGATION */}
-      <section className="py-8 text-center" style={{ background: "#FFFFFF" }}>
-        <button
-          className="inline-flex items-center gap-2 px-8 py-3 rounded-lg transition-all"
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: "14px",
-            fontWeight: 600,
-            color: "#00276B",
-            border: "1px solid #00276B",
-            background: "transparent",
-            cursor: "pointer",
-          }}
-          onClick={() => router.back()}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#00276B";
-            e.currentTarget.style.color = "#FFFFFF";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "#00276B";
-          }}
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Kembali ke Media
-        </button>
-      </section>
+      <BackButton label="Kembali ke Media" bgSection="#FFFFFF" />
     </main>
   );
 }

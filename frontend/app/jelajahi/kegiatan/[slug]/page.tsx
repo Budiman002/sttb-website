@@ -1,37 +1,23 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import {
-  ArrowLeft,
   Calendar,
-  Clock,
   MapPin,
-  DollarSign,
   User,
   Twitter,
   Facebook,
   MessageCircle,
   AlertCircle,
 } from "lucide-react";
+import { getKegiatanDetail, getKegiatanList } from "@/lib/api";
+import { BackButton } from "@/components/shared/BackButton";
+import type { Metadata } from "next";
 
-// Same image used for the featured (Unggulan) card on the kegiatan listing page
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1662151820001-0c8d949304a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b3JzaGlwJTIwY2h1cmNoJTIwc2VydmljZXxlbnwxfHx8fDE3NzMyODQ4ODl8MA&ixlib=rb-4.1.0&q=80&w=1080";
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1662151820001-0c8d949304a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
 
-type RelatedEvent = {
-  status: string;
-  statusColor: string;
-  category: string;
-  date: string;
-  time: string;
-  location: string;
-  title: string;
-  image: string;
-};
-
-const relatedEvents: RelatedEvent[] = [
+const relatedEvents = [
   {
     status: "UPCOMING",
     statusColor: "#0056B3",
@@ -41,7 +27,7 @@ const relatedEvents: RelatedEvent[] = [
     location: "Zoom",
     title: "Kelas Sit In Magister Teologi Pelayanan Pastoral",
     image:
-      "https://images.unsplash.com/photo-1561089489-f13d5e730d72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0aGVvbG9neSUyMGNsYXNzcm9vbSUyMGxlY3R1cmV8ZW58MXx8fHwxNzczMjg1NDI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1561089489-f13d5e730d72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
   },
   {
     status: "UPCOMING",
@@ -52,7 +38,7 @@ const relatedEvents: RelatedEvent[] = [
     location: "Kampus STTB",
     title: "Open House Penerimaan Mahasiswa Baru 2026–2027",
     image:
-      "https://images.unsplash.com/photo-1758270704787-615782711641?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHVkZW50cyUyMGNhbXB1cyUyMGRpc2N1c3Npb258ZW58MXx8fHwxNzczMjg1NDI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1758270704787-615782711641?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
   },
   {
     status: "UPCOMING",
@@ -63,12 +49,75 @@ const relatedEvents: RelatedEvent[] = [
     location: "Zoom",
     title: "Bincang Rame: Menemukan Panggilan Hidupmu",
     image:
-      "https://images.unsplash.com/photo-1477569914486-b9955238cae0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZW1pbmFyJTIwcGVvcGxlJTIwdGFsa2luZ3xlbnwxfHx8fDE3NzMyODU0MjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1477569914486-b9955238cae0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
   },
 ];
 
-export default function KegiatanDetailPage() {
-  const router = useRouter();
+function getStatusColor(status: string): string {
+  switch (status.toUpperCase()) {
+    case "UPCOMING":
+      return "#0056B3";
+    case "ONGOING":
+      return "#16A34A";
+    default:
+      return "#6B7280";
+  }
+}
+
+function formatDateRange(mulai: string, selesai: string | null): string {
+  const start = new Date(mulai).toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+  if (!selesai) return start;
+  const end = new Date(selesai).toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+  return `${start} — ${end}`;
+}
+
+export async function generateStaticParams() {
+  try {
+    const data = await getKegiatanList(1, 100);
+    return data.items.map((item) => ({ slug: item.slug }));
+  } catch {
+    return [];
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const data = await getKegiatanDetail(slug);
+    return { title: `${data.judul} — STTB Bandung` };
+  } catch {
+    return { title: "Kegiatan — STTB Bandung" };
+  }
+}
+
+export default async function KegiatanDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  let data;
+  try {
+    data = await getKegiatanDetail(slug);
+  } catch {
+    notFound();
+  }
+
+  const dateRange = formatDateRange(data.tanggalMulai, data.tanggalSelesai);
+  const statusColor = getStatusColor(data.status);
 
   return (
     <main className="min-h-screen" style={{ fontFamily: "var(--font-sans)" }}>
@@ -78,7 +127,6 @@ export default function KegiatanDetailPage() {
         style={{ background: "#00276B" }}
       >
         <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
-          {/* Breadcrumb */}
           <nav className="mb-8">
             <p
               style={{
@@ -97,26 +145,24 @@ export default function KegiatanDetailPage() {
               >
                 Kegiatan
               </Link>
-              {" › Akademik"}
+              {" › "}
+              {data.kategori}
             </p>
           </nav>
 
-          {/* Featured Card */}
           <div
             className="bg-white rounded-xl overflow-hidden grid lg:grid-cols-2"
             style={{ boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)" }}
           >
-            {/* Left: Image */}
             <div className="relative aspect-video lg:aspect-auto lg:min-h-[400px]">
               <Image
-                src={HERO_IMAGE}
-                alt="Kelas Sit In Magister Pendidikan Kristen"
+                src={data.thumbnailUrl ?? FALLBACK_IMAGE}
+                alt={data.judul}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 priority
               />
-              {/* Detail Badge */}
               <div
                 className="absolute top-4 left-4 px-4 py-2 rounded-md"
                 style={{
@@ -131,11 +177,10 @@ export default function KegiatanDetailPage() {
               >
                 DETAIL KEGIATAN
               </div>
-              {/* Status Badge */}
               <div
                 className="absolute top-4 right-4 px-4 py-2 rounded-md"
                 style={{
-                  background: "#16A34A",
+                  background: statusColor,
                   fontFamily: "var(--font-sans)",
                   fontSize: "11px",
                   fontWeight: 700,
@@ -144,13 +189,11 @@ export default function KegiatanDetailPage() {
                   letterSpacing: "0.08em",
                 }}
               >
-                ONGOING
+                {data.status}
               </div>
             </div>
 
-            {/* Right: Content */}
             <div className="p-8 lg:p-12 flex flex-col justify-center">
-              {/* Category Pill */}
               <div className="mb-6">
                 <span
                   className="inline-block rounded-full px-4 py-1"
@@ -164,33 +207,41 @@ export default function KegiatanDetailPage() {
                     letterSpacing: "0.08em",
                   }}
                 >
-                  AKADEMIK
+                  {data.kategori}
                 </span>
               </div>
 
-              {/* Event Meta */}
               <div className="space-y-2 mb-6">
-                {[
-                  { Icon: Calendar, text: "9 Januari — 18 Mei 2026" },
-                  { Icon: Clock, text: "Jumat–Sabtu, 16.00 – 21.00 WIB" },
-                  { Icon: MapPin, text: "Onsite & Zoom" },
-                ].map(({ Icon, text }, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <Icon
-                      className="w-4 h-4 flex-shrink-0 mt-0.5"
-                      style={{ color: "#6B7280" }}
-                    />
-                    <span
-                      style={{
-                        fontFamily: "var(--font-sans)",
-                        fontSize: "13px",
-                        color: "#6B7280",
-                      }}
-                    >
-                      {text}
-                    </span>
-                  </div>
-                ))}
+                <div className="flex items-start gap-2">
+                  <Calendar
+                    className="w-4 h-4 flex-shrink-0 mt-0.5"
+                    style={{ color: "#6B7280" }}
+                  />
+                  <span
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "13px",
+                      color: "#6B7280",
+                    }}
+                  >
+                    {dateRange}
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <MapPin
+                    className="w-4 h-4 flex-shrink-0 mt-0.5"
+                    style={{ color: "#6B7280" }}
+                  />
+                  <span
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "13px",
+                      color: "#6B7280",
+                    }}
+                  >
+                    {data.lokasi}
+                  </span>
+                </div>
               </div>
 
               <h1
@@ -203,7 +254,7 @@ export default function KegiatanDetailPage() {
                   lineHeight: 1.2,
                 }}
               >
-                Kelas Sit In Magister Pendidikan Kristen
+                {data.judul}
               </h1>
 
               <p
@@ -215,15 +266,12 @@ export default function KegiatanDetailPage() {
                   lineHeight: 1.7,
                 }}
               >
-                Kuliah ini akan membantu mahasiswa untuk dapat melakukan riset
-                literatur yang baik bagi penulisan tugas paper dan tugas akhir
-                serta menuliskannya dengan terstruktur sehingga dapat
-                dipublikasikan dalam publikasi ilmiah.
+                {data.deskripsi}
               </p>
 
               <div>
                 <button
-                  className="px-8 py-3 rounded-lg font-bold transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+                  className="px-8 py-3 rounded-lg font-bold transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2 hover:bg-[#E63950]"
                   style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: "14px",
@@ -231,12 +279,6 @@ export default function KegiatanDetailPage() {
                     background: "#C41E3A",
                     cursor: "pointer",
                   }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = "#E63950")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.background = "#C41E3A")
-                  }
                 >
                   Daftar Sekarang →
                 </button>
@@ -250,7 +292,6 @@ export default function KegiatanDetailPage() {
       <section className="pt-20 pb-16" style={{ background: "#F8F7F4" }}>
         <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
           <div className="grid lg:grid-cols-[65%_35%] gap-12">
-            {/* Left Content */}
             <div className="pr-0 lg:pr-12">
               <h3
                 className="mb-6"
@@ -264,7 +305,7 @@ export default function KegiatanDetailPage() {
                 Tentang Kegiatan Ini
               </h3>
 
-              <p
+              <div
                 className="mb-8"
                 style={{
                   fontFamily: "var(--font-sans)",
@@ -272,14 +313,9 @@ export default function KegiatanDetailPage() {
                   color: "#1F2937",
                   lineHeight: 1.8,
                 }}
-              >
-                Kuliah ini akan membantu mahasiswa untuk dapat melakukan riset
-                literatur yang baik bagi penulisan tugas paper dan tugas akhir
-                serta menuliskannya dengan terstruktur sehingga dapat
-                dipublikasikan dalam publikasi ilmiah.
-              </p>
+                dangerouslySetInnerHTML={{ __html: data.konten }}
+              />
 
-              {/* Red Divider */}
               <div
                 className="mb-8"
                 style={{ width: "40px", height: "2px", background: "#C41E3A" }}
@@ -297,12 +333,10 @@ export default function KegiatanDetailPage() {
                 Dosen Pengajar
               </h3>
 
-              {/* Instructor Card */}
               <div
                 className="bg-white rounded-lg p-6 flex gap-5"
                 style={{ boxShadow: "0 4px 16px rgba(0, 39, 107, 0.08)" }}
               >
-                {/* Avatar */}
                 <div
                   className="rounded-full flex-shrink-0 flex items-center justify-center"
                   style={{
@@ -313,7 +347,6 @@ export default function KegiatanDetailPage() {
                 >
                   <User className="w-7 h-7" style={{ color: "#FFFFFF" }} />
                 </div>
-
                 <div>
                   <h4
                     className="mb-1"
@@ -324,7 +357,7 @@ export default function KegiatanDetailPage() {
                       color: "#00276B",
                     }}
                   >
-                    Dwi Maria Handayani, Ph.D.
+                    Tim Dosen STTB
                   </h4>
                   <p
                     className="mb-3"
@@ -335,24 +368,12 @@ export default function KegiatanDetailPage() {
                       fontWeight: 600,
                     }}
                   >
-                    Ketua Program Studi Magister Teologi
-                  </p>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "14px",
-                      color: "#6B7280",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    Memperoleh gelar doktoral dalam bidang Perjanjian Lama dari
-                    Asia Graduate School of Theology, Filipina.
+                    Dosen Program Studi STTB Bandung
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Right Sidebar */}
             <div>
               <div
                 className="bg-white rounded-lg p-6 sticky top-32"
@@ -370,26 +391,11 @@ export default function KegiatanDetailPage() {
                   DETAIL KEGIATAN
                 </p>
 
-                {/* Info Rows */}
                 <div className="space-y-4 mb-6">
                   {[
-                    {
-                      Icon: Calendar,
-                      label: "Tanggal",
-                      value: "9 Jan — 18 Mei 2026",
-                    },
-                    {
-                      Icon: Clock,
-                      label: "Waktu",
-                      value: "Jumat–Sabtu, 16.00–21.00 WIB",
-                    },
-                    { Icon: MapPin, label: "Lokasi", value: "Onsite & Zoom" },
-                    {
-                      Icon: DollarSign,
-                      label: "Kontribusi",
-                      value: "Rp500.000 / mata kuliah",
-                    },
-                    { Icon: User, label: "Kategori", value: "Kelas Audit" },
+                    { Icon: Calendar, label: "Tanggal", value: dateRange },
+                    { Icon: MapPin, label: "Lokasi", value: data.lokasi },
+                    { Icon: User, label: "Kategori", value: data.kategori },
                   ].map(({ Icon, label, value }, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <Icon
@@ -422,16 +428,14 @@ export default function KegiatanDetailPage() {
                   ))}
                 </div>
 
-                {/* Divider */}
                 <div
                   className="mb-6"
                   style={{ height: "1px", background: "#E5E7EB" }}
                 />
 
-                {/* CTA Buttons */}
                 <div className="space-y-3 mb-6">
                   <button
-                    className="w-full px-6 py-3 rounded-lg font-bold transition-all shadow-lg hover:shadow-xl"
+                    className="w-full px-6 py-3 rounded-lg font-bold transition-all shadow-lg hover:shadow-xl hover:bg-[#E63950]"
                     style={{
                       fontFamily: "var(--font-sans)",
                       fontSize: "14px",
@@ -439,12 +443,6 @@ export default function KegiatanDetailPage() {
                       background: "#C41E3A",
                       cursor: "pointer",
                     }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = "#E63950")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background = "#C41E3A")
-                    }
                   >
                     Daftar Sekarang →
                   </button>
@@ -458,26 +456,16 @@ export default function KegiatanDetailPage() {
                       background: "transparent",
                       cursor: "pointer",
                     }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#00276B";
-                      e.currentTarget.style.color = "#FFFFFF";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "#00276B";
-                    }}
                   >
                     Hubungi Panitia
                   </button>
                 </div>
 
-                {/* Divider */}
                 <div
                   className="mb-6"
                   style={{ height: "1px", background: "#E5E7EB" }}
                 />
 
-                {/* Registration Deadline */}
                 <div className="flex items-start gap-2 mb-6">
                   <AlertCircle
                     className="w-4 h-4 flex-shrink-0 mt-0.5"
@@ -492,11 +480,10 @@ export default function KegiatanDetailPage() {
                       lineHeight: 1.5,
                     }}
                   >
-                    Batas pendaftaran: 2 Januari 2026
+                    Hubungi kami untuk informasi pendaftaran lebih lanjut.
                   </p>
                 </div>
 
-                {/* Social Share */}
                 <div className="text-center">
                   <p
                     className="mb-3"
@@ -568,7 +555,6 @@ export default function KegiatanDetailPage() {
                 className="bg-white rounded-lg overflow-hidden"
                 style={{ boxShadow: "0 4px 16px rgba(0, 39, 107, 0.08)" }}
               >
-                {/* Image */}
                 <div className="relative aspect-video overflow-hidden">
                   <Image
                     src={card.image}
@@ -606,13 +592,10 @@ export default function KegiatanDetailPage() {
                     {card.category}
                   </div>
                 </div>
-
-                {/* Card Body */}
                 <div className="p-5">
                   <div className="space-y-2 mb-4">
                     {[
                       { Icon: Calendar, text: card.date },
-                      { Icon: Clock, text: card.time },
                       { Icon: MapPin, text: card.location },
                     ].map(({ Icon, text }, i) => (
                       <div key={i} className="flex items-start gap-2">
@@ -632,7 +615,6 @@ export default function KegiatanDetailPage() {
                       </div>
                     ))}
                   </div>
-
                   <h3
                     className="mb-4"
                     style={{
@@ -649,7 +631,6 @@ export default function KegiatanDetailPage() {
                   >
                     {card.title}
                   </h3>
-
                   <a
                     href="#"
                     style={{
@@ -669,32 +650,7 @@ export default function KegiatanDetailPage() {
       </section>
 
       {/* SECTION 4 — BACK NAVIGATION */}
-      <section className="py-8 text-center" style={{ background: "#F8F7F4" }}>
-        <button
-          onClick={() => router.back()}
-          className="inline-flex items-center gap-2 px-8 py-3 rounded-lg transition-all"
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: "14px",
-            fontWeight: 600,
-            color: "#00276B",
-            border: "1px solid #00276B",
-            background: "transparent",
-            cursor: "pointer",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#00276B";
-            e.currentTarget.style.color = "#FFFFFF";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "#00276B";
-          }}
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Kembali ke Kegiatan
-        </button>
-      </section>
+      <BackButton label="Kembali ke Kegiatan" bgSection="#F8F7F4" />
     </main>
   );
 }
