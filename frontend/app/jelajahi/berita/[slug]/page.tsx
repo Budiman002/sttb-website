@@ -51,7 +51,9 @@ export default async function BeritaDetailPage({
   let relatedArticles: BeritaListItem[] = [];
   try {
     const list = await getBeritaList(1, 4);
-    relatedArticles = list.items.filter((item) => item.slug !== slug).slice(0, 3);
+    relatedArticles = list.items
+      .filter((item) => item.slug !== slug)
+      .slice(0, 3);
   } catch {
     relatedArticles = [];
   }
@@ -270,19 +272,58 @@ export default async function BeritaDetailPage({
                     style={{ boxShadow: "0 4px 16px rgba(0,39,107,0.08)" }}
                   >
                     <div className="relative aspect-video overflow-hidden">
-                      <Image src={card.thumbnailUrl ?? FALLBACK_IMAGE} alt={card.judul} fill className="object-cover" />
+                      <Image
+                        src={card.thumbnailUrl ?? FALLBACK_IMAGE}
+                        alt={card.judul}
+                        fill
+                        className="object-cover"
+                      />
                       <div
                         className="absolute bottom-4 left-4 px-3 py-1 rounded-md text-white text-xs font-bold uppercase"
-                        style={{ background: "#C41E3A", fontFamily: "var(--font-sans)", letterSpacing: "0.08em" }}
+                        style={{
+                          background: "#C41E3A",
+                          fontFamily: "var(--font-sans)",
+                          letterSpacing: "0.08em",
+                        }}
                       >
                         {card.kategori}
                       </div>
                     </div>
                     <div className="p-5">
-                      <p className="mb-2 text-xs text-gray-500" style={{ fontFamily: "var(--font-sans)" }}>{formatDate(card.tanggalPublish)}</p>
-                      <h3 className="mb-3 line-clamp-2" style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: 700, color: "#00276B", lineHeight: 1.3 }}>{card.judul}</h3>
-                      <p className="mb-4 text-sm text-gray-500 leading-relaxed line-clamp-2" style={{ fontFamily: "var(--font-sans)" }}>{card.excerpt}</p>
-                      <Link href={`/jelajahi/berita/${card.slug}`} className="text-xs font-semibold" style={{ fontFamily: "var(--font-sans)", color: "#C41E3A" }}>Baca Selengkapnya &rarr;</Link>
+                      <p
+                        className="mb-2 text-xs text-gray-500"
+                        style={{ fontFamily: "var(--font-sans)" }}
+                      >
+                        {formatDate(card.tanggalPublish)}
+                      </p>
+                      <h3
+                        className="mb-3 line-clamp-2"
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          fontSize: "18px",
+                          fontWeight: 700,
+                          color: "#00276B",
+                          lineHeight: 1.3,
+                        }}
+                      >
+                        {card.judul}
+                      </h3>
+                      <p
+                        className="mb-4 text-sm text-gray-500 leading-relaxed line-clamp-2"
+                        style={{ fontFamily: "var(--font-sans)" }}
+                      >
+                        {card.excerpt}
+                      </p>
+                      <Link
+                        href={`/jelajahi/berita/${card.slug}`}
+                        className="text-xs font-semibold"
+                        style={{
+                          fontFamily: "var(--font-sans)",
+                          color: "#C41E3A",
+                        }}
+                      >
+                        Baca Selengkapnya &rarr;
+                      </Link>
                     </div>
                   </div>
                 ))}
