@@ -1,0 +1,15 @@
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\obj\Debug\net10.0\Sttb.Entities.csproj.AssemblyReference.cache
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\obj\Debug\net10.0\Sttb.Entities.GeneratedMSBuildEditorConfig.editorconfig
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\obj\Debug\net10.0\Sttb.Entities.AssemblyInfoInputs.cache
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\obj\Debug\net10.0\Sttb.Entities.AssemblyInfo.cs
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\obj\Debug\net10.0\Sttb.Entities.csproj.CoreCompileInputs.cache
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\bin\Debug\net10.0\Sttb.Entities.deps.json
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\bin\Debug\net10.0\Sttb.Entities.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\bin\Debug\net10.0\Sttb.Entities.pdb
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\bin\Debug\net10.0\Sttb.Contracts.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\bin\Debug\net10.0\Sttb.Contracts.pdb
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\obj\Debug\net10.0\Sttb.Ent.06E70AB5.Up2Date
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\obj\Debug\net10.0\Sttb.Entities.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\obj\Debug\net10.0\refint\Sttb.Entities.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\obj\Debug\net10.0\Sttb.Entities.pdb
+F:\Coding\test\codingan\Project\Sttb\Sttb.Entities\obj\Debug\net10.0\ref\Sttb.Entities.dll

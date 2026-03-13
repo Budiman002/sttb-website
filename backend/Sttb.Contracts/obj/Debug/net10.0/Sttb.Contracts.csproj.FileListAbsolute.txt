@@ -1,0 +1,12 @@
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\bin\Debug\net10.0\Sttb.Contracts.deps.json
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\bin\Debug\net10.0\Sttb.Contracts.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\bin\Debug\net10.0\Sttb.Contracts.pdb
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\obj\Debug\net10.0\Sttb.Contracts.csproj.AssemblyReference.cache
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\obj\Debug\net10.0\Sttb.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\obj\Debug\net10.0\Sttb.Contracts.AssemblyInfoInputs.cache
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\obj\Debug\net10.0\Sttb.Contracts.AssemblyInfo.cs
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\obj\Debug\net10.0\Sttb.Contracts.csproj.CoreCompileInputs.cache
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\obj\Debug\net10.0\Sttb.Contracts.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\obj\Debug\net10.0\refint\Sttb.Contracts.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\obj\Debug\net10.0\Sttb.Contracts.pdb
+F:\Coding\test\codingan\Project\Sttb\Sttb.Contracts\obj\Debug\net10.0\ref\Sttb.Contracts.dll

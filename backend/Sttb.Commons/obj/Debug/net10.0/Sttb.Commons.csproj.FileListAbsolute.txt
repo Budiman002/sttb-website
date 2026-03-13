@@ -1,0 +1,17 @@
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\bin\Debug\net10.0\Sttb.Commons.deps.json
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\bin\Debug\net10.0\Sttb.Commons.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\bin\Debug\net10.0\Sttb.Commons.pdb
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\bin\Debug\net10.0\Sttb.Contracts.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\bin\Debug\net10.0\Sttb.Entities.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\bin\Debug\net10.0\Sttb.Contracts.pdb
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\bin\Debug\net10.0\Sttb.Entities.pdb
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\obj\Debug\net10.0\Sttb.Commons.csproj.AssemblyReference.cache
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\obj\Debug\net10.0\Sttb.Commons.GeneratedMSBuildEditorConfig.editorconfig
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\obj\Debug\net10.0\Sttb.Commons.AssemblyInfoInputs.cache
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\obj\Debug\net10.0\Sttb.Commons.AssemblyInfo.cs
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\obj\Debug\net10.0\Sttb.Commons.csproj.CoreCompileInputs.cache
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\obj\Debug\net10.0\Sttb.Com.907E9AB5.Up2Date
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\obj\Debug\net10.0\Sttb.Commons.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\obj\Debug\net10.0\refint\Sttb.Commons.dll
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\obj\Debug\net10.0\Sttb.Commons.pdb
+F:\Coding\test\codingan\Project\Sttb\Sttb.Commons\obj\Debug\net10.0\ref\Sttb.Commons.dll
