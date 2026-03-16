@@ -53,18 +53,22 @@ export default function MarsSttbPage() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const updateTime = () => setCurrentTime(audio.currentTime);
-    const updateDuration = () => setDuration(audio.duration);
-    const handleEnded = () => setIsPlaying(false);
+    const handleMetadata = () => {
+      if (audio.duration && !isNaN(audio.duration)) {
+        setDuration(audio.duration);
+      }
+    };
 
-    audio.addEventListener("timeupdate", updateTime);
-    audio.addEventListener("loadedmetadata", updateDuration);
-    audio.addEventListener("ended", handleEnded);
+    if (audio.readyState >= 1) {
+      handleMetadata();
+    }
+
+    audio.addEventListener("loadedmetadata", handleMetadata);
+    audio.addEventListener("durationchange", handleMetadata);
 
     return () => {
-      audio.removeEventListener("timeupdate", updateTime);
-      audio.removeEventListener("loadedmetadata", updateDuration);
-      audio.removeEventListener("ended", handleEnded);
+      audio.removeEventListener("loadedmetadata", handleMetadata);
+      audio.removeEventListener("durationchange", handleMetadata);
     };
   }, []);
 
@@ -124,7 +128,13 @@ export default function MarsSttbPage() {
               {/* Audio Player */}
               <div className="max-w-2xl mx-auto">
                 <div className="bg-[#00276B] rounded-2xl p-8 shadow-2xl border border-white/10">
-                  <audio ref={audioRef} src="#" preload="metadata" />
+                  <audio
+                    ref={audioRef}
+                    src="/MarsSTTB/Mars STTB  Sekolah Tinggi Teologi Bandung.mp4"
+                    preload="metadata"
+                    onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
+                    onEnded={() => setIsPlaying(false)}
+                  />
 
                   {/* Play/Pause Button */}
                   <div className="flex items-center justify-center mb-6">
@@ -148,12 +158,12 @@ export default function MarsSttbPage() {
                   <div className="mb-4">
                     <div
                       onClick={handleProgressClick}
-                      className="h-2 bg-white/20 rounded-full cursor-pointer overflow-hidden"
+                      className="relative w-full h-2 bg-white/20 rounded-full cursor-pointer"
                     >
                       <div
-                        className="h-full bg-[#C41E3A] transition-all duration-100 rounded-full"
+                        className="h-full bg-[#C41E3A] rounded-full transition-all duration-100"
                         style={{
-                          width: `${duration ? (currentTime / duration) * 100 : 0}%`,
+                          width: duration > 0 ? `${(currentTime / duration) * 100}%` : "0%",
                         }}
                       />
                     </div>
@@ -164,11 +174,6 @@ export default function MarsSttbPage() {
                     <span>{formatTime(currentTime)}</span>
                     <span>{formatTime(duration)}</span>
                   </div>
-
-                  <p className="text-xs text-white/50 text-center mt-6 italic">
-                    Audio player demonstration &mdash; actual audio file to be
-                    added
-                  </p>
                 </div>
               </div>
             </div>
