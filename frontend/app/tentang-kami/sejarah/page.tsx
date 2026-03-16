@@ -415,8 +415,8 @@ export default function SejarahPage() {
                       <Image
                         src={src}
                         alt={label}
-                        width={40}
-                        height={40}
+                        width={72}
+                        height={72}
                         className="object-contain"
                       />
                     </div>
@@ -448,19 +448,16 @@ export default function SejarahPage() {
 
             {/* Right Column — Logo Display */}
             <div
-              className="rounded-2xl p-12 flex items-center justify-center"
+              className="rounded-2xl p-8 flex items-center justify-center min-h-[480px]"
               style={{ background: "#003F8A" }}
             >
-              <div
-                className="relative w-full"
-                style={{ maxWidth: "280px", aspectRatio: "1/1" }}
-              >
+              <div className="relative w-full" style={{ aspectRatio: "1/1" }}>
                 <Image
-                  src="/images/sejarah/Image (Logo STTB).png"
+                  src="/images/image (STTB Logo).png"
                   alt="Logo STTB"
                   fill
                   className="object-contain"
-                  sizes="280px"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
                 />
               </div>
             </div>
