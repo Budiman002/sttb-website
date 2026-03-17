@@ -6,63 +6,66 @@ import {
   GraduationCap,
   Target,
   Heart,
-  BookOpen,
-  Users,
+  Lightbulb,
+  TrendingUp,
 } from "lucide-react";
-import { MagisterMinistriTeologiPelayananGerejawiAccordion } from "@/components/akademik/MagisterMinistriTeologiPelayananGerejawiAccordion";
+import { MagisterTeologiAccordion } from "@/components/akademik/MagisterTeologiAccordion";
 
 export const metadata: Metadata = {
   title:
-    "Magister Ministri — Teologi Pelayanan Gerejawi (M.Min.) — STTB Bandung",
+    "Magister Teologi — Pelayanan Pastoral Gereja Urban (M.Th.) — STTB Bandung",
   description:
-    "Program Magister Ministri Teologi Pelayanan Gerejawi STTB untuk memperlengkapi pelayan gereja dengan fondasi Teologi Reformed yang mendalam. 65 SKS, 2,5 tahun, gelar M.Min.",
+    "Program Magister Teologi STTB untuk memperlengkapi rohaniwan dengan landasan Teologi Reformed dalam pelayanan pastoral gereja perkotaan. 56 SKS, 2 tahun, gelar M.Th.",
 };
 
 const REQUIREMENTS = [
-  "Minimal lulusan S1 Teologi (STT terakreditasi).",
-  "Sudah baptis dewasa/sidi.",
-  "Aktif terlibat pelayanan di gereja/lembaga pelayanan minimal 2 tahun.",
-  "Menyerahkan book review.",
-  "Memenuhi syarat dan prosedur admisi STTB.",
+  "Minimal lulusan S.Th. / M.Div. / M.Min. dari sekolah teologi terakreditasi.",
+  "Lulus program S1 non-teologi (wajib mengikuti program matrikulasi 80 SKS).",
+  "Lulusan S.Pd. STTB tidak perlu mengambil program matrikulasi.",
+  "Pernah terlibat pelayanan gerejawi/lembaga Kristen minimal 2 tahun.",
+  "Memiliki panggilan yang jelas sebagai rohaniwan penuh waktu.",
+  "Kemampuan dasar Bahasa Inggris yang baik untuk teks akademik.",
+  "Menyerahkan paper akademik minimal 15 halaman.",
 ];
 
 const SYSTEM_ITEMS = [
-  "Perkuliahan dilakukan pada akhir pekan. Satu akhir pekan senilai 1–2 SKS.",
-  "Kuliah Online: Jumat malam (18.00–21.00) dan Sabtu sore (16.00–19.00).",
-  "Kuliah Onsite: Jumat malam (18.00–21.00) dan Sabtu pagi–sore (08.30–16.30).",
-  "Dalam 1 semester rata-rata terdapat 3 mata kuliah online dan 1 mata kuliah onsite di kampus STTB.",
+  "Kuliah dimulai pada bulan Agustus (Semester Ganjil).",
+  "Kuliah dalam bentuk block teaching secara daring dan luring (tatap muka 1 mata kuliah dilakukan selama seminggu).",
+  "Dalam 1 semester rata-rata terdapat 3 mata kuliah online dan 1 mata kuliah onsite di kampus.",
+  "Perkuliahan dilakukan Senin-Jumat: 08.00-12.00 (Kelas) & 13.00-17.00 (Tugas Mandiri).",
+  "Bagi lulusan S1 Umum: Wajib mengikuti kelas matrikulasi reguler 2 tahun pertama sebelum lanjut ke mata kuliah inti.",
 ];
 
-const CURRICULUM_CATEGORIES_ROW1 = [
-  {
-    title: "Fondasi Biblika",
-    sks: "9 SKS",
-    description: "PL Taurat, PB Injil, Hermeneutika",
-  },
-  {
-    title: "Fondasi Historika",
-    sks: "12 SKS",
-    description: "Allah & Penciptaan, Kristus, Roh Kudus, Sejarah Gereja",
-  },
+const CURRICULUM_CATEGORIES = [
   {
     title: "Mata Kuliah Inti",
-    sks: "11 SKS",
-    description: "Spiritualitas, Pemuridan, Misi, & Kepemimpinan",
+    sks: "15 SKS",
+    description:
+      "Peran Gereja, Gereja Perkotaan, Misi, Sejarah, & Spiritualitas",
   },
   {
-    title: "Mata Kuliah Konsentrasi",
-    sks: "23 SKS",
-    description: "PL, PB, Homiletika, Ibadah, Bahasa Biblika",
+    title: "Konsentrasi",
+    sks: "18 SKS",
+    description: "Homiletika Lanjutan, Manajemen, Konseling, & Antar Generasi",
+  },
+  {
+    title: "Mata Kuliah Elektif",
+    sks: "6 SKS",
+    description: "Dua Pilihan Mata Kuliah Pelayanan Kategorial",
+  },
+  {
+    title: "Penelitian & Akhir",
+    sks: "15 SKS",
+    description: "Penulisan Akademik, Riset, Praktik, & Tugas Akhir",
+  },
+  {
+    title: "Mentoring",
+    sks: "2 SKS",
+    description: "Mentoring Akademik dan Spiritual (Per Semester)",
   },
 ];
 
-const CURRICULUM_CATEGORY_BOTTOM = {
-  title: "Tugas Akhir & Mentoring",
-  sks: "10 SKS",
-  description: "Mentoring Akademik, Penulisan, & Praktik Pelayanan",
-};
-
-export default function MagisterMinistriTeologiPelayananGerejawiPage() {
+export default function MagisterTeologiPelayananPastoralPage() {
   return (
     <main>
       {/* SECTION 1 — HERO */}
@@ -91,27 +94,27 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                 <span
                   className="block mb-2 font-display italic text-white"
                   style={{
-                    fontSize: "clamp(36px, 5vw, 56px)",
+                    fontSize: "clamp(42px, 6vw, 68px)",
                     fontWeight: 400,
                     lineHeight: 1.15,
                   }}
                 >
-                  Magister Ministri
+                  Magister Teologi
                 </span>
                 <span
                   className="block font-heading text-white"
                   style={{
-                    fontSize: "clamp(28px, 4.5vw, 58px)",
+                    fontSize: "clamp(32px, 5.5vw, 68px)",
                     fontWeight: 700,
                     lineHeight: 1.05,
                   }}
                 >
-                  TEOLOGI PELAYANAN GEREJAWI
+                  PELAYANAN PASTORAL GEREJA URBAN
                 </span>
               </h1>
 
               <p
-                className="mb-8 font-body"
+                className="mb-12 font-body"
                 style={{
                   fontSize: "18px",
                   color: "rgba(255,255,255,0.95)",
@@ -119,24 +122,10 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                   maxWidth: "580px",
                 }}
               >
-                Program studi ini dirancang untuk memperlengkapi para pelayan
-                gereja dengan fondasi teologi yang mendalam dan keterampilan
-                pelayanan yang komprehensif guna melayani gereja dan masyarakat
-                secara transformatif.
-              </p>
-
-              <p
-                className="mb-10 px-4 py-3 rounded-md font-body italic"
-                style={{
-                  fontSize: "14px",
-                  color: "rgba(255,255,255,0.85)",
-                  backgroundColor: "rgba(255,255,255,0.1)",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  maxWidth: "540px",
-                }}
-              >
-                Program ini beserta 2 tahun berikutnya di tahap M.Th. memiliki
-                karakteristik M.Div. plus.
+                Program studi ini ditujukan untuk memperlengkapi rohaniwan
+                dengan landasan Teologi Reformed untuk menerapkan misi yang
+                integral dalam pelayanan pastoral mereka di tengah kompleksitas
+                konteks gereja perkotaan.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -144,7 +133,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                   className="px-6 py-3 rounded-lg font-body font-bold text-white text-sm"
                   style={{ background: "#C41E3A" }}
                 >
-                  Gelar: M.Min.
+                  Gelar: M.Th.
                 </span>
                 <span
                   className="px-6 py-3 rounded-lg font-body font-bold text-white text-sm"
@@ -153,7 +142,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                     backdropFilter: "blur(8px)",
                   }}
                 >
-                  65 SKS
+                  56 SKS
                 </span>
                 <span
                   className="px-6 py-3 rounded-lg font-body font-bold text-white text-sm"
@@ -162,7 +151,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                     backdropFilter: "blur(8px)",
                   }}
                 >
-                  2,5 Tahun
+                  2 Tahun
                 </span>
               </div>
             </div>
@@ -171,8 +160,8 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
           {/* Right Column — Image */}
           <div className="relative min-h-[400px] overflow-hidden">
             <Image
-              src="/images/Akademik/Magister-ministri-teologo-pelayanan-gerejawi.png"
-              alt="Magister Ministri Teologi Pelayanan Gerejawi STTB"
+              src="/images/Akademik/Magister-Teologi-Pelayanan-Pastoral.png"
+              alt="Magister Teologi Pelayanan Pastoral Gereja Urban STTB"
               fill
               className="object-cover object-center"
               priority
@@ -181,7 +170,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to right, rgba(0,39,107,0.3) 0%, rgba(0,39,107,0.1) 50%, transparent 100%)",
+                  "linear-gradient(to right, rgba(0,39,107,0.25) 0%, transparent 40%)",
               }}
             />
           </div>
@@ -211,7 +200,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                 lineHeight: 1.2,
               }}
             >
-              <em>Transformative Church Minister</em>
+              <em>Transformative Pastor-Scholar</em>
             </h2>
           </div>
 
@@ -228,7 +217,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
                 style={{ background: "#E8F0FB" }}
               >
-                <BookOpen className="w-7 h-7" style={{ color: "#0056B3" }} />
+                <Lightbulb className="w-7 h-7" style={{ color: "#0056B3" }} />
               </div>
               <h3
                 className="mb-4 font-heading"
@@ -240,9 +229,9 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                 className="font-body"
                 style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
               >
-                Pelayan gereja yang memiliki fondasi biblikal-teologis yang
-                kokoh serta pemahaman yang mendalam tentang Firman Tuhan dan
-                doktrin Kristen Reformed untuk mengemban panggilan pelayanan.
+                <em>Pastor-scholar</em> yang berpengetahuan luas, mampu
+                mengkonstruksi teologi yang sehat berdasarkan teks Alkitab dan
+                mengembangkan relevansinya dalam konteks perkotaan.
               </p>
             </div>
 
@@ -270,9 +259,9 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                 className="font-body"
                 style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
               >
-                Pelayan gereja yang hidupnya mengalami transformasi dan tumbuh
-                secara nyata dalam spiritualitas yang utuh, menjadi teladan bagi
-                jemaat yang dilayaninya.
+                <em>Pastor-scholar</em> yang hidupnya mengalami transformasi
+                nyata dan berpusatkan kepada Kristus dalam setiap aspek
+                kehidupannya.
               </p>
             </div>
 
@@ -288,7 +277,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
                 style={{ background: "#E8F0FB" }}
               >
-                <Users className="w-7 h-7" style={{ color: "#0056B3" }} />
+                <TrendingUp className="w-7 h-7" style={{ color: "#0056B3" }} />
               </div>
               <h3
                 className="mb-4 font-heading"
@@ -300,9 +289,8 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                 className="font-body"
                 style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
               >
-                Pelayan gereja yang tumbuh dalam semangat dan kompetensi untuk
-                membawa transformasi bagi gereja dan masyarakat melalui
-                pelayanan yang autentik dan berdampak.
+                <em>Pastor-scholar</em> yang mampu merancang dan melakukan
+                pelayanan yang integral dalam konteks gereja perkotaan.
               </p>
             </div>
           </div>
@@ -312,9 +300,9 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
       {/* SECTION 3 — DETAIL PROGRAM */}
       <section className="py-20 lg:py-28 bg-white">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-16">
-          <div className="grid lg:grid-cols-12 gap-16 items-start">
-            {/* Left — Informasi Program (7 cols) */}
-            <div className="lg:col-span-7">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            {/* Left — Informasi Program */}
+            <div>
               <h2
                 className="mb-12 font-heading"
                 style={{
@@ -353,17 +341,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                     className="font-body font-semibold"
                     style={{ fontSize: "20px", color: "#1A2340" }}
                   >
-                    65 SKS
-                  </p>
-                  <p
-                    className="font-body mt-1"
-                    style={{
-                      fontSize: "14px",
-                      color: "#9CA3AF",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    *Bagi lulusan S1 Teologi, 15 SKS Fondasi dapat ditransfer.
+                    56 SKS
                   </p>
                 </div>
 
@@ -393,7 +371,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                       lineHeight: 1.6,
                     }}
                   >
-                    2,5 Tahun (Mulai Agustus / Semester Ganjil)
+                    2 Tahun (Bagi lulusan teologi)
                   </p>
                 </div>
 
@@ -444,26 +422,14 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
               </div>
             </div>
 
-            {/* Right — Sistem Perkuliahan (5 cols) */}
-            <div
-              className="lg:col-span-5 p-10 rounded-2xl"
-              style={{ background: "#F8F7F4" }}
-            >
+            {/* Right — Sistem Perkuliahan */}
+            <div className="p-10 rounded-2xl" style={{ background: "#F8F7F4" }}>
               <h3
-                className="mb-4 font-heading"
+                className="mb-6 font-heading"
                 style={{ fontSize: "28px", fontWeight: 700, color: "#00276B" }}
               >
                 Sistem Perkuliahan
               </h3>
-              <p
-                className="mb-6 font-body"
-                style={{ fontSize: "15px", color: "#6B7A99", lineHeight: 1.6 }}
-              >
-                Dirancang khusus untuk para pelayan gereja. Mahasiswa yang telah
-                diterima dapat mulai kuliah di bulan Agustus (Ganjil) atau
-                Januari (Genap). Kuliah dalam bentuk{" "}
-                <strong>block teaching</strong> secara daring dan luring.
-              </p>
               <ul className="space-y-4">
                 {SYSTEM_ITEMS.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3">
@@ -481,7 +447,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                     <span
                       className="font-body"
                       style={{
-                        fontSize: "15px",
+                        fontSize: "16px",
                         color: "#1A2340",
                         lineHeight: 1.7,
                       }}
@@ -491,12 +457,6 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                   </li>
                 ))}
               </ul>
-              <p
-                className="mt-6 font-body italic"
-                style={{ fontSize: "12px", color: "#9CA3AF" }}
-              >
-                *Kelas dapat bergabung bersama M.Min. Marketplace.
-              </p>
             </div>
           </div>
         </div>
@@ -529,12 +489,12 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
             </h2>
           </div>
 
-          {/* Row 1 — 4 columns */}
-          <div className="grid md:grid-cols-4 gap-6">
-            {CURRICULUM_CATEGORIES_ROW1.map((cat, idx) => (
+          {/* 5-column grid */}
+          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {CURRICULUM_CATEGORIES.map((cat, idx) => (
               <div
                 key={idx}
-                className="p-6 rounded-xl flex flex-col items-center text-center"
+                className="p-6 rounded-xl flex flex-col text-center"
                 style={{
                   background: "rgba(255,255,255,0.1)",
                   backdropFilter: "blur(10px)",
@@ -542,23 +502,23 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                 }}
               >
                 <div
-                  className="inline-block px-4 py-2 rounded-full mb-4 font-body font-bold text-white text-sm"
+                  className="inline-block px-4 py-2 rounded-full mb-4 self-center font-body font-bold text-white text-sm"
                   style={{ background: "#C41E3A" }}
                 >
                   {cat.sks}
                 </div>
                 <h3
-                  className="mb-2 font-heading text-white"
-                  style={{ fontSize: "18px", fontWeight: 700 }}
+                  className="mb-3 font-heading text-white"
+                  style={{ fontSize: "20px", fontWeight: 700 }}
                 >
                   {cat.title}
                 </h3>
                 <p
-                  className="font-body"
+                  className="mt-auto font-body"
                   style={{
-                    fontSize: "13px",
+                    fontSize: "14px",
                     color: "rgba(255,255,255,0.85)",
-                    lineHeight: 1.5,
+                    lineHeight: 1.6,
                   }}
                 >
                   {cat.description}
@@ -567,53 +527,13 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
             ))}
           </div>
 
-          {/* Row 2 — 1 centered */}
-          <div className="mt-6 flex justify-center">
-            <div
-              className="p-6 rounded-xl flex flex-col items-center text-center w-full max-w-sm"
-              style={{
-                background: "rgba(255,255,255,0.1)",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255,255,255,0.2)",
-              }}
-            >
-              <div
-                className="inline-block px-4 py-2 rounded-full mb-4 font-body font-bold text-white text-sm"
-                style={{ background: "#C41E3A" }}
-              >
-                {CURRICULUM_CATEGORY_BOTTOM.sks}
-              </div>
-              <h3
-                className="mb-2 font-heading text-white"
-                style={{ fontSize: "18px", fontWeight: 700 }}
-              >
-                {CURRICULUM_CATEGORY_BOTTOM.title}
-              </h3>
-              <p
-                className="font-body"
-                style={{
-                  fontSize: "13px",
-                  color: "rgba(255,255,255,0.85)",
-                  lineHeight: 1.5,
-                }}
-              >
-                {CURRICULUM_CATEGORY_BOTTOM.description}
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-10 text-center space-y-2">
+          <div className="mt-12 text-center">
             <p
               className="font-body italic"
               style={{ fontSize: "14px", color: "rgba(255,255,255,0.7)" }}
             >
-              *Total beban studi keseluruhan adalah 65 SKS
-            </p>
-            <p
-              className="font-body italic"
-              style={{ fontSize: "14px", color: "rgba(255,255,255,0.7)" }}
-            >
-              *Mata Kuliah Fondasi (15 SKS) transfer dari S1 Teologi
+              *Total beban studi M.Th keseluruhan adalah 56 SKS (Di luar kelas
+              matrikulasi bagi lulusan S1 non-teologi)
             </p>
           </div>
         </div>
@@ -621,7 +541,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
 
       {/* SECTION 5 — DETAIL MATA KULIAH (accordion — client component) */}
       <section className="py-20 lg:py-28 bg-white">
-        <div className="max-w-[1000px] mx-auto px-6 lg:px-16">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-16">
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
@@ -631,7 +551,7 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                 letterSpacing: "0.12em",
               }}
             >
-              SILABUS
+              DESKRIPSI LENGKAP
             </p>
             <h2
               className="mb-6 font-heading"
@@ -641,19 +561,19 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
                 color: "#00276B",
               }}
             >
-              Silabus Program M.Min.
+              Mata Kuliah Program M.Th.
             </h2>
             <p
               className="max-w-3xl mx-auto font-body"
               style={{ fontSize: "18px", color: "#6B7A99", lineHeight: 1.7 }}
             >
-              Pelajari lebih detail kurikulum yang dirancang untuk
-              memperlengkapi pelayan gereja dengan fondasi teologi yang mendalam
-              dan keterampilan pelayanan yang komprehensif.
+              Pelajari lebih detail tentang setiap mata kuliah yang
+              memperlengkapi kompetensi Anda sebagai Pastor-Scholar di gereja
+              urban.
             </p>
           </div>
 
-          <MagisterMinistriTeologiPelayananGerejawiAccordion />
+          <MagisterTeologiAccordion />
         </div>
       </section>
 
@@ -669,14 +589,15 @@ export default function MagisterMinistriTeologiPelayananGerejawiPage() {
               lineHeight: 1.2,
             }}
           >
-            Diperlengkapi untuk Melayani Gereja dan Dunia
+            Siap Memperlengkapi Pelayanan Perkotaan?
           </h2>
           <p
             className="mb-10 max-w-2xl mx-auto font-body"
             style={{ fontSize: "18px", color: "#6B7A99", lineHeight: 1.7 }}
           >
-            Bergabunglah dengan program Magister Ministri Teologi Pelayanan
-            Gerejawi STTB dan jadilah pelayan gereja yang transformatif.
+            Bergabunglah dengan program Magister Teologi STTB dan jadilah{" "}
+            <em>Pastor-Scholar</em> yang transformatif di tengah kompleksitas
+            kota.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link

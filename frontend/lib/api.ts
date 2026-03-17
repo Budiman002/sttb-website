@@ -74,6 +74,18 @@ export function getBeritaList(
   return apiFetch(`/api/Berita/list${query}`);
 }
 
+export function getCmsBeritaList(
+  page = 1,
+  pageSize = 9,
+  kategori?: string,
+): Promise<PagedResponse<BeritaListItem>> {
+  const query = buildQuery({ page, pageSize, category: kategori });
+  return apiMutate(`/api/cms/Berita/list${query}`, {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
+}
+
 export function getBeritaDetail(slug: string): Promise<BeritaDetailItem> {
   return apiFetch(`/api/Berita/${slug}`);
 }
@@ -89,6 +101,18 @@ export function getKegiatanList(
   return apiFetch(`/api/Kegiatan/list${query}`);
 }
 
+export function getCmsKegiatanList(
+  page = 1,
+  pageSize = 9,
+  status?: string,
+): Promise<PagedResponse<KegiatanListItem>> {
+  const query = buildQuery({ page, pageSize, status });
+  return apiMutate(`/api/cms/Kegiatan/list${query}`, {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
+}
+
 export function getKegiatanDetail(slug: string): Promise<KegiatanDetailItem> {
   return apiFetch(`/api/Kegiatan/${slug}`);
 }
@@ -102,6 +126,29 @@ export function getMediaList(
 ): Promise<PagedResponse<MediaListItem>> {
   const query = buildQuery({ page, pageSize, type });
   return apiFetch(`/api/Media/list${query}`);
+}
+
+export function getCmsMediaArtikelList(
+  page = 1,
+  pageSize = 9,
+  kategori?: string,
+): Promise<PagedResponse<MediaListItem>> {
+  const query = buildQuery({ page, pageSize, category: kategori });
+  return apiMutate(`/api/cms/Media/artikel/list${query}`, {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
+}
+
+export function getCmsMediaVideoList(
+  page = 1,
+  pageSize = 9,
+): Promise<PagedResponse<MediaListItem>> {
+  const query = buildQuery({ page, pageSize });
+  return apiMutate(`/api/cms/Media/video/list${query}`, {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
 }
 
 export function getMediaArtikelDetail(
@@ -123,6 +170,18 @@ export function getPerpustakaanList(
 ): Promise<PagedResponse<PerpustakaanListItem>> {
   const query = buildQuery({ page, pageSize, category: kategori });
   return apiFetch(`/api/Perpustakaan/list${query}`);
+}
+
+export function getCmsPerpustakaanList(
+  page = 1,
+  pageSize = 9,
+  kategori?: string,
+): Promise<PagedResponse<PerpustakaanListItem>> {
+  const query = buildQuery({ page, pageSize, category: kategori });
+  return apiMutate(`/api/cms/Perpustakaan/list${query}`, {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
 }
 
 export function getPerpustakaanDetail(
@@ -184,7 +243,7 @@ export function getAuthHeaders(): { Authorization: string } {
 // ─── Berita mutations ─────────────────────────────────────────────────────────
 
 export function createBerita(data: CreateBeritaPayload): Promise<BeritaDetailItem> {
-  return apiMutate("/api/Berita", {
+  return apiMutate("/api/cms/Berita", {
     method: "POST",
     headers: getAuthHeaders(),
     body: JSON.stringify(data),
@@ -195,7 +254,7 @@ export function updateBerita(
   id: string,
   data: UpdateBeritaPayload,
 ): Promise<BeritaDetailItem> {
-  return apiMutate(`/api/Berita/${id}`, {
+  return apiMutate(`/api/cms/Berita/${id}`, {
     method: "PUT",
     headers: getAuthHeaders(),
     body: JSON.stringify(data),
@@ -203,7 +262,7 @@ export function updateBerita(
 }
 
 export function deleteBerita(id: string): Promise<void> {
-  return apiMutate(`/api/Berita/${id}`, {
+  return apiMutate(`/api/cms/Berita/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
   });
@@ -214,7 +273,7 @@ export function deleteBerita(id: string): Promise<void> {
 export function createKegiatan(
   data: CreateKegiatanPayload,
 ): Promise<KegiatanDetailItem> {
-  return apiMutate("/api/Kegiatan", {
+  return apiMutate("/api/cms/Kegiatan", {
     method: "POST",
     headers: getAuthHeaders(),
     body: JSON.stringify(data),
@@ -225,7 +284,7 @@ export function updateKegiatan(
   id: string,
   data: UpdateKegiatanPayload,
 ): Promise<KegiatanDetailItem> {
-  return apiMutate(`/api/Kegiatan/${id}`, {
+  return apiMutate(`/api/cms/Kegiatan/${id}`, {
     method: "PUT",
     headers: getAuthHeaders(),
     body: JSON.stringify(data),
@@ -233,7 +292,7 @@ export function updateKegiatan(
 }
 
 export function deleteKegiatan(id: string): Promise<void> {
-  return apiMutate(`/api/Kegiatan/${id}`, {
+  return apiMutate(`/api/cms/Kegiatan/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
   });
@@ -244,7 +303,7 @@ export function deleteKegiatan(id: string): Promise<void> {
 export function createMediaArtikel(
   data: CreateMediaArtikelPayload,
 ): Promise<MediaArtikelDetail> {
-  return apiMutate("/api/Media/artikel", {
+  return apiMutate("/api/cms/Media/artikel", {
     method: "POST",
     headers: getAuthHeaders(),
     body: JSON.stringify(data),
@@ -255,7 +314,7 @@ export function updateMediaArtikel(
   id: string,
   data: UpdateMediaArtikelPayload,
 ): Promise<MediaArtikelDetail> {
-  return apiMutate(`/api/Media/artikel/${id}`, {
+  return apiMutate(`/api/cms/Media/artikel/${id}`, {
     method: "PUT",
     headers: getAuthHeaders(),
     body: JSON.stringify(data),
@@ -263,7 +322,7 @@ export function updateMediaArtikel(
 }
 
 export function deleteMediaArtikel(id: string): Promise<void> {
-  return apiMutate(`/api/Media/artikel/${id}`, {
+  return apiMutate(`/api/cms/Media/artikel/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
   });
@@ -274,7 +333,7 @@ export function deleteMediaArtikel(id: string): Promise<void> {
 export function createMediaVideo(
   data: CreateMediaVideoPayload,
 ): Promise<MediaVideoDetail> {
-  return apiMutate("/api/Media/video", {
+  return apiMutate("/api/cms/Media/video", {
     method: "POST",
     headers: getAuthHeaders(),
     body: JSON.stringify(data),
@@ -285,7 +344,7 @@ export function updateMediaVideo(
   id: string,
   data: UpdateMediaVideoPayload,
 ): Promise<MediaVideoDetail> {
-  return apiMutate(`/api/Media/video/${id}`, {
+  return apiMutate(`/api/cms/Media/video/${id}`, {
     method: "PUT",
     headers: getAuthHeaders(),
     body: JSON.stringify(data),
@@ -293,7 +352,7 @@ export function updateMediaVideo(
 }
 
 export function deleteMediaVideo(id: string): Promise<void> {
-  return apiMutate(`/api/Media/video/${id}`, {
+  return apiMutate(`/api/cms/Media/video/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
   });
@@ -304,7 +363,7 @@ export function deleteMediaVideo(id: string): Promise<void> {
 export function createPerpustakaan(
   data: CreatePerpustakaanPayload,
 ): Promise<PerpustakaanDetail> {
-  return apiMutate("/api/Perpustakaan", {
+  return apiMutate("/api/cms/Perpustakaan", {
     method: "POST",
     headers: getAuthHeaders(),
     body: JSON.stringify(data),
@@ -315,7 +374,7 @@ export function updatePerpustakaan(
   id: string,
   data: UpdatePerpustakaanPayload,
 ): Promise<PerpustakaanDetail> {
-  return apiMutate(`/api/Perpustakaan/${id}`, {
+  return apiMutate(`/api/cms/Perpustakaan/${id}`, {
     method: "PUT",
     headers: getAuthHeaders(),
     body: JSON.stringify(data),
@@ -323,7 +382,7 @@ export function updatePerpustakaan(
 }
 
 export function deletePerpustakaan(id: string): Promise<void> {
-  return apiMutate(`/api/Perpustakaan/${id}`, {
+  return apiMutate(`/api/cms/Perpustakaan/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
   });

@@ -150,6 +150,7 @@ export interface CreateKegiatanPayload {
   tanggalSelesai: string;
   status: string;
   penyelenggara: string;
+  thumbnailUrl?: string;
   isPublished: boolean;
 }
 
@@ -204,7 +205,7 @@ export interface PerpustakaanListItem {
   penulis: string;
   kategori: string;
   thumbnailUrl: string | null;
-  tahunTerbit: number | null;
+  tahun: number | null;
   isPublished: boolean;
   createdAt: string;
 }
@@ -219,7 +220,7 @@ export interface PerpustakaanDetail {
   deskripsi: string;
   thumbnailUrl: string | null;
   fileUrl: string | null;
-  tahunTerbit: number | null;
+  tahun: number | null;
   isbn: string | null;
   isPublished: boolean;
   createdAt: string;

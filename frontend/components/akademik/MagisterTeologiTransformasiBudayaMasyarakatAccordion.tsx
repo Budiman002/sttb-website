@@ -20,7 +20,8 @@ const COURSE_CATEGORIES: CourseCategory[] = [
     courses: [
       {
         id: "inti-1",
-        title: "Pandangan Reformed tentang Peran Gereja Dalam Transformasi Masyarakat (3 SKS)",
+        title:
+          "Pandangan Reformed tentang Peran Gereja Dalam Transformasi Masyarakat (3 SKS)",
         content:
           "Bertujuan untuk membekali mahasiswa dengan pemahaman mendalam tentang bagaimana prinsip-prinsip Teologi <em>Reformed</em> dapat diaplikasikan dalam transformasi sosial, ekonomi, dan budaya masyarakat. Dengan menggabungkan teori, studi sejarah, dan aplikasi praktis, mahasiswa diharapkan mampu mengembangkan strategi pelayanan gereja yang efektif dan relevan untuk konteks masyarakat modern. Mata kuliah ini bertujuan untuk mempersiapkan pemimpin gereja yang mampu membawa dampak positif dan transformatif di tengah masyarakat.",
       },
@@ -38,7 +39,8 @@ const COURSE_CATEGORIES: CourseCategory[] = [
       },
       {
         id: "inti-4",
-        title: "Sejarah Gereja Dalam Perspektif Transformasi Sosial Budaya (3 SKS)",
+        title:
+          "Sejarah Gereja Dalam Perspektif Transformasi Sosial Budaya (3 SKS)",
         content:
           "Mata kuliah ini membahas perjalanan sejarah gereja dari masa awal hingga kontemporer dengan menyoroti peran dan dampaknya dalam perubahan sosial dan budaya. Mahasiswa diajak untuk melihat bagaimana gereja merespons dan turut membentuk dinamika masyarakat dalam berbagai konteks sejarah, serta merefleksikan relevansinya bagi misi gereja masa kini.",
       },
@@ -61,7 +63,8 @@ const COURSE_CATEGORIES: CourseCategory[] = [
       },
       {
         id: "konsentrasi-2",
-        title: "Perspektif Teologi/Biblika Tentang Dunia Kerja Dan Perekonomian (3 SKS)",
+        title:
+          "Perspektif Teologi/Biblika Tentang Dunia Kerja Dan Perekonomian (3 SKS)",
         content:
           "Mengeksplorasi pandangan teologi dan biblika tentang dunia kerja dan perekonomian, mengkaji bagaimana prinsip-prinsip Alkitab dan pemikiran teologis dapat diterapkan dalam konteks kerja dan ekonomi modern. Mahasiswa akan mempelajari teks-teks Alkitab yang relevan, dokumen gereja, dan teori-teori ekonomi dari perspektif teologi Kristen, serta bagaimana menerapkan wawasan ini dalam kehidupan profesional dan etika ekonomi.",
       },
@@ -73,13 +76,15 @@ const COURSE_CATEGORIES: CourseCategory[] = [
       },
       {
         id: "konsentrasi-4",
-        title: "Perspektif Teologi/Biblika Tentang Keadilan Dan Kekuasaan (3 SKS)",
+        title:
+          "Perspektif Teologi/Biblika Tentang Keadilan Dan Kekuasaan (3 SKS)",
         content:
           "Mengeksplorasi pandangan teologi dan biblika tentang konsep keadilan dan kekuasaan, serta bagaimana prinsip-prinsip Alkitab dan pemikiran teologis dapat diterapkan dalam konteks sosial, politik, dan ekonomi modern. Mahasiswa akan mempelajari teks-teks Alkitab yang relevan, dokumen gereja, dan teori-teori keadilan dari perspektif teologi Kristen, serta bagaimana menerapkan wawasan ini dalam tindakan nyata untuk mencapai keadilan sosial dan penggunaan kekuasaan yang etis.",
       },
       {
         id: "konsentrasi-5",
-        title: "Perspektif Teologi/Biblika Tentang Kemajemukan/Pluralisme (3 SKS)",
+        title:
+          "Perspektif Teologi/Biblika Tentang Kemajemukan/Pluralisme (3 SKS)",
         content:
           "Mengeksplorasi pandangan teologi dan biblika tentang kemajemukan dan pluralisme, mengkaji bagaimana prinsip-prinsip Alkitab dan pemikiran teologis dapat diterapkan dalam konteks masyarakat yang beragam. Mahasiswa akan mempelajari teks-teks Alkitab yang relevan, dokumen gereja, dan teori-teori pluralisme dari perspektif teologi Kristen, serta bagaimana menerapkan wawasan ini dalam upaya menciptakan dialog antaragama dan toleransi.",
       },
@@ -170,7 +175,10 @@ function AccordionItem({
   onToggle: () => void;
 }) {
   return (
-    <div className="border-b last:border-b-0" style={{ borderColor: "#E8ECF2" }}>
+    <div
+      className="border-b last:border-b-0"
+      style={{ borderColor: "#E8ECF2" }}
+    >
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between py-5 px-6 text-left transition-all hover:bg-gray-50"

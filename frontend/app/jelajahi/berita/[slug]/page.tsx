@@ -211,7 +211,7 @@ export default async function BeritaDetailPage({
                 color: "#1F2937",
                 lineHeight: 1.8,
               }}
-              dangerouslySetInnerHTML={{ __html: data.konten }}
+              dangerouslySetInnerHTML={{ __html: data.konten ?? "" }}
             />
 
             <div className="mb-8 h-px bg-gray-200" />

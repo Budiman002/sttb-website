@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { BookOpen, Clock, GraduationCap, Target, Heart, TrendingUp } from "lucide-react";
+import {
+  BookOpen,
+  Clock,
+  GraduationCap,
+  Target,
+  Heart,
+  TrendingUp,
+} from "lucide-react";
 import { SarjanaPendidikanKristenAccordion } from "@/components/akademik/SarjanaPendidikanKristenAccordion";
 
 export const metadata: Metadata = {
@@ -63,7 +70,8 @@ const CURRICULUM_CATEGORIES_BOTTOM = [
   {
     title: "Praktik Lapangan",
     sks: "9 SKS",
-    description: "Pelayanan Media, Akhir Pekan, Misi, dan Praktik 1 Tahun (PPL)",
+    description:
+      "Pelayanan Media, Akhir Pekan, Misi, dan Praktik 1 Tahun (PPL)",
   },
   {
     title: "Tugas Akhir",
@@ -81,12 +89,18 @@ export default function SarjanaPendidikanKristenPage() {
           {/* Left Column — Content */}
           <div
             className="relative flex items-center px-8 lg:px-16 xl:px-24 py-20 lg:py-28"
-            style={{ background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)" }}
+            style={{
+              background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)",
+            }}
           >
             <div className="max-w-2xl">
               <p
                 className="uppercase font-bold mb-6 font-body"
-                style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.15em" }}
+                style={{
+                  fontSize: "13px",
+                  color: "#C41E3A",
+                  letterSpacing: "0.15em",
+                }}
               >
                 PROGRAM SARJANA
               </p>
@@ -94,13 +108,21 @@ export default function SarjanaPendidikanKristenPage() {
               <h1 className="mb-8">
                 <span
                   className="block mb-2 font-display italic text-white"
-                  style={{ fontSize: "clamp(42px, 6vw, 68px)", fontWeight: 400, lineHeight: 1.15 }}
+                  style={{
+                    fontSize: "clamp(42px, 6vw, 68px)",
+                    fontWeight: 400,
+                    lineHeight: 1.15,
+                  }}
                 >
                   Sarjana
                 </span>
                 <span
                   className="block font-heading text-white"
-                  style={{ fontSize: "clamp(46px, 6.5vw, 82px)", fontWeight: 700, lineHeight: 0.95 }}
+                  style={{
+                    fontSize: "clamp(46px, 6.5vw, 82px)",
+                    fontWeight: 700,
+                    lineHeight: 0.95,
+                  }}
                 >
                   PENDIDIKAN KRISTEN
                 </span>
@@ -130,13 +152,19 @@ export default function SarjanaPendidikanKristenPage() {
                 </span>
                 <span
                   className="px-6 py-3 rounded-lg font-body font-bold text-white text-sm"
-                  style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)" }}
+                  style={{
+                    background: "rgba(255,255,255,0.15)",
+                    backdropFilter: "blur(8px)",
+                  }}
                 >
                   145 SKS
                 </span>
                 <span
                   className="px-6 py-3 rounded-lg font-body font-bold text-white text-sm"
-                  style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)" }}
+                  style={{
+                    background: "rgba(255,255,255,0.15)",
+                    backdropFilter: "blur(8px)",
+                  }}
                 >
                   4 Tahun
                 </span>
@@ -170,7 +198,11 @@ export default function SarjanaPendidikanKristenPage() {
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               PROFIL LULUSAN
             </p>
@@ -191,7 +223,10 @@ export default function SarjanaPendidikanKristenPage() {
             {/* Informed */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -205,7 +240,10 @@ export default function SarjanaPendidikanKristenPage() {
               >
                 Informed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
                 Pendidik Kristen yang berpengetahuan luas dan aplikatif terhadap
                 tantangan perkembangan dunia pendidikan.
               </p>
@@ -214,7 +252,10 @@ export default function SarjanaPendidikanKristenPage() {
             {/* Transformed */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -228,7 +269,10 @@ export default function SarjanaPendidikanKristenPage() {
               >
                 Transformed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
                 Pembelajar yang memiliki fondasi spiritualitas yang kokoh dan
                 matang.
               </p>
@@ -237,7 +281,10 @@ export default function SarjanaPendidikanKristenPage() {
             {/* Transformative */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -251,7 +298,10 @@ export default function SarjanaPendidikanKristenPage() {
               >
                 Transformative
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
                 Pendidik Kristen yang berdampak bagi peserta didik dan
                 lingkungan tempatnya melayani.
               </p>
@@ -280,12 +330,22 @@ export default function SarjanaPendidikanKristenPage() {
 
               <div className="space-y-8">
                 {/* Jumlah Kredit */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#C41E3A" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#C41E3A" }}
+                >
                   <div className="flex items-center gap-3 mb-2">
-                    <GraduationCap className="w-6 h-6" style={{ color: "#C41E3A" }} />
+                    <GraduationCap
+                      className="w-6 h-6"
+                      style={{ color: "#C41E3A" }}
+                    />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#C41E3A" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#C41E3A",
+                      }}
                     >
                       Jumlah Kredit
                     </span>
@@ -299,29 +359,50 @@ export default function SarjanaPendidikanKristenPage() {
                 </div>
 
                 {/* Masa Studi */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#0056B3" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#0056B3" }}
+                >
                   <div className="flex items-center gap-3 mb-2">
                     <Clock className="w-6 h-6" style={{ color: "#0056B3" }} />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#0056B3" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#0056B3",
+                      }}
                     >
                       Masa Studi
                     </span>
                   </div>
-                  <p className="font-body" style={{ fontSize: "18px", color: "#1A2340", lineHeight: 1.6 }}>
+                  <p
+                    className="font-body"
+                    style={{
+                      fontSize: "18px",
+                      color: "#1A2340",
+                      lineHeight: 1.6,
+                    }}
+                  >
                     4 tahun <em>full time</em>: 3 tahun kuliah + 1 tahun praktik
                     pelayanan
                   </p>
                 </div>
 
                 {/* Persyaratan */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#00276B" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#00276B" }}
+                >
                   <div className="flex items-center gap-3 mb-3">
                     <Target className="w-6 h-6" style={{ color: "#00276B" }} />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#00276B" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#00276B",
+                      }}
                     >
                       Persyaratan Khusus
                     </span>
@@ -329,10 +410,22 @@ export default function SarjanaPendidikanKristenPage() {
                   <ul className="space-y-2">
                     {REQUIREMENTS.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span style={{ color: "#C41E3A", fontSize: "18px", lineHeight: 1 }}>•</span>
+                        <span
+                          style={{
+                            color: "#C41E3A",
+                            fontSize: "18px",
+                            lineHeight: 1,
+                          }}
+                        >
+                          •
+                        </span>
                         <span
                           className="font-body"
-                          style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.6 }}
+                          style={{
+                            fontSize: "16px",
+                            color: "#6B7A99",
+                            lineHeight: 1.6,
+                          }}
                         >
                           {item}
                         </span>
@@ -358,13 +451,20 @@ export default function SarjanaPendidikanKristenPage() {
                       className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-1"
                       style={{ background: "#C41E3A" }}
                     >
-                      <span className="font-body font-bold text-white" style={{ fontSize: "12px" }}>
+                      <span
+                        className="font-body font-bold text-white"
+                        style={{ fontSize: "12px" }}
+                      >
                         {idx + 1}
                       </span>
                     </div>
                     <span
                       className="font-body"
-                      style={{ fontSize: "16px", color: "#1A2340", lineHeight: 1.7 }}
+                      style={{
+                        fontSize: "16px",
+                        color: "#1A2340",
+                        lineHeight: 1.7,
+                      }}
                     >
                       {item}
                     </span>
@@ -379,13 +479,19 @@ export default function SarjanaPendidikanKristenPage() {
       {/* SECTION 4 — STRUKTUR KURIKULUM */}
       <section
         className="py-20 lg:py-28"
-        style={{ background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)" }}
+        style={{
+          background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)",
+        }}
       >
         <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               STRUKTUR PROGRAM
             </p>
@@ -423,7 +529,11 @@ export default function SarjanaPendidikanKristenPage() {
                 </h3>
                 <p
                   className="font-body"
-                  style={{ fontSize: "14px", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}
+                  style={{
+                    fontSize: "14px",
+                    color: "rgba(255,255,255,0.85)",
+                    lineHeight: 1.6,
+                  }}
                 >
                   {cat.description}
                 </p>
@@ -457,7 +567,11 @@ export default function SarjanaPendidikanKristenPage() {
                 </h3>
                 <p
                   className="font-body"
-                  style={{ fontSize: "14px", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}
+                  style={{
+                    fontSize: "14px",
+                    color: "rgba(255,255,255,0.85)",
+                    lineHeight: 1.6,
+                  }}
                 >
                   {cat.description}
                 </p>
@@ -482,13 +596,21 @@ export default function SarjanaPendidikanKristenPage() {
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               DESKRIPSI LENGKAP
             </p>
             <h2
               className="mb-6 font-heading"
-              style={{ fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700, color: "#00276B" }}
+              style={{
+                fontSize: "clamp(32px, 4vw, 48px)",
+                fontWeight: 700,
+                color: "#00276B",
+              }}
             >
               Mata Kuliah Program S.Pd.
             </h2>
@@ -496,8 +618,8 @@ export default function SarjanaPendidikanKristenPage() {
               className="max-w-3xl mx-auto font-body"
               style={{ fontSize: "18px", color: "#6B7A99", lineHeight: 1.7 }}
             >
-              Pelajari lebih detail tentang setiap mata kuliah yang memperlengkapi
-              kompetensi lulusan Sarjana Pendidikan Kristen.
+              Pelajari lebih detail tentang setiap mata kuliah yang
+              memperlengkapi kompetensi lulusan Sarjana Pendidikan Kristen.
             </p>
           </div>
 
@@ -538,7 +660,11 @@ export default function SarjanaPendidikanKristenPage() {
             <Link
               href="/admisi/info-persyaratan"
               className="px-10 py-4 rounded-lg font-bold font-body text-base transition-all hover:bg-gray-50"
-              style={{ color: "#00276B", background: "#FFFFFF", border: "2px solid #00276B" }}
+              style={{
+                color: "#00276B",
+                background: "#FFFFFF",
+                border: "2px solid #00276B",
+              }}
             >
               Info Persyaratan
             </Link>

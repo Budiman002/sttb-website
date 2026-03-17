@@ -391,7 +391,7 @@ export function PerpustakaanListClient({ items, totalCount }: Props) {
                         color: "#9CA3AF",
                       }}
                     >
-                      {item.tahunTerbit ?? "—"}
+                      {item.tahun ?? "—"}
                     </p>
 
                     <Link

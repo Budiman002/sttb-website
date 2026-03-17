@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -12,7 +12,8 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { deleteMediaVideo } from "@/lib/api";
+import { deleteMediaVideo, getCmsMediaVideoList } from "@/lib/api";
+import { formatDate } from "@/lib/utils";
 
 interface VideoItem {
   id: number | string;
@@ -114,15 +115,61 @@ function truncateUrl(url: string, maxLength = 35) {
   return url.length <= maxLength ? url : url.substring(0, maxLength) + "...";
 }
 
+const PAGE_SIZE = 10;
 const totalPages = 3;
 
-export function CmsMediaVideo({ initialItems }: { initialItems?: VideoItem[] } = {}) {
+export function CmsMediaVideo({
+  initialItems,
+  totalCount: initialTotalCount,
+}: {
+  initialItems?: VideoItem[];
+  totalCount?: number;
+} = {}) {
   const pathname = usePathname();
   const isVideoTab = pathname.includes("/video");
 
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [items, setItems] = useState<VideoItem[]>(initialItems ?? VIDEO_DATA_INITIAL);
+  const [items, setItems] = useState<VideoItem[]>(initialItems ?? []);
+  const [totalCount, setTotalCount] = useState(initialTotalCount ?? 0);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const isFirstRender = useRef(true);
+
+  const totalPagesCalculated = Math.ceil(totalCount / PAGE_SIZE);
+
+  // Fetch data when page changes (skip initial mount — server already fetched page 1)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const fetchPage = async () => {
+      setIsLoadingPage(true);
+      try {
+        const data = await getCmsMediaVideoList(currentPage, PAGE_SIZE);
+        setItems(
+          data.items.map((item) => ({
+            id: item.id,
+            slug: item.slug,
+            thumbnail: item.thumbnailUrl ?? "",
+            judul: item.judul,
+            durasi: "",
+            videoUrl: "",
+            tanggal: formatDate(item.tanggalPublish),
+            status: item.isPublished ? "Published" : "Draft",
+          })),
+        );
+        setTotalCount(data.totalCount);
+      } catch (error) {
+        console.error("Failed to fetch page:", error);
+      } finally {
+        setIsLoadingPage(false);
+      }
+    };
+
+    fetchPage();
+  }, [currentPage]);
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Hapus video ini?")) return;
@@ -313,8 +360,20 @@ export function CmsMediaVideo({ initialItems }: { initialItems?: VideoItem[] } =
           <div className="px-6 py-4 border-t border-[#E8ECF2] flex items-center justify-between">
             <p className="text-sm text-[#6B7A99]">
               Menampilkan{" "}
-              <span className="font-semibold text-[#1A2340]">1-6</span> dari{" "}
-              <span className="font-semibold text-[#1A2340]">6</span> video
+              <span className="font-semibold text-[#1A2340]">
+                {(() => {
+                  const startItem =
+                    totalCount === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+                  const endItem = Math.min(currentPage * PAGE_SIZE, totalCount);
+                  const displayStart = Math.min(startItem, endItem);
+                  return totalCount === 0
+                    ? "0–0"
+                    : `${displayStart}–${endItem}`;
+                })()}
+              </span>{" "}
+              dari{" "}
+              <span className="font-semibold text-[#1A2340]">{totalCount}</span>{" "}
+              video
             </p>
 
             <div className="flex items-center gap-2">

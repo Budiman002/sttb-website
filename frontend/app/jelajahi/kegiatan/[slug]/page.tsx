@@ -13,45 +13,10 @@ import {
 import { getKegiatanDetail, getKegiatanList } from "@/lib/api";
 import { BackButton } from "@/components/shared/BackButton";
 import type { Metadata } from "next";
+import type { KegiatanListItem } from "@/types/api";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1662151820001-0c8d949304a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
-
-const relatedEvents = [
-  {
-    status: "UPCOMING",
-    statusColor: "#0056B3",
-    category: "AKADEMIK",
-    date: "15 April — 30 Juni 2026",
-    time: "Rabu, 19.00 – 21.00 WIB",
-    location: "Zoom",
-    title: "Kelas Sit In Magister Teologi Pelayanan Pastoral",
-    image:
-      "https://images.unsplash.com/photo-1561089489-f13d5e730d72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
-  },
-  {
-    status: "UPCOMING",
-    statusColor: "#0056B3",
-    category: "KOMUNITAS",
-    date: "20 April 2026",
-    time: "09.00 – 12.00 WIB",
-    location: "Kampus STTB",
-    title: "Open House Penerimaan Mahasiswa Baru 2026–2027",
-    image:
-      "https://images.unsplash.com/photo-1758270704787-615782711641?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
-  },
-  {
-    status: "UPCOMING",
-    statusColor: "#0056B3",
-    category: "KOMUNITAS",
-    date: "5 Mei 2026",
-    time: "18.00 – 20.00 WIB",
-    location: "Zoom",
-    title: "Bincang Rame: Menemukan Panggilan Hidupmu",
-    image:
-      "https://images.unsplash.com/photo-1477569914486-b9955238cae0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
-  },
-];
 
 function getStatusColor(status: string): string {
   switch (status.toUpperCase()) {
@@ -114,6 +79,16 @@ export default async function KegiatanDetailPage({
     data = await getKegiatanDetail(slug);
   } catch {
     notFound();
+  }
+
+  let relatedEvents: KegiatanListItem[] = [];
+  try {
+    const list = await getKegiatanList(1, 4);
+    relatedEvents = list.items
+      .filter((item) => item.slug !== slug)
+      .slice(0, 3);
+  } catch {
+    relatedEvents = [];
   }
 
   const dateRange = formatDateRange(data.tanggalMulai, data.tanggalSelesai);
@@ -313,7 +288,7 @@ export default async function KegiatanDetailPage({
                   color: "#1F2937",
                   lineHeight: 1.8,
                 }}
-                dangerouslySetInnerHTML={{ __html: data.konten }}
+                dangerouslySetInnerHTML={{ __html: data.deskripsi ?? "" }}
               />
 
               <div
@@ -522,132 +497,142 @@ export default async function KegiatanDetailPage({
       </section>
 
       {/* SECTION 3 — KEGIATAN LAINNYA */}
-      <section className="py-16 lg:py-20" style={{ background: "#FFFFFF" }}>
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
-          <div className="mb-12">
-            <p
-              className="uppercase font-bold mb-4"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "13px",
-                color: "#C41E3A",
-                letterSpacing: "0.12em",
-              }}
-            >
-              JANGAN LEWATKAN
-            </p>
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(2rem, 5vw, 3rem)",
-                fontWeight: 700,
-                color: "#00276B",
-              }}
-            >
-              Kegiatan Lainnya
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedEvents.map((card, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-lg overflow-hidden"
-                style={{ boxShadow: "0 4px 16px rgba(0, 39, 107, 0.08)" }}
+      {relatedEvents.length > 0 && (
+        <section className="py-16 lg:py-20" style={{ background: "#FFFFFF" }}>
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
+            <div className="mb-12">
+              <p
+                className="uppercase font-bold mb-4"
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "13px",
+                  color: "#C41E3A",
+                  letterSpacing: "0.12em",
+                }}
               >
-                <div className="relative aspect-video overflow-hidden">
-                  <Image
-                    src={card.image}
-                    alt={card.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
+                JANGAN LEWATKAN
+              </p>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(2rem, 5vw, 3rem)",
+                  fontWeight: 700,
+                  color: "#00276B",
+                }}
+              >
+                Kegiatan Lainnya
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {relatedEvents.map((card) => {
+                const cardDateRange = formatDateRange(
+                  card.tanggalMulai,
+                  card.tanggalSelesai,
+                );
+                const cardStatusColor = getStatusColor(card.status);
+
+                return (
                   <div
-                    className="absolute top-4 right-4 px-3 py-1 rounded-md"
-                    style={{
-                      background: card.statusColor,
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      color: "#FFFFFF",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.08em",
-                    }}
+                    key={card.slug}
+                    className="bg-white rounded-lg overflow-hidden"
+                    style={{ boxShadow: "0 4px 16px rgba(0, 39, 107, 0.08)" }}
                   >
-                    {card.status}
-                  </div>
-                  <div
-                    className="absolute bottom-4 left-4 px-3 py-1 rounded-md"
-                    style={{
-                      background: "#C41E3A",
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      color: "#FFFFFF",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.08em",
-                    }}
-                  >
-                    {card.category}
-                  </div>
-                </div>
-                <div className="p-5">
-                  <div className="space-y-2 mb-4">
-                    {[
-                      { Icon: Calendar, text: card.date },
-                      { Icon: MapPin, text: card.location },
-                    ].map(({ Icon, text }, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <Icon
-                          className="w-3 h-3 flex-shrink-0 mt-0.5"
-                          style={{ color: "#6B7280" }}
-                        />
-                        <span
-                          style={{
-                            fontFamily: "var(--font-sans)",
-                            fontSize: "12px",
-                            color: "#6B7280",
-                          }}
-                        >
-                          {text}
-                        </span>
+                    <div className="relative aspect-video overflow-hidden">
+                      <Image
+                        src={card.thumbnailUrl ?? FALLBACK_IMAGE}
+                        alt={card.judul}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                      <div
+                        className="absolute top-4 right-4 px-3 py-1 rounded-md"
+                        style={{
+                          background: cardStatusColor,
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "10px",
+                          fontWeight: 700,
+                          color: "#FFFFFF",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.08em",
+                        }}
+                      >
+                        {card.status}
                       </div>
-                    ))}
+                      <div
+                        className="absolute bottom-4 left-4 px-3 py-1 rounded-md"
+                        style={{
+                          background: "#C41E3A",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "10px",
+                          fontWeight: 700,
+                          color: "#FFFFFF",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.08em",
+                        }}
+                      >
+                        {card.kategori}
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="space-y-2 mb-4">
+                        {[
+                          { Icon: Calendar, text: cardDateRange },
+                          { Icon: MapPin, text: card.lokasi },
+                        ].map(({ Icon, text }, i) => (
+                          <div key={i} className="flex items-start gap-2">
+                            <Icon
+                              className="w-3 h-3 flex-shrink-0 mt-0.5"
+                              style={{ color: "#6B7280" }}
+                            />
+                            <span
+                              style={{
+                                fontFamily: "var(--font-sans)",
+                                fontSize: "12px",
+                                color: "#6B7280",
+                              }}
+                            >
+                              {text}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      <h3
+                        className="mb-4"
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          fontSize: "18px",
+                          fontWeight: 700,
+                          color: "#00276B",
+                          lineHeight: 1.3,
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {card.judul}
+                      </h3>
+                      <Link
+                        href={`/jelajahi/kegiatan/${card.slug}`}
+                        style={{
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "13px",
+                          fontWeight: 600,
+                          color: "#C41E3A",
+                        }}
+                      >
+                        Lihat Detail →
+                      </Link>
+                    </div>
                   </div>
-                  <h3
-                    className="mb-4"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: "18px",
-                      fontWeight: 700,
-                      color: "#00276B",
-                      lineHeight: 1.3,
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {card.title}
-                  </h3>
-                  <a
-                    href="#"
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "13px",
-                      fontWeight: 600,
-                      color: "#C41E3A",
-                    }}
-                  >
-                    Lihat Detail →
-                  </a>
-                </div>
-              </div>
-            ))}
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* SECTION 4 — BACK NAVIGATION */}
       <BackButton label="Kembali ke Kegiatan" bgSection="#F8F7F4" />

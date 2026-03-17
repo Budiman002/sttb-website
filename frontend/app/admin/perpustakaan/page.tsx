@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CmsPerpustakaan } from "@/components/admin/CmsPerpustakaan";
-import { getPerpustakaanList } from "@/lib/api";
+import { getCmsPerpustakaanList } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Kelola Perpustakaan — STTB CMS",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default async function AdminPerpustakaanPage() {
   try {
-    const data = await getPerpustakaanList(1, 10);
+    const data = await getCmsPerpustakaanList(1, 10);
     const initialItems = data.items.map((item) => ({
       id: item.id,
       slug: item.slug,
@@ -17,10 +17,10 @@ export default async function AdminPerpustakaanPage() {
       judul: item.judul,
       penulis: item.penulis,
       kategori: item.kategori,
-      tahun: String(item.tahunTerbit ?? ""),
+      tahun: String(item.tahun ?? ""),
       status: item.isPublished ? "Published" : "Draft",
     }));
-    return <CmsPerpustakaan initialItems={initialItems} />;
+    return <CmsPerpustakaan initialItems={initialItems} totalCount={data.totalCount} />;
   } catch {
     return <CmsPerpustakaan />;
   }

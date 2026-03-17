@@ -85,7 +85,8 @@ const COURSE_CATEGORIES: CourseCategory[] = [
       },
       {
         id: "biblika-6",
-        title: "Studi Perjanjian Baru 2: Kisah Para Rasul dan Surat Paulus (3 SKS)",
+        title:
+          "Studi Perjanjian Baru 2: Kisah Para Rasul dan Surat Paulus (3 SKS)",
         content:
           "Studi komprehensif terhadap Kitab Kisah Para Rasul dan Surat-Surat Paulus. Penekanan diberikan pada aspek historis, teologis, eksegesis, keunikan masing-masing kitab, dan aplikasi praktis bagi kehidupan rohani dan pelayanan.",
       },
@@ -270,7 +271,7 @@ const COURSE_CATEGORIES: CourseCategory[] = [
         id: "pendidikan-16",
         title: "Integrasi Iman dan Ilmu (3 SKS)",
         content:
-          "Mata kuliah ini mempelajari landasan teori dan implementasi dari integrasi <em>worldview</em> Kristen dengan berbagai bidang ilmu dan atau pekerjaan mengingat \"segala kebenaran adalah kebenaran Allah\". Dalam mata kuliah ini mahasiswa akan mengeksplorasi fondasi historis, teologi, biblika, serta etika dari integrasi iman Kristen dan ilmu serta aplikasinya dengan beberapa contoh bidang ilmu/atau pekerjaan.",
+          'Mata kuliah ini mempelajari landasan teori dan implementasi dari integrasi <em>worldview</em> Kristen dengan berbagai bidang ilmu dan atau pekerjaan mengingat "segala kebenaran adalah kebenaran Allah". Dalam mata kuliah ini mahasiswa akan mengeksplorasi fondasi historis, teologi, biblika, serta etika dari integrasi iman Kristen dan ilmu serta aplikasinya dengan beberapa contoh bidang ilmu/atau pekerjaan.',
       },
       {
         id: "pendidikan-17",
@@ -390,7 +391,10 @@ function AccordionItem({
   onToggle: () => void;
 }) {
   return (
-    <div className="border-b last:border-b-0" style={{ borderColor: "#E8ECF2" }}>
+    <div
+      className="border-b last:border-b-0"
+      style={{ borderColor: "#E8ECF2" }}
+    >
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between py-5 px-6 text-left transition-all hover:bg-gray-50"

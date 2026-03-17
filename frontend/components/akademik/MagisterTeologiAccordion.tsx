@@ -20,7 +20,8 @@ const COURSE_CATEGORIES: CourseCategory[] = [
     courses: [
       {
         id: "inti-1",
-        title: "Pandangan Reformed tentang Peran Gereja Dalam Transformasi Masyarakat (3 SKS)",
+        title:
+          "Pandangan Reformed tentang Peran Gereja Dalam Transformasi Masyarakat (3 SKS)",
         content:
           "Kuliah ini bertujuan untuk membekali mahasiswa dengan pemahaman mendalam tentang bagaimana prinsip-prinsip Teologi Reformed dapat diaplikasikan dalam transformasi sosial, ekonomi, dan budaya masyarakat. Dengan menggabungkan teori, studi sejarah, dan aplikasi praktis, mahasiswa diharapkan mampu mengembangkan strategi pelayanan gereja yang efektif dan relevan untuk konteks masyarakat modern. Mata kuliah ini bertujuan untuk mempersiapkan pemimpin gereja yang mampu membawa dampak positif dan transformatif di tengah masyarakat.",
       },
@@ -38,7 +39,8 @@ const COURSE_CATEGORIES: CourseCategory[] = [
       },
       {
         id: "inti-4",
-        title: "Sejarah Gereja dalam Perspektif Transformasi Sosial Budaya (3 SKS)",
+        title:
+          "Sejarah Gereja dalam Perspektif Transformasi Sosial Budaya (3 SKS)",
         content:
           "Mata kuliah ini membahas perjalanan sejarah gereja dari masa awal hingga kontemporer dengan menyoroti peran dan dampaknya dalam perubahan sosial dan budaya. Mahasiswa diajak untuk melihat bagaimana gereja merespons dan turut membentuk dinamika masyarakat dalam berbagai konteks sejarah, serta merefleksikan relevansinya bagi misi gereja masa kini.",
       },
@@ -170,7 +172,10 @@ function AccordionItem({
   onToggle: () => void;
 }) {
   return (
-    <div className="border-b last:border-b-0" style={{ borderColor: "#E8ECF2" }}>
+    <div
+      className="border-b last:border-b-0"
+      style={{ borderColor: "#E8ECF2" }}
+    >
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between py-5 px-6 text-left transition-all hover:bg-gray-50"

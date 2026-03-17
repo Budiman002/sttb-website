@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight, Upload, X, Play, AlertCircle } from "lucide-react";
+import { ChevronRight, Upload, X, AlertCircle } from "lucide-react";
 import {
   createMediaVideo,
   updateMediaVideo,
@@ -16,6 +16,15 @@ function isValidVideoUrl(url: string): boolean {
     url.includes("youtu.be") ||
     url.includes("vimeo.com")
   );
+}
+
+function getYoutubeEmbedUrl(url: string): string {
+  const watchMatch = url.match(/[?&]v=([^&]+)/);
+  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  const shortMatch = url.match(/youtu\.be\/([^?]+)/);
+  if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  if (url.includes("/embed/")) return url;
+  return url;
 }
 
 interface CmsMediaVideoFormProps {
@@ -102,7 +111,6 @@ export function CmsMediaVideoForm({
     }
   };
 
-  const urlIsValid = videoUrl.trim().length > 0 && isValidVideoUrl(videoUrl);
   const urlIsInvalid = videoUrl.trim().length > 0 && !isValidVideoUrl(videoUrl);
 
   return (
@@ -371,30 +379,17 @@ export function CmsMediaVideoForm({
                 Preview Video
               </h3>
 
-              {urlIsValid ? (
-                <div className="relative aspect-video bg-[#1A2340] rounded-lg overflow-hidden flex items-center justify-center">
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="w-14 h-14 rounded-full bg-white/10 border-2 border-white/30 flex items-center justify-center">
-                      <Play className="w-6 h-6 text-white ml-1" />
-                    </div>
-                    <p className="text-white/60 text-xs text-center px-4 leading-relaxed">
-                      Klik Publikasikan untuk melihat video
-                    </p>
-                  </div>
-                </div>
-              ) : urlIsInvalid ? (
-                <div className="aspect-video bg-red-50 rounded-lg flex items-center justify-center border border-red-100">
-                  <div className="flex flex-col items-center gap-2 px-4">
-                    <AlertCircle className="w-8 h-8 text-sttb-red/60" />
-                    <p className="text-sttb-red text-xs text-center leading-relaxed">
-                      URL tidak valid. Gunakan link YouTube atau Vimeo.
-                    </p>
-                  </div>
-                </div>
+              {videoUrl ? (
+                <iframe
+                  src={getYoutubeEmbedUrl(videoUrl)}
+                  className="w-full aspect-video rounded-lg"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                  allowFullScreen
+                />
               ) : (
-                <div className="aspect-video bg-[#F5F7FA] rounded-lg flex items-center justify-center border-2 border-dashed border-[#E8ECF2]">
-                  <p className="text-[#9AA3B5] text-xs text-center px-4">
-                    Masukkan URL YouTube atau Vimeo untuk preview
+                <div className="w-full aspect-video rounded-lg bg-gray-900 flex items-center justify-center">
+                  <p className="text-gray-400 text-sm text-center px-4">
+                    Masukkan Video URL untuk preview
                   </p>
                 </div>
               )}

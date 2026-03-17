@@ -44,7 +44,7 @@ export function CmsPerpustakaanForm({
           setSlug(data.slug ?? "");
           setPenulis(data.penulis ?? "");
           setKategori(data.kategori ?? "");
-          setTahun(String(data.tahunTerbit ?? ""));
+          setTahun(String(data.tahun ?? ""));
           setPenerbit(data.penerbit ?? "");
           setDeskripsi(data.deskripsi ?? "");
           setFileUrl(data.fileUrl ?? "");

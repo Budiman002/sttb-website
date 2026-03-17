@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -11,7 +11,9 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { deleteKegiatan } from "@/lib/api";
+import { deleteKegiatan, getCmsKegiatanList } from "@/lib/api";
+import type { KegiatanListItem } from "@/types/api";
+import { formatDate } from "@/lib/utils";
 
 interface KegiatanItem {
   id: number | string;
@@ -107,6 +109,8 @@ const TABLE_HEADERS = [
 
 function getStatusClass(status: string) {
   switch (status) {
+    case "Published":
+      return "bg-emerald-100 text-emerald-600";
     case "Upcoming":
       return "bg-[#E8F0FB] text-[#0056B3]";
     case "Ongoing":
@@ -118,13 +122,72 @@ function getStatusClass(status: string) {
   }
 }
 
+const PAGE_SIZE = 10;
 const totalPages = 3;
 
-export function CmsKegiatan({ initialItems }: { initialItems?: KegiatanItem[] } = {}) {
+export function CmsKegiatan({
+  initialItems,
+  totalCount: initialTotalCount,
+}: {
+  initialItems?: KegiatanItem[];
+  totalCount?: number;
+} = {}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("semua");
   const [currentPage, setCurrentPage] = useState(1);
-  const [items, setItems] = useState<KegiatanItem[]>(initialItems ?? KEGIATAN_DATA_INITIAL);
+  const [items, setItems] = useState<KegiatanItem[]>(initialItems ?? []);
+  const [totalCount, setTotalCount] = useState(initialTotalCount ?? 0);
+  const [isLoading, setIsLoading] = useState(false);
+  const isFirstRender = useRef(true);
+
+  const totalPagesCalculated = Math.ceil(totalCount / PAGE_SIZE);
+
+  // Fetch data when page or filter changes (skip initial mount — server already fetched page 1)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const fetchPage = async () => {
+      setIsLoading(true);
+      try {
+        const statusParam =
+          selectedStatus === "semua" ? undefined : selectedStatus;
+        const data = await getCmsKegiatanList(
+          currentPage,
+          PAGE_SIZE,
+          statusParam,
+        );
+        setItems(
+          data.items.map((item: KegiatanListItem) => ({
+            id: item.id,
+            slug: item.slug,
+            thumbnail: item.thumbnailUrl ?? "",
+            judul: item.judul,
+            lokasi: item.lokasi,
+            tanggalMulai: formatDate(item.tanggalMulai),
+            tanggalSelesai: item.tanggalSelesai
+              ? formatDate(item.tanggalSelesai)
+              : "",
+            status: item.isPublished ? "Published" : "Draft",
+          })),
+        );
+        setTotalCount(data.totalCount);
+      } catch (error) {
+        console.error("Failed to fetch page:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPage();
+  }, [currentPage, selectedStatus]);
+
+  const handleStatusChange = (value: string) => {
+    setSelectedStatus(value);
+    setCurrentPage(1);
+  };
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Hapus kegiatan ini?")) return;
@@ -176,7 +239,7 @@ export function CmsKegiatan({ initialItems }: { initialItems?: KegiatanItem[] } 
             {/* Status */}
             <select
               value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
+              onChange={(e) => handleStatusChange(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-[#E8ECF2] text-sm text-[#1A2340] transition-colors focus:outline-none focus:border-sttb-navy cursor-pointer"
             >
               {STATUSES.map((s) => (
@@ -190,7 +253,9 @@ export function CmsKegiatan({ initialItems }: { initialItems?: KegiatanItem[] } 
 
         {/* Data Table */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
+          <div
+            className={`overflow-x-auto transition-opacity${isLoading ? " opacity-50 pointer-events-none" : ""}`}
+          >
             <table className="w-full">
               <thead className="bg-[#F5F7FA]">
                 <tr>
@@ -286,8 +351,20 @@ export function CmsKegiatan({ initialItems }: { initialItems?: KegiatanItem[] } 
           <div className="px-6 py-4 border-t border-[#E8ECF2] flex items-center justify-between">
             <p className="text-sm text-[#6B7A99]">
               Menampilkan{" "}
-              <span className="font-semibold text-[#1A2340]">1-6</span> dari{" "}
-              <span className="font-semibold text-[#1A2340]">6</span> kegiatan
+              <span className="font-semibold text-[#1A2340]">
+                {(() => {
+                  const startItem =
+                    totalCount === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+                  const endItem = Math.min(currentPage * PAGE_SIZE, totalCount);
+                  const displayStart = Math.min(startItem, endItem);
+                  return totalCount === 0
+                    ? "0–0"
+                    : `${displayStart}–${endItem}`;
+                })()}
+              </span>{" "}
+              dari{" "}
+              <span className="font-semibold text-[#1A2340]">{totalCount}</span>{" "}
+              kegiatan
             </p>
 
             <div className="flex items-center gap-2">

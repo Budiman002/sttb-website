@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, GraduationCap, Target, Heart, Lightbulb, Users } from "lucide-react";
+import {
+  Clock,
+  GraduationCap,
+  Target,
+  Heart,
+  Lightbulb,
+  Users,
+} from "lucide-react";
 import { MagisterMinistriKepemimpinanPastoralAccordion } from "@/components/akademik/MagisterMinistriKepemimpinanPastoralAccordion";
 
 export const metadata: Metadata = {
@@ -46,12 +53,18 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
           {/* Left Column — Content */}
           <div
             className="relative flex items-center px-8 lg:px-16 xl:px-24 py-20 lg:py-28"
-            style={{ background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)" }}
+            style={{
+              background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)",
+            }}
           >
             <div className="max-w-2xl">
               <p
                 className="uppercase font-bold mb-6 font-body"
-                style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.15em" }}
+                style={{
+                  fontSize: "13px",
+                  color: "#C41E3A",
+                  letterSpacing: "0.15em",
+                }}
               >
                 PROGRAM PASCASARJANA
               </p>
@@ -59,13 +72,21 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
               <h1 className="mb-8">
                 <span
                   className="block mb-2 font-display italic text-white"
-                  style={{ fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 400, lineHeight: 1.15 }}
+                  style={{
+                    fontSize: "clamp(36px, 5vw, 56px)",
+                    fontWeight: 400,
+                    lineHeight: 1.15,
+                  }}
                 >
                   Magister Ministri
                 </span>
                 <span
                   className="block font-heading text-white"
-                  style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 700, lineHeight: 1.05 }}
+                  style={{
+                    fontSize: "clamp(32px, 5vw, 64px)",
+                    fontWeight: 700,
+                    lineHeight: 1.05,
+                  }}
                 >
                   KEPEMIMPINAN PASTORAL
                 </span>
@@ -80,9 +101,9 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
                   maxWidth: "600px",
                 }}
               >
-                Program studi ini ditujukan untuk memberikan kerangka biblika dan
-                teologis yang lebih solid serta membangun perspektif yang lebih utuh
-                dalam pelayanan gereja urban.
+                Program studi ini ditujukan untuk memberikan kerangka biblika
+                dan teologis yang lebih solid serta membangun perspektif yang
+                lebih utuh dalam pelayanan gereja urban.
               </p>
 
               <p
@@ -152,7 +173,11 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
           <div className="text-center mb-20">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               PROFIL LULUSAN
             </p>
@@ -187,10 +212,13 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
               >
                 Informed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
-                Memiliki fondasi biblika-teologis dan pendidikan yang solid dalam
-                mengembangkan kepemimpinan dan penggembalaan yang holistik dan
-                integratif.
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
+                Memiliki fondasi biblika-teologis dan pendidikan yang solid
+                dalam mengembangkan kepemimpinan dan penggembalaan yang holistik
+                dan integratif.
               </p>
             </div>
 
@@ -211,9 +239,12 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
               >
                 Transformed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
-                Memiliki hidup yang berpusatkan kepada Kristus dan karakter yang dewasa
-                untuk menjadi teladan bagi jemaat.
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
+                Memiliki hidup yang berpusatkan kepada Kristus dan karakter yang
+                dewasa untuk menjadi teladan bagi jemaat.
               </p>
             </div>
 
@@ -234,9 +265,12 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
               >
                 Transformative
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
-                Memiliki kecakapan memimpin dan menggembalakan jemaat gereja urban
-                serta membawa dampak perubahan yang nyata.
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
+                Memiliki kecakapan memimpin dan menggembalakan jemaat gereja
+                urban serta membawa dampak perubahan yang nyata.
               </p>
             </div>
           </div>
@@ -265,18 +299,31 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
                 <div className="flex items-center gap-4">
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center"
-                    style={{ background: "#F8F7F4", border: "1px solid #E8ECF2" }}
+                    style={{
+                      background: "#F8F7F4",
+                      border: "1px solid #E8ECF2",
+                    }}
                   >
-                    <GraduationCap className="w-6 h-6" style={{ color: "#C41E3A" }} />
+                    <GraduationCap
+                      className="w-6 h-6"
+                      style={{ color: "#C41E3A" }}
+                    />
                   </div>
                   <div>
                     <p
                       className="font-body font-bold uppercase mb-1"
-                      style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.08em" }}
+                      style={{
+                        fontSize: "13px",
+                        color: "#C41E3A",
+                        letterSpacing: "0.08em",
+                      }}
                     >
                       Jumlah Kredit
                     </p>
-                    <p className="font-body font-bold" style={{ fontSize: "20px", color: "#1A2340" }}>
+                    <p
+                      className="font-body font-bold"
+                      style={{ fontSize: "20px", color: "#1A2340" }}
+                    >
                       45 SKS
                     </p>
                   </div>
@@ -285,18 +332,28 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
                 <div className="flex items-center gap-4">
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center"
-                    style={{ background: "#F8F7F4", border: "1px solid #E8ECF2" }}
+                    style={{
+                      background: "#F8F7F4",
+                      border: "1px solid #E8ECF2",
+                    }}
                   >
                     <Clock className="w-6 h-6" style={{ color: "#0056B3" }} />
                   </div>
                   <div>
                     <p
                       className="font-body font-bold uppercase mb-1"
-                      style={{ fontSize: "13px", color: "#0056B3", letterSpacing: "0.08em" }}
+                      style={{
+                        fontSize: "13px",
+                        color: "#0056B3",
+                        letterSpacing: "0.08em",
+                      }}
                     >
                       Masa Studi
                     </p>
-                    <p className="font-body font-bold" style={{ fontSize: "20px", color: "#1A2340" }}>
+                    <p
+                      className="font-body font-bold"
+                      style={{ fontSize: "20px", color: "#1A2340" }}
+                    >
                       2 Tahun
                     </p>
                   </div>
@@ -309,7 +366,11 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
               >
                 <h4
                   className="font-heading mb-6 flex items-center gap-3"
-                  style={{ fontSize: "20px", fontWeight: 700, color: "#00276B" }}
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: 700,
+                    color: "#00276B",
+                  }}
                 >
                   <Target className="w-6 h-6" style={{ color: "#C41E3A" }} />
                   Persyaratan Pendaftar
@@ -317,10 +378,23 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
                 <ul className="space-y-3">
                   {REQUIREMENTS.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <span style={{ color: "#C41E3A", fontSize: "18px", lineHeight: 1, marginTop: "2px" }}>•</span>
+                      <span
+                        style={{
+                          color: "#C41E3A",
+                          fontSize: "18px",
+                          lineHeight: 1,
+                          marginTop: "2px",
+                        }}
+                      >
+                        •
+                      </span>
                       <span
                         className="font-body"
-                        style={{ fontSize: "15px", color: "#4A5568", lineHeight: 1.6 }}
+                        style={{
+                          fontSize: "15px",
+                          color: "#4A5568",
+                          lineHeight: 1.6,
+                        }}
                       >
                         {item}
                       </span>
@@ -342,7 +416,11 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
               >
                 <h3
                   className="mb-8 font-heading"
-                  style={{ fontSize: "28px", fontWeight: 700, color: "#00276B" }}
+                  style={{
+                    fontSize: "28px",
+                    fontWeight: 700,
+                    color: "#00276B",
+                  }}
                 >
                   Sistem Perkuliahan
                 </h3>
@@ -356,10 +434,14 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
                   </div>
                   <p
                     className="font-body"
-                    style={{ fontSize: "16px", lineHeight: 1.6, color: "#1A2340" }}
+                    style={{
+                      fontSize: "16px",
+                      lineHeight: 1.6,
+                      color: "#1A2340",
+                    }}
                   >
-                    Jadwal kuliah akan disesuaikan berdasarkan kesepakatan (sistem{" "}
-                    <strong>cohort</strong>).
+                    Jadwal kuliah akan disesuaikan berdasarkan kesepakatan
+                    (sistem <strong>cohort</strong>).
                   </p>
                 </div>
 
@@ -371,7 +453,8 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
                     borderColor: "#E8ECF2",
                   }}
                 >
-                  *Program ini diselenggarakan dalam bentuk cohort atas kerja sama dengan institusi pengutus.
+                  *Program ini diselenggarakan dalam bentuk cohort atas kerja
+                  sama dengan institusi pengutus.
                 </p>
               </div>
             </div>
@@ -382,13 +465,19 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
       {/* SECTION 4 — STRUKTUR KURIKULUM */}
       <section
         className="py-24 lg:py-32"
-        style={{ background: "linear-gradient(135deg, #001A4A 0%, #00276B 100%)" }}
+        style={{
+          background: "linear-gradient(135deg, #001A4A 0%, #00276B 100%)",
+        }}
       >
         <div className="max-w-[1280px] mx-auto px-6 lg:px-16">
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               STRUKTUR PROGRAM
             </p>
@@ -456,7 +545,10 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
               >
                 Mata Kuliah Elektif
               </h3>
-              <p className="font-body" style={{ fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "13px", color: "rgba(255,255,255,0.7)" }}
+              >
                 Pilihan mata kuliah lintas prodi
               </p>
             </div>
@@ -481,7 +573,10 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
               >
                 Tugas Akhir &amp; Mentoring
               </h3>
-              <p className="font-body" style={{ fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "13px", color: "rgba(255,255,255,0.7)" }}
+              >
                 Mentoring Pastoral &amp; Tugas Akhir
               </p>
             </div>
@@ -504,13 +599,21 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
           <div className="text-center mb-20">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               SILABUS
             </p>
             <h2
               className="mb-6 font-heading"
-              style={{ fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 700, color: "#00276B" }}
+              style={{
+                fontSize: "clamp(32px, 4vw, 44px)",
+                fontWeight: 700,
+                color: "#00276B",
+              }}
             >
               Deskripsi Mata Kuliah
             </h2>
@@ -538,7 +641,8 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
             className="mb-10 max-w-2xl mx-auto font-body"
             style={{ fontSize: "18px", color: "#6B7A99", lineHeight: 1.7 }}
           >
-            Bergabunglah dengan program Magister Ministri Kepemimpinan Pastoral STTB.
+            Bergabunglah dengan program Magister Ministri Kepemimpinan Pastoral
+            STTB.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
@@ -551,7 +655,11 @@ export default function MagisterMinistriKepemimpinanPastoralPage() {
             <Link
               href="/admisi/info-persyaratan"
               className="px-10 py-4 rounded-lg font-bold font-body text-base transition-all hover:bg-gray-50"
-              style={{ color: "#00276B", background: "#FFFFFF", border: "2px solid #00276B" }}
+              style={{
+                color: "#00276B",
+                background: "#FFFFFF",
+                border: "2px solid #00276B",
+              }}
             >
               Info Persyaratan
             </Link>

@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, GraduationCap, Target, Heart, Lightbulb, TrendingUp } from "lucide-react";
+import {
+  Clock,
+  GraduationCap,
+  Target,
+  Heart,
+  Lightbulb,
+  TrendingUp,
+} from "lucide-react";
 import { SarjanaTeologiAccordion } from "@/components/akademik/SarjanaTeologiAccordion";
 
 export const metadata: Metadata = {
@@ -61,12 +68,18 @@ export default function SarjanaTeologiPage() {
           {/* Left Column — Content */}
           <div
             className="relative flex items-center px-8 lg:px-16 xl:px-24 py-20 lg:py-28"
-            style={{ background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)" }}
+            style={{
+              background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)",
+            }}
           >
             <div className="max-w-2xl">
               <p
                 className="uppercase font-bold mb-6 font-body"
-                style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.15em" }}
+                style={{
+                  fontSize: "13px",
+                  color: "#C41E3A",
+                  letterSpacing: "0.15em",
+                }}
               >
                 PROGRAM SARJANA
               </p>
@@ -74,13 +87,21 @@ export default function SarjanaTeologiPage() {
               <h1 className="mb-8">
                 <span
                   className="block mb-2 font-display italic text-white"
-                  style={{ fontSize: "clamp(42px, 6vw, 68px)", fontWeight: 400, lineHeight: 1.15 }}
+                  style={{
+                    fontSize: "clamp(42px, 6vw, 68px)",
+                    fontWeight: 400,
+                    lineHeight: 1.15,
+                  }}
                 >
                   Sarjana
                 </span>
                 <span
                   className="block font-heading text-white"
-                  style={{ fontSize: "clamp(52px, 7.5vw, 92px)", fontWeight: 700, lineHeight: 0.95 }}
+                  style={{
+                    fontSize: "clamp(52px, 7.5vw, 92px)",
+                    fontWeight: 700,
+                    lineHeight: 0.95,
+                  }}
                 >
                   TEOLOGI
                 </span>
@@ -109,13 +130,19 @@ export default function SarjanaTeologiPage() {
                 </span>
                 <span
                   className="px-6 py-3 rounded-lg font-body font-bold text-white text-sm"
-                  style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)" }}
+                  style={{
+                    background: "rgba(255,255,255,0.15)",
+                    backdropFilter: "blur(8px)",
+                  }}
                 >
                   148 SKS
                 </span>
                 <span
                   className="px-6 py-3 rounded-lg font-body font-bold text-white text-sm"
-                  style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)" }}
+                  style={{
+                    background: "rgba(255,255,255,0.15)",
+                    backdropFilter: "blur(8px)",
+                  }}
                 >
                   4 Tahun
                 </span>
@@ -149,7 +176,11 @@ export default function SarjanaTeologiPage() {
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               PROFIL LULUSAN
             </p>
@@ -178,7 +209,10 @@ export default function SarjanaTeologiPage() {
             {/* Informed */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -192,7 +226,10 @@ export default function SarjanaTeologiPage() {
               >
                 Informed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
                 <em>Pastor-scholar</em> yang berpengetahuan luas dan aplikatif
                 terhadap tantangan perkembangan pelayanan gerejawi dalam konteks
                 urban.
@@ -202,7 +239,10 @@ export default function SarjanaTeologiPage() {
             {/* Transformed */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -216,7 +256,10 @@ export default function SarjanaTeologiPage() {
               >
                 Transformed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
                 <em>Pastor-scholar</em> yang terus bertumbuh secara rohani,
                 karakter, dan memiliki integritas yang menjadi teladan jemaat.
               </p>
@@ -225,7 +268,10 @@ export default function SarjanaTeologiPage() {
             {/* Impactful */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -239,7 +285,10 @@ export default function SarjanaTeologiPage() {
               >
                 Impactful
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
                 <em>Pastor-scholar</em> yang mampu memberikan kontribusi nyata
                 dalam kehidupan gereja dan masyarakat untuk kemuliaan Tuhan.
               </p>
@@ -268,12 +317,22 @@ export default function SarjanaTeologiPage() {
 
               <div className="space-y-8">
                 {/* Jumlah Kredit */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#C41E3A" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#C41E3A" }}
+                >
                   <div className="flex items-center gap-3 mb-2">
-                    <GraduationCap className="w-6 h-6" style={{ color: "#C41E3A" }} />
+                    <GraduationCap
+                      className="w-6 h-6"
+                      style={{ color: "#C41E3A" }}
+                    />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#C41E3A" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#C41E3A",
+                      }}
                     >
                       Jumlah Kredit
                     </span>
@@ -287,29 +346,50 @@ export default function SarjanaTeologiPage() {
                 </div>
 
                 {/* Masa Studi */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#0056B3" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#0056B3" }}
+                >
                   <div className="flex items-center gap-3 mb-2">
                     <Clock className="w-6 h-6" style={{ color: "#0056B3" }} />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#0056B3" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#0056B3",
+                      }}
                     >
                       Masa Studi
                     </span>
                   </div>
-                  <p className="font-body" style={{ fontSize: "18px", color: "#1A2340", lineHeight: 1.6 }}>
+                  <p
+                    className="font-body"
+                    style={{
+                      fontSize: "18px",
+                      color: "#1A2340",
+                      lineHeight: 1.6,
+                    }}
+                  >
                     4 tahun <em>full time</em>: 3,5 tahun kuliah + 6 bulan
                     praktik pelayanan
                   </p>
                 </div>
 
                 {/* Persyaratan */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#00276B" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#00276B" }}
+                >
                   <div className="flex items-center gap-3 mb-3">
                     <Target className="w-6 h-6" style={{ color: "#00276B" }} />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#00276B" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#00276B",
+                      }}
                     >
                       Persyaratan
                     </span>
@@ -317,10 +397,22 @@ export default function SarjanaTeologiPage() {
                   <ul className="space-y-2">
                     {REQUIREMENTS.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span style={{ color: "#C41E3A", fontSize: "18px", lineHeight: 1 }}>•</span>
+                        <span
+                          style={{
+                            color: "#C41E3A",
+                            fontSize: "18px",
+                            lineHeight: 1,
+                          }}
+                        >
+                          •
+                        </span>
                         <span
                           className="font-body"
-                          style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.6 }}
+                          style={{
+                            fontSize: "16px",
+                            color: "#6B7A99",
+                            lineHeight: 1.6,
+                          }}
                         >
                           {item}
                         </span>
@@ -346,13 +438,20 @@ export default function SarjanaTeologiPage() {
                       className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-1"
                       style={{ background: "#C41E3A" }}
                     >
-                      <span className="font-body font-bold text-white" style={{ fontSize: "12px" }}>
+                      <span
+                        className="font-body font-bold text-white"
+                        style={{ fontSize: "12px" }}
+                      >
                         {idx + 1}
                       </span>
                     </div>
                     <span
                       className="font-body"
-                      style={{ fontSize: "16px", color: "#1A2340", lineHeight: 1.7 }}
+                      style={{
+                        fontSize: "16px",
+                        color: "#1A2340",
+                        lineHeight: 1.7,
+                      }}
                     >
                       {item}
                     </span>
@@ -367,13 +466,19 @@ export default function SarjanaTeologiPage() {
       {/* SECTION 4 — STRUKTUR KURIKULUM */}
       <section
         className="py-20 lg:py-28"
-        style={{ background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)" }}
+        style={{
+          background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)",
+        }}
       >
         <div className="max-w-[1280px] mx-auto px-6 lg:px-16">
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               STRUKTUR PROGRAM
             </p>
@@ -410,7 +515,11 @@ export default function SarjanaTeologiPage() {
                 </h3>
                 <p
                   className="font-body"
-                  style={{ fontSize: "14px", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}
+                  style={{
+                    fontSize: "14px",
+                    color: "rgba(255,255,255,0.85)",
+                    lineHeight: 1.6,
+                  }}
                 >
                   {cat.description}
                 </p>
@@ -420,8 +529,16 @@ export default function SarjanaTeologiPage() {
 
           <div className="mt-12 grid md:grid-cols-2 gap-6">
             {[
-              { label: "Konsentrasi: Pemuridan & Misi", sks: "9 SKS", highlight: false },
-              { label: "Konsentrasi: Pelayanan Anak Holistik", sks: "9 SKS", highlight: false },
+              {
+                label: "Konsentrasi: Pemuridan & Misi",
+                sks: "9 SKS",
+                highlight: false,
+              },
+              {
+                label: "Konsentrasi: Pelayanan Anak Holistik",
+                sks: "9 SKS",
+                highlight: false,
+              },
               { label: "Praktik Lapangan", sks: "9 SKS", highlight: true },
               { label: "Tugas Akhir", sks: "6 SKS", highlight: true },
             ].map((item, idx) => (
@@ -438,13 +555,18 @@ export default function SarjanaTeologiPage() {
                     : "1px solid rgba(255,255,255,0.15)",
                 }}
               >
-                <h4 className="font-heading text-white" style={{ fontSize: "18px", fontWeight: 700 }}>
+                <h4
+                  className="font-heading text-white"
+                  style={{ fontSize: "18px", fontWeight: 700 }}
+                >
                   {item.label}
                 </h4>
                 <span
                   className="flex-shrink-0 ml-4 px-4 py-2 rounded-full font-body font-bold text-white text-sm"
                   style={{
-                    background: item.highlight ? "#C41E3A" : "rgba(255,255,255,0.2)",
+                    background: item.highlight
+                      ? "#C41E3A"
+                      : "rgba(255,255,255,0.2)",
                   }}
                 >
                   {item.sks}
@@ -461,13 +583,21 @@ export default function SarjanaTeologiPage() {
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               DESKRIPSI LENGKAP
             </p>
             <h2
               className="mb-6 font-heading"
-              style={{ fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700, color: "#00276B" }}
+              style={{
+                fontSize: "clamp(32px, 4vw, 48px)",
+                fontWeight: 700,
+                color: "#00276B",
+              }}
             >
               Mata Kuliah Program S.Th.
             </h2>
@@ -516,7 +646,11 @@ export default function SarjanaTeologiPage() {
             <Link
               href="/admisi/info-persyaratan"
               className="px-10 py-4 rounded-lg font-bold font-body text-base transition-all"
-              style={{ color: "#00276B", background: "#FFFFFF", border: "2px solid #00276B" }}
+              style={{
+                color: "#00276B",
+                background: "#FFFFFF",
+                border: "2px solid #00276B",
+              }}
             >
               Info Persyaratan
             </Link>

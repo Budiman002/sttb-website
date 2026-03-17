@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { BookOpen, Target, Clock, GraduationCap, Heart, TrendingUp } from "lucide-react";
+import {
+  BookOpen,
+  Target,
+  Clock,
+  GraduationCap,
+  Heart,
+  TrendingUp,
+} from "lucide-react";
 import { MagisterPendidikanKristenAccordion } from "@/components/akademik/MagisterPendidikanKristenAccordion";
 
 export const metadata: Metadata = {
@@ -20,9 +27,16 @@ const REQUIREMENTS = [
 ];
 
 const SYSTEM_ITEMS = [
-  <>Kuliah dimulai pada bulan <strong>Agustus</strong> (Semester Ganjil).</>,
-  <>Mata kuliah diajarkan secara <strong>Block Teaching (intensif)</strong>.</>,
-  <>Dalam 1 Semester berisi <strong>5 mata kuliah</strong>. Terdapat 1 Mata Kuliah yang diadakan <strong>Onsite</strong> setiap semesternya.</>,
+  <>
+    Kuliah dimulai pada bulan <strong>Agustus</strong> (Semester Ganjil).
+  </>,
+  <>
+    Mata kuliah diajarkan secara <strong>Block Teaching (intensif)</strong>.
+  </>,
+  <>
+    Dalam 1 Semester berisi <strong>5 mata kuliah</strong>. Terdapat 1 Mata
+    Kuliah yang diadakan <strong>Onsite</strong> setiap semesternya.
+  </>,
 ];
 
 const TOP_CURRICULUM = [
@@ -52,12 +66,18 @@ export default function MagisterPendidikanKristenPage() {
           {/* Left Column — Content */}
           <div
             className="relative flex items-center px-8 lg:px-16 xl:px-24 py-20 lg:py-28"
-            style={{ background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)" }}
+            style={{
+              background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)",
+            }}
           >
             <div className="max-w-2xl">
               <p
                 className="uppercase font-bold mb-6 font-body"
-                style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.15em" }}
+                style={{
+                  fontSize: "13px",
+                  color: "#C41E3A",
+                  letterSpacing: "0.15em",
+                }}
               >
                 PROGRAM PASCASARJANA
               </p>
@@ -65,13 +85,21 @@ export default function MagisterPendidikanKristenPage() {
               <h1 className="mb-8">
                 <span
                   className="block mb-2 font-display italic text-white"
-                  style={{ fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 400, lineHeight: 1.15 }}
+                  style={{
+                    fontSize: "clamp(36px, 5vw, 56px)",
+                    fontWeight: 400,
+                    lineHeight: 1.15,
+                  }}
                 >
                   Magister
                 </span>
                 <span
                   className="block font-heading text-white"
-                  style={{ fontSize: "clamp(38px, 5vw, 64px)", fontWeight: 700, lineHeight: 1.05 }}
+                  style={{
+                    fontSize: "clamp(38px, 5vw, 64px)",
+                    fontWeight: 700,
+                    lineHeight: 1.05,
+                  }}
                 >
                   PENDIDIKAN KRISTEN
                 </span>
@@ -86,10 +114,11 @@ export default function MagisterPendidikanKristenPage() {
                   maxWidth: "600px",
                 }}
               >
-                Program studi ini ditujukan untuk memperlengkapi pemimpin dan pendidik
-                di sekolah, gereja, atau lembaga pelayanan Kristen lainnya dengan
-                fondasi biblika-teologis yang solid serta teori pendidikan dan formasi
-                spiritualitas untuk berkarya secara transformatif.
+                Program studi ini ditujukan untuk memperlengkapi pemimpin dan
+                pendidik di sekolah, gereja, atau lembaga pelayanan Kristen
+                lainnya dengan fondasi biblika-teologis yang solid serta teori
+                pendidikan dan formasi spiritualitas untuk berkarya secara
+                transformatif.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -149,7 +178,11 @@ export default function MagisterPendidikanKristenPage() {
           <div className="text-center mb-20">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               PROFIL LULUSAN
             </p>
@@ -184,9 +217,13 @@ export default function MagisterPendidikanKristenPage() {
               >
                 Informed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
-                Memiliki fondasi biblika-teologis dan pendidikan yang solid dalam
-                mengembangkan pendidikan Kristen yang holistik dan integratif.
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
+                Memiliki fondasi biblika-teologis dan pendidikan yang solid
+                dalam mengembangkan pendidikan Kristen yang holistik dan
+                integratif.
               </p>
             </div>
 
@@ -207,7 +244,10 @@ export default function MagisterPendidikanKristenPage() {
               >
                 Transformed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
                 Memiliki transformasi hidup yang berpusatkan kepada Kristus dan
                 memiliki karakter yang dewasa.
               </p>
@@ -230,9 +270,12 @@ export default function MagisterPendidikanKristenPage() {
               >
                 Transformative
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
-                Memiliki kecakapan memimpin dan merancang pendidikan Kristen yang
-                transformatif.
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
+                Memiliki kecakapan memimpin dan merancang pendidikan Kristen
+                yang transformatif.
               </p>
             </div>
           </div>
@@ -261,18 +304,31 @@ export default function MagisterPendidikanKristenPage() {
                 <div className="flex items-center gap-4">
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center"
-                    style={{ background: "#F8F7F4", border: "1px solid #E8ECF2" }}
+                    style={{
+                      background: "#F8F7F4",
+                      border: "1px solid #E8ECF2",
+                    }}
                   >
-                    <GraduationCap className="w-6 h-6" style={{ color: "#C41E3A" }} />
+                    <GraduationCap
+                      className="w-6 h-6"
+                      style={{ color: "#C41E3A" }}
+                    />
                   </div>
                   <div>
                     <p
                       className="font-body font-bold uppercase mb-1"
-                      style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.08em" }}
+                      style={{
+                        fontSize: "13px",
+                        color: "#C41E3A",
+                        letterSpacing: "0.08em",
+                      }}
                     >
                       Jumlah Kredit
                     </p>
-                    <p className="font-body font-bold" style={{ fontSize: "20px", color: "#1A2340" }}>
+                    <p
+                      className="font-body font-bold"
+                      style={{ fontSize: "20px", color: "#1A2340" }}
+                    >
                       60 SKS
                     </p>
                   </div>
@@ -281,18 +337,28 @@ export default function MagisterPendidikanKristenPage() {
                 <div className="flex items-center gap-4">
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center"
-                    style={{ background: "#F8F7F4", border: "1px solid #E8ECF2" }}
+                    style={{
+                      background: "#F8F7F4",
+                      border: "1px solid #E8ECF2",
+                    }}
                   >
                     <Clock className="w-6 h-6" style={{ color: "#0056B3" }} />
                   </div>
                   <div>
                     <p
                       className="font-body font-bold uppercase mb-1"
-                      style={{ fontSize: "13px", color: "#0056B3", letterSpacing: "0.08em" }}
+                      style={{
+                        fontSize: "13px",
+                        color: "#0056B3",
+                        letterSpacing: "0.08em",
+                      }}
                     >
                       Masa Studi
                     </p>
-                    <p className="font-body font-bold" style={{ fontSize: "20px", color: "#1A2340" }}>
+                    <p
+                      className="font-body font-bold"
+                      style={{ fontSize: "20px", color: "#1A2340" }}
+                    >
                       2 Tahun
                     </p>
                   </div>
@@ -305,7 +371,11 @@ export default function MagisterPendidikanKristenPage() {
               >
                 <h4
                   className="font-heading mb-6 flex items-center gap-3"
-                  style={{ fontSize: "20px", fontWeight: 700, color: "#00276B" }}
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: 700,
+                    color: "#00276B",
+                  }}
                 >
                   <Target className="w-6 h-6" style={{ color: "#C41E3A" }} />
                   Persyaratan Pendaftar
@@ -313,10 +383,23 @@ export default function MagisterPendidikanKristenPage() {
                 <ul className="space-y-3">
                   {REQUIREMENTS.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <span style={{ color: "#C41E3A", fontSize: "18px", lineHeight: 1, marginTop: "2px" }}>•</span>
+                      <span
+                        style={{
+                          color: "#C41E3A",
+                          fontSize: "18px",
+                          lineHeight: 1,
+                          marginTop: "2px",
+                        }}
+                      >
+                        •
+                      </span>
                       <span
                         className="font-body"
-                        style={{ fontSize: "15px", color: "#4A5568", lineHeight: 1.6 }}
+                        style={{
+                          fontSize: "15px",
+                          color: "#4A5568",
+                          lineHeight: 1.6,
+                        }}
                       >
                         {item}
                       </span>
@@ -338,7 +421,11 @@ export default function MagisterPendidikanKristenPage() {
               >
                 <h3
                   className="mb-8 font-heading"
-                  style={{ fontSize: "28px", fontWeight: 700, color: "#00276B" }}
+                  style={{
+                    fontSize: "28px",
+                    fontWeight: 700,
+                    color: "#00276B",
+                  }}
                 >
                   Sistem Perkuliahan
                 </h3>
@@ -354,7 +441,11 @@ export default function MagisterPendidikanKristenPage() {
                       </div>
                       <p
                         className="font-body"
-                        style={{ fontSize: "16px", lineHeight: 1.6, color: "#1A2340" }}
+                        style={{
+                          fontSize: "16px",
+                          lineHeight: 1.6,
+                          color: "#1A2340",
+                        }}
                       >
                         {item}
                       </p>
@@ -370,7 +461,8 @@ export default function MagisterPendidikanKristenPage() {
                     borderColor: "#E8ECF2",
                   }}
                 >
-                  *Jadwal ini bisa berubah tergantung pada kesepakatan kelas bersama dosen.
+                  *Jadwal ini bisa berubah tergantung pada kesepakatan kelas
+                  bersama dosen.
                 </p>
               </div>
             </div>
@@ -381,13 +473,19 @@ export default function MagisterPendidikanKristenPage() {
       {/* SECTION 4 — STRUKTUR KURIKULUM */}
       <section
         className="py-24 lg:py-32"
-        style={{ background: "linear-gradient(135deg, #001A4A 0%, #00276B 100%)" }}
+        style={{
+          background: "linear-gradient(135deg, #001A4A 0%, #00276B 100%)",
+        }}
       >
         <div className="max-w-[1280px] mx-auto px-6 lg:px-16">
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               STRUKTUR PROGRAM
             </p>
@@ -455,7 +553,10 @@ export default function MagisterPendidikanKristenPage() {
               >
                 Pilihan Konsentrasi
               </h3>
-              <p className="font-body" style={{ fontSize: "13px", color: "rgba(255,255,255,0.8)" }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "13px", color: "rgba(255,255,255,0.8)" }}
+              >
                 Pilih antara <strong>Desain Pembelajaran</strong> ATAU{" "}
                 <strong>Kepemimpinan Pendidikan</strong>
               </p>
@@ -481,7 +582,10 @@ export default function MagisterPendidikanKristenPage() {
               >
                 Mata Kuliah Elektif
               </h3>
-              <p className="font-body" style={{ fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "13px", color: "rgba(255,255,255,0.7)" }}
+              >
                 Pilihan mata kuliah lintas prodi jenjang magister
               </p>
             </div>
@@ -504,13 +608,21 @@ export default function MagisterPendidikanKristenPage() {
           <div className="text-center mb-20">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               SILABUS
             </p>
             <h2
               className="mb-6 font-heading"
-              style={{ fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 700, color: "#00276B" }}
+              style={{
+                fontSize: "clamp(32px, 4vw, 44px)",
+                fontWeight: 700,
+                color: "#00276B",
+              }}
             >
               Deskripsi Mata Kuliah
             </h2>
@@ -538,8 +650,9 @@ export default function MagisterPendidikanKristenPage() {
             className="mb-10 max-w-2xl mx-auto font-body"
             style={{ fontSize: "18px", color: "#6B7A99", lineHeight: 1.7 }}
           >
-            Bergabunglah dengan program Magister Pendidikan Kristen STTB dan tingkatkan
-            kapasitas Anda sebagai pendidik dan pemimpin yang holistik.
+            Bergabunglah dengan program Magister Pendidikan Kristen STTB dan
+            tingkatkan kapasitas Anda sebagai pendidik dan pemimpin yang
+            holistik.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
@@ -552,7 +665,11 @@ export default function MagisterPendidikanKristenPage() {
             <Link
               href="/admisi/info-persyaratan"
               className="px-10 py-4 rounded-lg font-bold font-body text-base transition-all hover:bg-gray-50"
-              style={{ color: "#00276B", background: "#FFFFFF", border: "2px solid #00276B" }}
+              style={{
+                color: "#00276B",
+                background: "#FFFFFF",
+                border: "2px solid #00276B",
+              }}
             >
               Info Persyaratan
             </Link>

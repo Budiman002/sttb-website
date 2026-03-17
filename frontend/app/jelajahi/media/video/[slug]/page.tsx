@@ -6,37 +6,19 @@ import { notFound } from "next/navigation";
 import { getMediaVideoDetail, getMediaList } from "@/lib/api";
 import { BackButton } from "@/components/shared/BackButton";
 import { formatDate } from "@/lib/utils";
-import type { MediaVideoDetail } from "@/types/api";
+import type { MediaVideoDetail, MediaListItem } from "@/types/api";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1697057406467-60340e993e6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1cmJhbiUyMGNpdHklMjBtaXNzaW9ufGVufDF8fHx8MTc3MzI5MDg4Nnww&ixlib=rb-4.1.0&q=80&w=1080";
 
-const relatedVideos = [
-  {
-    category: "LEAD",
-    title: "City TransForMission #1: Urbanisasi & Misi",
-    duration: "22 mnt",
-    image:
-      "https://images.unsplash.com/photo-1697057406467-60340e993e6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1cmJhbiUyMGNpdHklMjBtaXNzaW9ufGVufDF8fHx8MTc3MzI5MDg4Nnww&ixlib=rb-4.1.0&q=80&w=1080",
-    slug: "city-transformission-1-urbanisasi-misi",
-  },
-  {
-    category: "STT BANDUNG",
-    title: "Persembahan Pujian STTB untuk Pelayanan Sekolah Minggu",
-    duration: "8 mnt",
-    image:
-      "https://images.unsplash.com/photo-1629143935265-73c99997212e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b3JzaGlwJTIwY2h1cmNoJTIwcHJhaXNlfGVufDF8fHx8MTc3MzI5MDg4Nnww&ixlib=rb-4.1.0&q=80&w=1080",
-    slug: "persembahan-pujian-sttb-pelayanan-sekolah-minggu",
-  },
-  {
-    category: "LEAD",
-    title: "Seminar Teologi Kota: Gereja dan Transformasi Urban",
-    duration: "35 mnt",
-    image:
-      "https://images.unsplash.com/photo-1477569914486-b9955238cae0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZW1pbmFyJTIwcGVvcGxlJTIwdGFsa2luZ3xlbnwxfHx8fDE3NzMyODU0MjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    slug: "seminar-teologi-kota-gereja-dan-transformasi-urban",
-  },
-];
+function getYoutubeEmbedUrl(url: string): string {
+  const watchMatch = url.match(/[?&]v=([^&]+)/);
+  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  const shortMatch = url.match(/youtu\.be\/([^?]+)/);
+  if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  if (url.includes("/embed/")) return url;
+  return url;
+}
 
 export async function generateStaticParams() {
   try {
@@ -77,6 +59,16 @@ export default async function VideoDetailPage({
     notFound();
   }
   if (!data) notFound();
+
+  let relatedVideos: MediaListItem[] = [];
+  try {
+    const relatedData = await getMediaList(1, 9, "video");
+    relatedVideos = relatedData.items
+      .filter((item) => item.slug !== slug)
+      .slice(0, 3);
+  } catch {
+    // keep empty on error
+  }
 
   const heroImage = data.thumbnailUrl ?? FALLBACK_IMAGE;
   const durasi = data.durasi ?? "—";
@@ -132,7 +124,7 @@ export default async function VideoDetailPage({
                 color: "rgba(255, 255, 255, 0.5)",
               }}
             >
-              • {formatDate(data.tanggalPublish)}
+              • {data.tanggalPublish ? formatDate(data.tanggalPublish) : "—"}
             </span>
           </div>
 
@@ -228,43 +220,50 @@ export default async function VideoDetailPage({
         >
           {/* Video Player */}
           <div className="relative rounded-lg overflow-hidden mb-5 aspect-video">
-            {/* Thumbnail */}
-            <Image
-              src={heroImage}
-              alt={data.judul}
-              fill
-              className="object-cover"
-              sizes="(max-width: 900px) 100vw, 900px"
-              priority
-            />
-
-            {/* Dark overlay */}
-            <div
-              className="absolute inset-0"
-              style={{ background: "rgba(0, 0, 0, 0.35)" }}
-            />
-
-            {/* Play Button Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div
-                className="rounded-full flex items-center justify-center bg-white cursor-pointer transition-transform hover:scale-110"
-                style={{
-                  width: "72px",
-                  height: "72px",
-                  boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)",
-                }}
-              >
-                <Play
-                  className="ml-1"
-                  style={{
-                    width: "28px",
-                    height: "28px",
-                    fill: "#C41E3A",
-                    color: "#C41E3A",
-                  }}
+            {data.videoUrl ? (
+              <iframe
+                src={getYoutubeEmbedUrl(data.videoUrl)}
+                title={data.judul}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            ) : (
+              <>
+                <Image
+                  src={heroImage}
+                  alt={data.judul}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 900px) 100vw, 900px"
+                  priority
                 />
-              </div>
-            </div>
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "rgba(0, 0, 0, 0.35)" }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div
+                    className="rounded-full flex items-center justify-center bg-white"
+                    style={{
+                      width: "72px",
+                      height: "72px",
+                      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)",
+                    }}
+                  >
+                    <Play
+                      className="ml-1"
+                      style={{
+                        width: "28px",
+                        height: "28px",
+                        fill: "#C41E3A",
+                        color: "#C41E3A",
+                      }}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
 
             {/* Duration Overlay Bottom-Left */}
             {data.durasi && (
@@ -304,7 +303,8 @@ export default async function VideoDetailPage({
               color: "#6B7280",
             }}
           >
-            {formatDate(data.tanggalPublish)} • {durasi} • {data.kategori}
+            {data.tanggalPublish ? formatDate(data.tanggalPublish) : "—"} •{" "}
+            {durasi} • {data.kategori}
           </p>
         </div>
       </section>
@@ -343,160 +343,150 @@ export default async function VideoDetailPage({
               color: "#374151",
               lineHeight: 1.9,
             }}
-            dangerouslySetInnerHTML={{ __html: data.deskripsi }}
+            dangerouslySetInnerHTML={{ __html: data.deskripsi ?? "" }}
           />
         </div>
       </section>
 
       {/* SECTION 4 — VIDEO LAINNYA */}
-      <section className="py-16" style={{ background: "#F8F7F4" }}>
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
-          {/* Section Header */}
-          <div className="mb-12">
-            <p
-              className="uppercase font-bold mb-4"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "12px",
-                color: "#C41E3A",
-                letterSpacing: "0.12em",
-              }}
-            >
-              TERKAIT
-            </p>
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(2rem, 5vw, 3rem)",
-                fontWeight: 700,
-                color: "#00276B",
-              }}
-            >
-              Video Lainnya
-            </h2>
-          </div>
-
-          {/* 3-Column Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedVideos.map((card, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-lg overflow-hidden"
+      {relatedVideos.length > 0 && (
+        <section className="py-16" style={{ background: "#F8F7F4" }}>
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
+            {/* Section Header */}
+            <div className="mb-12">
+              <p
+                className="uppercase font-bold mb-4"
                 style={{
-                  boxShadow: "0 4px 16px rgba(0, 39, 107, 0.08)",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "12px",
+                  color: "#C41E3A",
+                  letterSpacing: "0.12em",
                 }}
               >
-                {/* Image Area */}
-                <div className="relative aspect-video overflow-hidden">
-                  <Image
-                    src={card.image}
-                    alt={card.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
+                TERKAIT
+              </p>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(2rem, 5vw, 3rem)",
+                  fontWeight: 700,
+                  color: "#00276B",
+                }}
+              >
+                Video Lainnya
+              </h2>
+            </div>
 
-                  {/* Play Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center">
+            {/* 3-Column Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {relatedVideos.map((card) => (
+                <div
+                  key={card.id}
+                  className="bg-white rounded-lg overflow-hidden"
+                  style={{
+                    boxShadow: "0 4px 16px rgba(0, 39, 107, 0.08)",
+                  }}
+                >
+                  {/* Image Area */}
+                  <div className="relative aspect-video overflow-hidden">
+                    <Image
+                      src={card.thumbnailUrl ?? FALLBACK_IMAGE}
+                      alt={card.judul}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+
+                    {/* Play Button Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div
+                        className="rounded-full flex items-center justify-center bg-white"
+                        style={{ width: "48px", height: "48px" }}
+                      >
+                        <Play
+                          className="ml-1"
+                          style={{
+                            width: "16px",
+                            height: "16px",
+                            fill: "#C41E3A",
+                            color: "#C41E3A",
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Type Badge (Top-Left) */}
                     <div
-                      className="rounded-full flex items-center justify-center bg-white"
-                      style={{ width: "48px", height: "48px" }}
+                      className="absolute top-4 left-4 px-3 py-1 rounded-full"
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "10px",
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                        background: "#C41E3A",
+                        color: "#FFFFFF",
+                      }}
                     >
-                      <Play
-                        className="ml-1"
-                        style={{
-                          width: "16px",
-                          height: "16px",
-                          fill: "#C41E3A",
-                          color: "#C41E3A",
-                        }}
-                      />
+                      VIDEO
+                    </div>
+
+                    {/* Category Badge (Bottom-Left) */}
+                    <div
+                      className="absolute bottom-4 left-4 px-3 py-1 rounded-md"
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "10px",
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                        background: "#00276B",
+                        color: "#FFFFFF",
+                      }}
+                    >
+                      {card.kategori}
                     </div>
                   </div>
 
-                  {/* Type Badge (Top-Left) */}
-                  <div
-                    className="absolute top-4 left-4 px-3 py-1 rounded-full"
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.08em",
-                      background: "#C41E3A",
-                      color: "#FFFFFF",
-                    }}
-                  >
-                    VIDEO
-                  </div>
-
-                  {/* Category Badge (Bottom-Left) */}
-                  <div
-                    className="absolute bottom-4 left-4 px-3 py-1 rounded-md"
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.08em",
-                      background: "#00276B",
-                      color: "#FFFFFF",
-                    }}
-                  >
-                    {card.category}
-                  </div>
-                </div>
-
-                {/* Card Body */}
-                <div className="p-5">
-                  <h3
-                    className="mb-3"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: "16px",
-                      fontWeight: 700,
-                      color: "#00276B",
-                      lineHeight: 1.3,
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {card.title}
-                  </h3>
-
-                  <div
-                    className="inline-block rounded-md px-3 py-1 mb-4"
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "12px",
-                      background: "#F3F4F6",
-                      color: "#6B7280",
-                    }}
-                  >
-                    {card.duration}
-                  </div>
-
-                  <div>
-                    <Link
-                      href={`/jelajahi/media/video/${card.slug}`}
+                  {/* Card Body */}
+                  <div className="p-5">
+                    <h3
+                      className="mb-4"
                       style={{
-                        fontFamily: "var(--font-sans)",
-                        fontSize: "13px",
-                        fontWeight: 600,
-                        color: "#C41E3A",
+                        fontFamily: "var(--font-display)",
+                        fontSize: "16px",
+                        fontWeight: 700,
+                        color: "#00276B",
+                        lineHeight: 1.3,
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
                       }}
                     >
-                      Tonton Sekarang →
-                    </Link>
+                      {card.judul}
+                    </h3>
+
+                    <div>
+                      <Link
+                        href={`/jelajahi/media/video/${card.slug}`}
+                        style={{
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "13px",
+                          fontWeight: 600,
+                          color: "#C41E3A",
+                        }}
+                      >
+                        Tonton Sekarang →
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* SECTION 5 — BACK NAVIGATION */}
       <BackButton label="Kembali ke Media" bgSection="#FFFFFF" />

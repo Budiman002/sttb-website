@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -12,7 +12,8 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { deleteMediaArtikel } from "@/lib/api";
+import { deleteMediaArtikel, getCmsMediaArtikelList } from "@/lib/api";
+import { formatDate } from "@/lib/utils";
 
 interface ArtikelItem {
   id: number | string;
@@ -119,16 +120,68 @@ function getStatusClass(status: string) {
     : "bg-[#F5F7FA] text-[#9AA3B5]";
 }
 
+const PAGE_SIZE = 10;
 const totalPages = 3;
 
-export function CmsMedia({ initialItems }: { initialItems?: ArtikelItem[] } = {}) {
+export function CmsMedia({
+  initialItems,
+  totalCount: initialTotalCount,
+}: {
+  initialItems?: ArtikelItem[];
+  totalCount?: number;
+} = {}) {
   const pathname = usePathname();
   const isVideoTab = pathname.includes("/video");
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedKategori, setSelectedKategori] = useState("semua");
   const [currentPage, setCurrentPage] = useState(1);
-  const [items, setItems] = useState<ArtikelItem[]>(initialItems ?? ARTIKEL_DATA_INITIAL);
+  const [items, setItems] = useState<ArtikelItem[]>(initialItems ?? []);
+  const [totalCount, setTotalCount] = useState(initialTotalCount ?? 0);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const isFirstRender = useRef(true);
+
+  const totalPagesCalculated = Math.ceil(totalCount / PAGE_SIZE);
+
+  // Fetch data when page or filter changes (skip initial mount — server already fetched page 1)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const fetchPage = async () => {
+      setIsLoadingPage(true);
+      try {
+        const kategoriParam =
+          selectedKategori === "semua" ? undefined : selectedKategori;
+        const data = await getCmsMediaArtikelList(
+          currentPage,
+          PAGE_SIZE,
+          kategoriParam,
+        );
+        setItems(
+          data.items.map((item) => ({
+            id: item.id,
+            slug: item.slug,
+            thumbnail: item.thumbnailUrl ?? "",
+            judul: item.judul,
+            kategori: item.kategori,
+            penulis: item.penulis,
+            tanggal: formatDate(item.tanggalPublish),
+            status: item.isPublished ? "Published" : "Draft",
+          })),
+        );
+        setTotalCount(data.totalCount);
+      } catch (error) {
+        console.error("Failed to fetch page:", error);
+      } finally {
+        setIsLoadingPage(false);
+      }
+    };
+
+    fetchPage();
+  }, [currentPage, selectedKategori]);
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Hapus artikel ini?")) return;
@@ -308,8 +361,20 @@ export function CmsMedia({ initialItems }: { initialItems?: ArtikelItem[] } = {}
           <div className="px-6 py-4 border-t border-[#E8ECF2] flex items-center justify-between">
             <p className="text-sm text-[#6B7A99]">
               Menampilkan{" "}
-              <span className="font-semibold text-[#1A2340]">1-6</span> dari{" "}
-              <span className="font-semibold text-[#1A2340]">6</span> artikel
+              <span className="font-semibold text-[#1A2340]">
+                {(() => {
+                  const startItem =
+                    totalCount === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+                  const endItem = Math.min(currentPage * PAGE_SIZE, totalCount);
+                  const displayStart = Math.min(startItem, endItem);
+                  return totalCount === 0
+                    ? "0–0"
+                    : `${displayStart}–${endItem}`;
+                })()}
+              </span>{" "}
+              dari{" "}
+              <span className="font-semibold text-[#1A2340]">{totalCount}</span>{" "}
+              artikel
             </p>
 
             <div className="flex items-center gap-2">

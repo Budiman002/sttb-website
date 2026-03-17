@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, GraduationCap, Target, Heart, Lightbulb, Briefcase } from "lucide-react";
+import {
+  Clock,
+  GraduationCap,
+  Target,
+  Heart,
+  Lightbulb,
+  Briefcase,
+} from "lucide-react";
 import { MagisterMinistriMarketplaceAccordion } from "@/components/akademik/MagisterMinistriMarketplaceAccordion";
 
 export const metadata: Metadata = {
@@ -68,12 +75,18 @@ export default function MagisterMinistriMarketplacePage() {
           {/* Left Column — Content */}
           <div
             className="relative flex items-center px-8 lg:px-16 xl:px-24 py-20 lg:py-28"
-            style={{ background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)" }}
+            style={{
+              background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)",
+            }}
           >
             <div className="max-w-2xl">
               <p
                 className="uppercase font-bold mb-6 font-body"
-                style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.15em" }}
+                style={{
+                  fontSize: "13px",
+                  color: "#C41E3A",
+                  letterSpacing: "0.15em",
+                }}
               >
                 PROGRAM PASCASARJANA
               </p>
@@ -81,13 +94,21 @@ export default function MagisterMinistriMarketplacePage() {
               <h1 className="mb-8">
                 <span
                   className="block mb-2 font-display italic text-white"
-                  style={{ fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 400, lineHeight: 1.15 }}
+                  style={{
+                    fontSize: "clamp(36px, 5vw, 56px)",
+                    fontWeight: 400,
+                    lineHeight: 1.15,
+                  }}
                 >
                   Magister Ministri
                 </span>
                 <span
                   className="block font-heading text-white"
-                  style={{ fontSize: "clamp(36px, 5.5vw, 68px)", fontWeight: 700, lineHeight: 1.05 }}
+                  style={{
+                    fontSize: "clamp(36px, 5.5vw, 68px)",
+                    fontWeight: 700,
+                    lineHeight: 1.05,
+                  }}
                 >
                   MARKETPLACE
                 </span>
@@ -103,8 +124,8 @@ export default function MagisterMinistriMarketplacePage() {
                 }}
               >
                 Program studi ini ditujukan untuk memperlengkapi profesional,
-                wirausahawan, pebisnis, dan pemimpin gereja dengan landasan Teologi
-                Reformed untuk mengintegrasikan iman dan pekerjaan.
+                wirausahawan, pebisnis, dan pemimpin gereja dengan landasan
+                Teologi Reformed untuk mengintegrasikan iman dan pekerjaan.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -116,13 +137,19 @@ export default function MagisterMinistriMarketplacePage() {
                 </span>
                 <span
                   className="px-6 py-3 rounded-lg font-body font-bold text-white text-sm"
-                  style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)" }}
+                  style={{
+                    background: "rgba(255,255,255,0.15)",
+                    backdropFilter: "blur(8px)",
+                  }}
                 >
                   54 SKS
                 </span>
                 <span
                   className="px-6 py-3 rounded-lg font-body font-bold text-white text-sm"
-                  style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)" }}
+                  style={{
+                    background: "rgba(255,255,255,0.15)",
+                    backdropFilter: "blur(8px)",
+                  }}
                 >
                   Kelas Akhir Pekan
                 </span>
@@ -156,7 +183,11 @@ export default function MagisterMinistriMarketplacePage() {
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               PROFIL LULUSAN
             </p>
@@ -177,7 +208,10 @@ export default function MagisterMinistriMarketplacePage() {
             {/* Informed */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -191,17 +225,23 @@ export default function MagisterMinistriMarketplacePage() {
               >
                 Informed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
-                Profesional Kristen yang memiliki fondasi biblikal-teologis yang kokoh
-                untuk memahami kehidupan di dunia kerja dan misi Allah melalui dunia
-                kerja.
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
+                Profesional Kristen yang memiliki fondasi biblikal-teologis yang
+                kokoh untuk memahami kehidupan di dunia kerja dan misi Allah
+                melalui dunia kerja.
               </p>
             </div>
 
             {/* Transformed */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -215,16 +255,22 @@ export default function MagisterMinistriMarketplacePage() {
               >
                 Transformed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
-                Profesional Kristen yang hidupnya mengalami transformasi dan tumbuh
-                secara nyata dalam spiritualitas yang utuh.
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
+                Profesional Kristen yang hidupnya mengalami transformasi dan
+                tumbuh secara nyata dalam spiritualitas yang utuh.
               </p>
             </div>
 
             {/* Transformative */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -238,9 +284,13 @@ export default function MagisterMinistriMarketplacePage() {
               >
                 Transformative
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
-                Profesional Kristen yang tumbuh dalam semangat dan kompetensi untuk
-                menghadirkan shalom melalui hidup dan karyanya di dunia kerja.
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
+                Profesional Kristen yang tumbuh dalam semangat dan kompetensi
+                untuk menghadirkan shalom melalui hidup dan karyanya di dunia
+                kerja.
               </p>
             </div>
           </div>
@@ -267,12 +317,22 @@ export default function MagisterMinistriMarketplacePage() {
 
               <div className="space-y-8">
                 {/* Jumlah Kredit */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#C41E3A" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#C41E3A" }}
+                >
                   <div className="flex items-center gap-3 mb-2">
-                    <GraduationCap className="w-6 h-6" style={{ color: "#C41E3A" }} />
+                    <GraduationCap
+                      className="w-6 h-6"
+                      style={{ color: "#C41E3A" }}
+                    />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#C41E3A" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#C41E3A",
+                      }}
                     >
                       Jumlah Kredit
                     </span>
@@ -286,28 +346,49 @@ export default function MagisterMinistriMarketplacePage() {
                 </div>
 
                 {/* Masa Studi */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#0056B3" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#0056B3" }}
+                >
                   <div className="flex items-center gap-3 mb-2">
                     <Clock className="w-6 h-6" style={{ color: "#0056B3" }} />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#0056B3" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#0056B3",
+                      }}
                     >
                       Masa Studi
                     </span>
                   </div>
-                  <p className="font-body" style={{ fontSize: "18px", color: "#1A2340", lineHeight: 1.6 }}>
+                  <p
+                    className="font-body"
+                    style={{
+                      fontSize: "18px",
+                      color: "#1A2340",
+                      lineHeight: 1.6,
+                    }}
+                  >
                     2 Tahun (Mulai Agustus / Semester Ganjil)
                   </p>
                 </div>
 
                 {/* Persyaratan */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#00276B" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#00276B" }}
+                >
                   <div className="flex items-center gap-3 mb-3">
                     <Target className="w-6 h-6" style={{ color: "#00276B" }} />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#00276B" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#00276B",
+                      }}
                     >
                       Persyaratan Admisi
                     </span>
@@ -315,10 +396,22 @@ export default function MagisterMinistriMarketplacePage() {
                   <ul className="space-y-2">
                     {REQUIREMENTS.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span style={{ color: "#C41E3A", fontSize: "18px", lineHeight: 1 }}>•</span>
+                        <span
+                          style={{
+                            color: "#C41E3A",
+                            fontSize: "18px",
+                            lineHeight: 1,
+                          }}
+                        >
+                          •
+                        </span>
                         <span
                           className="font-body"
-                          style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.6 }}
+                          style={{
+                            fontSize: "16px",
+                            color: "#6B7A99",
+                            lineHeight: 1.6,
+                          }}
                         >
                           {item}
                         </span>
@@ -341,9 +434,10 @@ export default function MagisterMinistriMarketplacePage() {
                 className="mb-6 font-body"
                 style={{ fontSize: "15px", color: "#6B7A99", lineHeight: 1.6 }}
               >
-                Dirancang khusus untuk para profesional. Mahasiswa yang telah diterima
-                dapat mulai kuliah di bulan Agustus (Ganjil) atau Januari (Genap). Kuliah
-                dalam bentuk <strong>block teaching</strong> secara daring dan luring.
+                Dirancang khusus untuk para profesional. Mahasiswa yang telah
+                diterima dapat mulai kuliah di bulan Agustus (Ganjil) atau
+                Januari (Genap). Kuliah dalam bentuk{" "}
+                <strong>block teaching</strong> secara daring dan luring.
               </p>
               <ul className="space-y-4">
                 {SYSTEM_ITEMS.map((item, idx) => (
@@ -352,13 +446,20 @@ export default function MagisterMinistriMarketplacePage() {
                       className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-1"
                       style={{ background: "#C41E3A" }}
                     >
-                      <span className="font-body font-bold text-white" style={{ fontSize: "12px" }}>
+                      <span
+                        className="font-body font-bold text-white"
+                        style={{ fontSize: "12px" }}
+                      >
                         {idx + 1}
                       </span>
                     </div>
                     <span
                       className="font-body"
-                      style={{ fontSize: "15px", color: "#1A2340", lineHeight: 1.7 }}
+                      style={{
+                        fontSize: "15px",
+                        color: "#1A2340",
+                        lineHeight: 1.7,
+                      }}
                     >
                       {item}
                     </span>
@@ -379,13 +480,19 @@ export default function MagisterMinistriMarketplacePage() {
       {/* SECTION 4 — STRUKTUR KURIKULUM */}
       <section
         className="py-20 lg:py-28"
-        style={{ background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)" }}
+        style={{
+          background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)",
+        }}
       >
         <div className="max-w-[1280px] mx-auto px-6 lg:px-16">
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               STRUKTUR PROGRAM
             </p>
@@ -423,7 +530,11 @@ export default function MagisterMinistriMarketplacePage() {
                 </h3>
                 <p
                   className="font-body"
-                  style={{ fontSize: "14px", color: "rgba(255,255,255,0.85)", lineHeight: 1.5 }}
+                  style={{
+                    fontSize: "14px",
+                    color: "rgba(255,255,255,0.85)",
+                    lineHeight: 1.5,
+                  }}
                 >
                   {cat.description}
                 </p>
@@ -448,13 +559,21 @@ export default function MagisterMinistriMarketplacePage() {
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               DESKRIPSI LENGKAP
             </p>
             <h2
               className="mb-6 font-heading"
-              style={{ fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700, color: "#00276B" }}
+              style={{
+                fontSize: "clamp(32px, 4vw, 48px)",
+                fontWeight: 700,
+                color: "#00276B",
+              }}
             >
               Silabus Program M.Min.
             </h2>
@@ -462,8 +581,9 @@ export default function MagisterMinistriMarketplacePage() {
               className="max-w-3xl mx-auto font-body"
               style={{ fontSize: "18px", color: "#6B7A99", lineHeight: 1.7 }}
             >
-              Pelajari lebih detail kurikulum yang dirancang untuk mengintegrasikan
-              kebenaran Teologi Reformed dengan realitas dunia kerja.
+              Pelajari lebih detail kurikulum yang dirancang untuk
+              mengintegrasikan kebenaran Teologi Reformed dengan realitas dunia
+              kerja.
             </p>
           </div>
 
@@ -489,8 +609,8 @@ export default function MagisterMinistriMarketplacePage() {
             className="mb-10 max-w-2xl mx-auto font-body"
             style={{ fontSize: "18px", color: "#6B7A99", lineHeight: 1.7 }}
           >
-            Bergabunglah dengan program Magister Ministri Marketplace STTB dan jadilah
-            profesional Kristen yang transformatif.
+            Bergabunglah dengan program Magister Ministri Marketplace STTB dan
+            jadilah profesional Kristen yang transformatif.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
@@ -503,7 +623,11 @@ export default function MagisterMinistriMarketplacePage() {
             <Link
               href="/admisi/info-persyaratan"
               className="px-10 py-4 rounded-lg font-bold font-body text-base transition-all hover:bg-gray-50"
-              style={{ color: "#00276B", background: "#FFFFFF", border: "2px solid #00276B" }}
+              style={{
+                color: "#00276B",
+                background: "#FFFFFF",
+                border: "2px solid #00276B",
+              }}
             >
               Info Persyaratan
             </Link>

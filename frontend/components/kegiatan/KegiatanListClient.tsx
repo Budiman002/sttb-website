@@ -215,69 +215,24 @@ export function KegiatanListClient({ items, totalCount }: Props) {
         </div>
       </section>
 
-      {/* SECTION 3 — KEGIATAN UNGGULAN (static featured) */}
-      <section className="py-12 lg:py-16" style={{ background: "#F8F7F4" }}>
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
-          <div
-            className="grid lg:grid-cols-2 rounded-2xl overflow-hidden"
-            style={{ boxShadow: "0 4px 16px rgba(0, 39, 107, 0.12)" }}
-          >
-            <div className="relative aspect-video lg:aspect-auto lg:min-h-[360px]">
-              <Image
-                src="https://images.unsplash.com/photo-1662151820001-0c8d949304a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b3JzaGlwJTIwY2h1cmNoJTIwc2VydmljZXxlbnwxfHx8fDE3NzMyODQ4ODl8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Kelas Sit In Magister Pendidikan Kristen"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div
-                className="absolute top-4 left-4 px-4 py-2 rounded-md"
-                style={{
-                  background: "#C41E3A",
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  color: "#FFFFFF",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.08em",
-                }}
-              >
-                UNGGULAN
-              </div>
-              <div
-                className="absolute top-4 right-4 px-4 py-2 rounded-md"
-                style={{
-                  background: "#16A34A",
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  color: "#FFFFFF",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.08em",
-                }}
-              >
-                ONGOING
-              </div>
-            </div>
-
-            <div className="bg-white p-8 lg:p-10 flex flex-col justify-center">
-              <div className="flex items-center gap-2 mb-4">
-                <span
-                  className="inline-block rounded-full px-3 py-1"
-                  style={{
-                    background: "#16A34A",
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "11px",
-                    fontWeight: 700,
-                    color: "#FFFFFF",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.08em",
-                  }}
-                >
-                  ONGOING
-                </span>
-                <span
-                  className="inline-block rounded-full px-3 py-1"
+      {/* SECTION 3 — KEGIATAN UNGGULAN */}
+      {items.length > 0 && items[0] && (
+        <section className="py-12 lg:py-16" style={{ background: "#F8F7F4" }}>
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
+            <div
+              className="grid lg:grid-cols-2 rounded-2xl overflow-hidden"
+              style={{ boxShadow: "0 4px 16px rgba(0, 39, 107, 0.12)" }}
+            >
+              <div className="relative aspect-video lg:aspect-auto lg:min-h-[360px]">
+                <Image
+                  src={items[0].thumbnailUrl ?? FALLBACK_IMAGE}
+                  alt={items[0].judul}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div
+                  className="absolute top-4 left-4 px-4 py-2 rounded-md"
                   style={{
                     background: "#C41E3A",
                     fontFamily: "var(--font-sans)",
@@ -288,52 +243,100 @@ export function KegiatanListClient({ items, totalCount }: Props) {
                     letterSpacing: "0.08em",
                   }}
                 >
-                  AKADEMIK
-                </span>
+                  UNGGULAN
+                </div>
+                <div
+                  className="absolute top-4 right-4 px-4 py-2 rounded-md"
+                  style={{
+                    background: getStatusColor(items[0].status),
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    color: "#FFFFFF",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                  }}
+                >
+                  {items[0].status.toUpperCase()}
+                </div>
               </div>
 
-              <h2
-                className="mb-6"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "26px",
-                  fontWeight: 700,
-                  color: "#00276B",
-                  lineHeight: 1.3,
-                }}
-              >
-                Kelas Sit In Magister Pendidikan Kristen
-              </h2>
+              <div className="bg-white p-8 lg:p-10 flex flex-col justify-center">
+                <div className="flex items-center gap-2 mb-4">
+                  <span
+                    className="inline-block rounded-full px-3 py-1"
+                    style={{
+                      background: getStatusColor(items[0].status),
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      color: "#FFFFFF",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    {items[0].status.toUpperCase()}
+                  </span>
+                  <span
+                    className="inline-block rounded-full px-3 py-1"
+                    style={{
+                      background: "#C41E3A",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      color: "#FFFFFF",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    {items[0].status}
+                  </span>
+                </div>
 
-              <p
-                className="mb-6"
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "14px",
-                  color: "#6B7280",
-                  lineHeight: 1.7,
-                }}
-              >
-                Kuliah ini membantu mahasiswa melakukan riset literatur yang
-                baik untuk penulisan tugas paper dan tugas akhir.
-              </p>
+                <h2
+                  className="mb-6"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "26px",
+                    fontWeight: 700,
+                    color: "#00276B",
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {items[0].judul}
+                </h2>
 
-              <Link
-                href="/jelajahi/kegiatan/kelas-sit-in-magister-pendidikan-kristen"
-                className="px-8 py-3 rounded-lg font-bold transition-all shadow-lg hover:shadow-xl self-start inline-block"
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "14px",
-                  color: "#FFFFFF",
-                  background: "#C41E3A",
-                }}
-              >
-                Lihat Detail →
-              </Link>
+                {items[0].deskripsi && (
+                  <p
+                    className="mb-6"
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "14px",
+                      color: "#6B7280",
+                      lineHeight: 1.7,
+                    }}
+                  >
+                    {items[0].deskripsi}
+                  </p>
+                )}
+
+                <Link
+                  href={`/jelajahi/kegiatan/${items[0].slug}`}
+                  className="px-8 py-3 rounded-lg font-bold transition-all shadow-lg hover:shadow-xl self-start inline-block"
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "14px",
+                    color: "#FFFFFF",
+                    background: "#C41E3A",
+                  }}
+                >
+                  Lihat Detail →
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* SECTION 4 — GRID KEGIATAN */}
       <section className="py-16 lg:py-24" style={{ background: "#FFFFFF" }}>

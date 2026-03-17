@@ -132,7 +132,9 @@ export default function MarsSttbPage() {
                     ref={audioRef}
                     src="/MarsSTTB/Mars STTB  Sekolah Tinggi Teologi Bandung.mp4"
                     preload="metadata"
-                    onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
+                    onTimeUpdate={(e) =>
+                      setCurrentTime(e.currentTarget.currentTime)
+                    }
                     onEnded={() => setIsPlaying(false)}
                   />
 
@@ -163,7 +165,10 @@ export default function MarsSttbPage() {
                       <div
                         className="h-full bg-[#C41E3A] rounded-full transition-all duration-100"
                         style={{
-                          width: duration > 0 ? `${(currentTime / duration) * 100}%` : "0%",
+                          width:
+                            duration > 0
+                              ? `${(currentTime / duration) * 100}%`
+                              : "0%",
                         }}
                       />
                     </div>

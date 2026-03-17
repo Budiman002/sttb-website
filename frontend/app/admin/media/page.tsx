@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CmsMedia } from "@/components/admin/CmsMedia";
-import { getMediaList } from "@/lib/api";
+import { getCmsMediaArtikelList } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function AdminMediaPage() {
   try {
-    const data = await getMediaList(1, 10, "artikel");
+    const data = await getCmsMediaArtikelList(1, 10);
     const initialItems = data.items.map((item) => ({
       id: item.id,
       slug: item.slug,
@@ -21,7 +21,7 @@ export default async function AdminMediaPage() {
       tanggal: formatDate(item.tanggalPublish),
       status: item.isPublished ? "Published" : "Draft",
     }));
-    return <CmsMedia initialItems={initialItems} />;
+    return <CmsMedia initialItems={initialItems} totalCount={data.totalCount} />;
   } catch {
     return <CmsMedia />;
   }

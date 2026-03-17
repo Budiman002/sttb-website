@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CmsKegiatan } from "@/components/admin/CmsKegiatan";
-import { getKegiatanList } from "@/lib/api";
+import { getCmsKegiatanList } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function AdminKegiatanPage() {
   try {
-    const data = await getKegiatanList(1, 10);
+    const data = await getCmsKegiatanList(1, 10);
     const initialItems = data.items.map((item) => ({
       id: item.id,
       slug: item.slug,
@@ -21,7 +21,7 @@ export default async function AdminKegiatanPage() {
       tanggalSelesai: item.tanggalSelesai ? formatDate(item.tanggalSelesai) : "",
       status: item.isPublished ? "Published" : "Draft",
     }));
-    return <CmsKegiatan initialItems={initialItems} />;
+    return <CmsKegiatan initialItems={initialItems} totalCount={data.totalCount} />;
   } catch {
     return <CmsKegiatan />;
   }

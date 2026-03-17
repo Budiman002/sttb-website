@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -12,7 +12,8 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { deleteBerita } from "@/lib/api";
+import { deleteBerita, getCmsBeritaList } from "@/lib/api";
+import { formatDate } from "@/lib/utils";
 
 interface BeritaItem {
   id: number | string;
@@ -120,14 +121,65 @@ const TABLE_HEADERS = [
   { label: "Aksi", className: "w-[120px] text-center" },
 ];
 
-export function CmsBerita({ initialItems }: { initialItems?: BeritaItem[] } = {}) {
+const PAGE_SIZE = 10;
+
+export function CmsBerita({
+  initialItems,
+  totalCount: initialTotalCount,
+}: {
+  initialItems?: BeritaItem[];
+  totalCount?: number;
+} = {}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedKategori, setSelectedKategori] = useState("semua");
   const [selectedStatus, setSelectedStatus] = useState("semua");
   const [currentPage, setCurrentPage] = useState(1);
-  const [items, setItems] = useState<BeritaItem[]>(initialItems ?? BERITA_DATA_INITIAL);
+  const [items, setItems] = useState<BeritaItem[]>(initialItems ?? []);
+  const [totalCount, setTotalCount] = useState(initialTotalCount ?? 0);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const isFirstRender = useRef(true);
 
-  const totalPages = 3;
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+  // Fetch data when page or filter changes (skip initial mount — server already fetched page 1)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const fetchPage = async () => {
+      setIsLoadingPage(true);
+      try {
+        const kategoriParam =
+          selectedKategori === "semua" ? undefined : selectedKategori;
+        const data = await getCmsBeritaList(
+          currentPage,
+          PAGE_SIZE,
+          kategoriParam,
+        );
+        setItems(
+          data.items.map((item) => ({
+            id: item.id,
+            slug: item.slug,
+            thumbnail: item.thumbnailUrl ?? "",
+            judul: item.judul,
+            kategori: item.kategori,
+            penulis: item.penulis,
+            tanggalPublish: formatDate(item.tanggalPublish),
+            status: item.isPublished ? "Published" : "Draft",
+          })),
+        );
+        setTotalCount(data.totalCount);
+      } catch (error) {
+        console.error("Failed to fetch page:", error);
+      } finally {
+        setIsLoadingPage(false);
+      }
+    };
+
+    fetchPage();
+  }, [currentPage, selectedKategori]);
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Hapus berita ini?")) return;
@@ -138,6 +190,19 @@ export function CmsBerita({ initialItems }: { initialItems?: BeritaItem[] } = {}
       alert("Gagal menghapus. Coba lagi.");
     }
   };
+
+  const filteredItems = items.filter((berita) => {
+    const matchesKategori =
+      selectedKategori === "semua" ||
+      berita.kategori.toLowerCase() === selectedKategori;
+    const matchesStatus =
+      selectedStatus === "semua" ||
+      berita.status.toLowerCase() === selectedStatus;
+    const matchesSearch =
+      searchQuery === "" ||
+      berita.judul.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesKategori && matchesStatus && matchesSearch;
+  });
 
   return (
     <div className="min-h-screen bg-[#F5F7FA] font-body">
@@ -221,7 +286,7 @@ export function CmsBerita({ initialItems }: { initialItems?: BeritaItem[] } = {}
                 </tr>
               </thead>
               <tbody>
-                {items.map((berita) => (
+                {filteredItems.map((berita) => (
                   <tr
                     key={berita.id}
                     className="border-b border-[#E8ECF2] hover:bg-gray-50 transition-colors"
@@ -302,8 +367,20 @@ export function CmsBerita({ initialItems }: { initialItems?: BeritaItem[] } = {}
           <div className="px-6 py-4 border-t border-[#E8ECF2] flex items-center justify-between">
             <p className="text-sm text-[#6B7A99]">
               Menampilkan{" "}
-              <span className="font-semibold text-[#1A2340]">1-6</span> dari{" "}
-              <span className="font-semibold text-[#1A2340]">6</span> berita
+              <span className="font-semibold text-[#1A2340]">
+                {(() => {
+                  const startItem =
+                    totalCount === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+                  const endItem = Math.min(currentPage * PAGE_SIZE, totalCount);
+                  const displayStart = Math.min(startItem, endItem);
+                  return totalCount === 0
+                    ? "0–0"
+                    : `${displayStart}–${endItem}`;
+                })()}
+              </span>{" "}
+              dari{" "}
+              <span className="font-semibold text-[#1A2340]">{totalCount}</span>{" "}
+              berita
             </p>
 
             <div className="flex items-center gap-2">

@@ -187,7 +187,10 @@ function AccordionItem({
   onToggle: () => void;
 }) {
   return (
-    <div className="border-b last:border-b-0" style={{ borderColor: "#E8ECF2" }}>
+    <div
+      className="border-b last:border-b-0"
+      style={{ borderColor: "#E8ECF2" }}
+    >
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between py-5 px-6 text-left transition-all hover:bg-gray-50"
@@ -224,7 +227,9 @@ function AccordionItem({
 }
 
 export function MagisterPendidikanKristenAccordion() {
-  const [openAccordion, setOpenAccordion] = useState<string | null>("fondasi-1");
+  const [openAccordion, setOpenAccordion] = useState<string | null>(
+    "fondasi-1",
+  );
 
   const toggleAccordion = (id: string) => {
     setOpenAccordion(openAccordion === id ? null : id);

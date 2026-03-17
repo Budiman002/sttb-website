@@ -90,6 +90,7 @@ export function CmsKegiatanForm({
         tanggalSelesai,
         status: statusKegiatan,
         penyelenggara,
+        thumbnailUrl: thumbnail ?? undefined,
         isPublished,
       };
       if (mode === "edit") {

@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, GraduationCap, Target, Heart, Lightbulb, TrendingUp } from "lucide-react";
+import {
+  Clock,
+  GraduationCap,
+  Target,
+  Heart,
+  Lightbulb,
+  TrendingUp,
+} from "lucide-react";
 import { MagisterTeologiTransformasiBudayaMasyarakatAccordion } from "@/components/akademik/MagisterTeologiTransformasiBudayaMasyarakatAccordion";
 
 export const metadata: Metadata = {
-  title: "Magister Teologi — Transformasi Budaya & Masyarakat (M.Th.) — STTB Bandung",
+  title:
+    "Magister Teologi — Transformasi Budaya & Masyarakat (M.Th.) — STTB Bandung",
   description:
     "Program Magister Teologi STTB untuk memperlengkapi rohaniwan dengan landasan Teologi Reformed dalam menerapkan peran gereja untuk transformasi budaya dan masyarakat perkotaan. 56 SKS, 2 tahun, gelar M.Th.",
 };
@@ -66,12 +74,18 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
           {/* Left Column — Content */}
           <div
             className="relative flex items-center px-8 lg:px-16 xl:px-24 py-20 lg:py-28"
-            style={{ background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)" }}
+            style={{
+              background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)",
+            }}
           >
             <div className="max-w-2xl">
               <p
                 className="uppercase font-bold mb-6 font-body"
-                style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.15em" }}
+                style={{
+                  fontSize: "13px",
+                  color: "#C41E3A",
+                  letterSpacing: "0.15em",
+                }}
               >
                 PROGRAM PASCASARJANA
               </p>
@@ -79,13 +93,21 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
               <h1 className="mb-8">
                 <span
                   className="block mb-2 font-display italic text-white"
-                  style={{ fontSize: "clamp(42px, 6vw, 68px)", fontWeight: 400, lineHeight: 1.15 }}
+                  style={{
+                    fontSize: "clamp(42px, 6vw, 68px)",
+                    fontWeight: 400,
+                    lineHeight: 1.15,
+                  }}
                 >
                   Magister Teologi
                 </span>
                 <span
                   className="block font-heading text-white"
-                  style={{ fontSize: "clamp(28px, 4.5vw, 58px)", fontWeight: 700, lineHeight: 1.1 }}
+                  style={{
+                    fontSize: "clamp(28px, 4.5vw, 58px)",
+                    fontWeight: 700,
+                    lineHeight: 1.1,
+                  }}
                 >
                   TRANSFORMASI BUDAYA & MASYARAKAT
                 </span>
@@ -101,9 +123,9 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
                 }}
               >
                 Program studi pascasarjana yang ditujukan untuk memperlengkapi
-                rohaniwan dengan landasan Teologi Reformed untuk menerapkan peran
-                gereja dalam melakukan transformasi budaya dan masyarakat dalam
-                konteks perkotaan.
+                rohaniwan dengan landasan Teologi Reformed untuk menerapkan
+                peran gereja dalam melakukan transformasi budaya dan masyarakat
+                dalam konteks perkotaan.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -115,13 +137,19 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
                 </span>
                 <span
                   className="px-6 py-3 rounded-lg font-body font-bold text-white text-sm"
-                  style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)" }}
+                  style={{
+                    background: "rgba(255,255,255,0.15)",
+                    backdropFilter: "blur(8px)",
+                  }}
                 >
                   56 SKS
                 </span>
                 <span
                   className="px-6 py-3 rounded-lg font-body font-bold text-white text-sm"
-                  style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)" }}
+                  style={{
+                    background: "rgba(255,255,255,0.15)",
+                    backdropFilter: "blur(8px)",
+                  }}
                 >
                   2 Tahun
                 </span>
@@ -155,7 +183,11 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               PROFIL LULUSAN
             </p>
@@ -176,7 +208,10 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
             {/* Informed */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -190,17 +225,24 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
               >
                 Informed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
-                <em>Pastor-scholar</em> yang berpengetahuan luas, mampu mengkonstruksi
-                teologi yang sehat berdasarkan teks Alkitab dan mengembangkan
-                relevansinya dalam konteks perkotaan di Indonesia dan sekitarnya.
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
+                <em>Pastor-scholar</em> yang berpengetahuan luas, mampu
+                mengkonstruksi teologi yang sehat berdasarkan teks Alkitab dan
+                mengembangkan relevansinya dalam konteks perkotaan di Indonesia
+                dan sekitarnya.
               </p>
             </div>
 
             {/* Transformed */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -214,7 +256,10 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
               >
                 Transformed
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
                 <em>Pastor-scholar</em> yang hidupnya mengalami transformasi dan
                 berpusatkan kepada Kristus dalam setiap aspek kehidupannya.
               </p>
@@ -223,7 +268,10 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
             {/* Transformative */}
             <div
               className="p-8 rounded-2xl"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 20px rgba(0,39,107,0.08)" }}
+              style={{
+                background: "#FFFFFF",
+                boxShadow: "0 4px 20px rgba(0,39,107,0.08)",
+              }}
             >
               <div
                 className="flex items-center justify-center w-14 h-14 rounded-full mb-6"
@@ -237,10 +285,13 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
               >
                 Transformative
               </h3>
-              <p className="font-body" style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}>
-                <em>Pastor-scholar</em> yang mampu merancang dan melakukan pelayanan
-                yang integral serta mampu melakukan penelitian akademis dan publikasi
-                ilmiah dalam bidang ilmu teologi.
+              <p
+                className="font-body"
+                style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.7 }}
+              >
+                <em>Pastor-scholar</em> yang mampu merancang dan melakukan
+                pelayanan yang integral serta mampu melakukan penelitian
+                akademis dan publikasi ilmiah dalam bidang ilmu teologi.
               </p>
             </div>
           </div>
@@ -267,12 +318,22 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
 
               <div className="space-y-8">
                 {/* Jumlah Kredit */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#C41E3A" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#C41E3A" }}
+                >
                   <div className="flex items-center gap-3 mb-2">
-                    <GraduationCap className="w-6 h-6" style={{ color: "#C41E3A" }} />
+                    <GraduationCap
+                      className="w-6 h-6"
+                      style={{ color: "#C41E3A" }}
+                    />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#C41E3A" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#C41E3A",
+                      }}
                     >
                       Jumlah Kredit
                     </span>
@@ -286,28 +347,49 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
                 </div>
 
                 {/* Masa Studi */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#0056B3" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#0056B3" }}
+                >
                   <div className="flex items-center gap-3 mb-2">
                     <Clock className="w-6 h-6" style={{ color: "#0056B3" }} />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#0056B3" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#0056B3",
+                      }}
                     >
                       Masa Studi
                     </span>
                   </div>
-                  <p className="font-body" style={{ fontSize: "18px", color: "#1A2340", lineHeight: 1.6 }}>
+                  <p
+                    className="font-body"
+                    style={{
+                      fontSize: "18px",
+                      color: "#1A2340",
+                      lineHeight: 1.6,
+                    }}
+                  >
                     2 Tahun
                   </p>
                 </div>
 
                 {/* Persyaratan */}
-                <div className="border-l-4 pl-6" style={{ borderColor: "#00276B" }}>
+                <div
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: "#00276B" }}
+                >
                   <div className="flex items-center gap-3 mb-3">
                     <Target className="w-6 h-6" style={{ color: "#00276B" }} />
                     <span
                       className="font-body font-bold uppercase"
-                      style={{ fontSize: "14px", letterSpacing: "0.08em", color: "#00276B" }}
+                      style={{
+                        fontSize: "14px",
+                        letterSpacing: "0.08em",
+                        color: "#00276B",
+                      }}
                     >
                       Persyaratan Admisi
                     </span>
@@ -315,10 +397,22 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
                   <ul className="space-y-2">
                     {REQUIREMENTS.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span style={{ color: "#C41E3A", fontSize: "18px", lineHeight: 1 }}>•</span>
+                        <span
+                          style={{
+                            color: "#C41E3A",
+                            fontSize: "18px",
+                            lineHeight: 1,
+                          }}
+                        >
+                          •
+                        </span>
                         <span
                           className="font-body"
-                          style={{ fontSize: "16px", color: "#6B7A99", lineHeight: 1.6 }}
+                          style={{
+                            fontSize: "16px",
+                            color: "#6B7A99",
+                            lineHeight: 1.6,
+                          }}
                         >
                           {item}
                         </span>
@@ -344,13 +438,20 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
                       className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-1"
                       style={{ background: "#C41E3A" }}
                     >
-                      <span className="font-body font-bold text-white" style={{ fontSize: "12px" }}>
+                      <span
+                        className="font-body font-bold text-white"
+                        style={{ fontSize: "12px" }}
+                      >
                         {idx + 1}
                       </span>
                     </div>
                     <span
                       className="font-body"
-                      style={{ fontSize: "16px", color: "#1A2340", lineHeight: 1.7 }}
+                      style={{
+                        fontSize: "16px",
+                        color: "#1A2340",
+                        lineHeight: 1.7,
+                      }}
                     >
                       {item}
                     </span>
@@ -365,13 +466,19 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
       {/* SECTION 4 — STRUKTUR KURIKULUM */}
       <section
         className="py-20 lg:py-28"
-        style={{ background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)" }}
+        style={{
+          background: "linear-gradient(135deg, #00276B 0%, #003F8A 100%)",
+        }}
       >
         <div className="max-w-[1280px] mx-auto px-6 lg:px-16">
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               STRUKTUR PROGRAM
             </p>
@@ -409,7 +516,11 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
                 </h3>
                 <p
                   className="mt-auto font-body"
-                  style={{ fontSize: "14px", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}
+                  style={{
+                    fontSize: "14px",
+                    color: "rgba(255,255,255,0.85)",
+                    lineHeight: 1.6,
+                  }}
                 >
                   {cat.description}
                 </p>
@@ -434,13 +545,21 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
           <div className="text-center mb-16">
             <p
               className="uppercase font-bold mb-4 font-body"
-              style={{ fontSize: "13px", color: "#C41E3A", letterSpacing: "0.12em" }}
+              style={{
+                fontSize: "13px",
+                color: "#C41E3A",
+                letterSpacing: "0.12em",
+              }}
             >
               DESKRIPSI LENGKAP
             </p>
             <h2
               className="mb-6 font-heading"
-              style={{ fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700, color: "#00276B" }}
+              style={{
+                fontSize: "clamp(32px, 4vw, 48px)",
+                fontWeight: 700,
+                color: "#00276B",
+              }}
             >
               Mata Kuliah Program M.Th.
             </h2>
@@ -448,8 +567,8 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
               className="max-w-3xl mx-auto font-body"
               style={{ fontSize: "18px", color: "#6B7A99", lineHeight: 1.7 }}
             >
-              Pelajari lebih detail tentang setiap mata kuliah yang berfokus pada
-              Transformasi Budaya &amp; Masyarakat dalam konteks perkotaan.
+              Pelajari lebih detail tentang setiap mata kuliah yang berfokus
+              pada Transformasi Budaya &amp; Masyarakat dalam konteks perkotaan.
             </p>
           </div>
 
@@ -475,8 +594,8 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
             className="mb-10 max-w-2xl mx-auto font-body"
             style={{ fontSize: "18px", color: "#6B7A99", lineHeight: 1.7 }}
           >
-            Bergabunglah dengan program M.Th. STTB dan wujudkan panggilan Anda untuk
-            menjadi agen perubahan di tengah masyarakat urban.
+            Bergabunglah dengan program M.Th. STTB dan wujudkan panggilan Anda
+            untuk menjadi agen perubahan di tengah masyarakat urban.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
@@ -489,7 +608,11 @@ export default function MagisterTeologiTransformasiBudayaMasyarakatPage() {
             <Link
               href="/admisi/info-persyaratan"
               className="px-10 py-4 rounded-lg font-bold font-body text-base transition-all hover:bg-gray-50"
-              style={{ color: "#00276B", background: "#FFFFFF", border: "2px solid #00276B" }}
+              style={{
+                color: "#00276B",
+                background: "#FFFFFF",
+                border: "2px solid #00276B",
+              }}
             >
               Info Persyaratan
             </Link>

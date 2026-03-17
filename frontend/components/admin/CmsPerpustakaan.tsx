@@ -12,7 +12,7 @@ import {
   ChevronRight,
   ChevronDown,
 } from "lucide-react";
-import { deletePerpustakaan } from "@/lib/api";
+import { deletePerpustakaan, getCmsPerpustakaanList } from "@/lib/api";
 
 const CATEGORIES = [
   "Semua Kategori",
@@ -121,17 +121,30 @@ function getStatusClass(status: string) {
     : "bg-[#F5F7FA] text-[#9AA3B5]";
 }
 
+const PAGE_SIZE = 10;
 const totalPages = 3;
 
-export function CmsPerpustakaan({ initialItems }: { initialItems?: PerpustakaanItem[] } = {}) {
+export function CmsPerpustakaan({
+  initialItems,
+  totalCount: initialTotalCount,
+}: {
+  initialItems?: PerpustakaanItem[];
+  totalCount?: number;
+} = {}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Semua Kategori");
   const [currentPage, setCurrentPage] = useState(1);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
-  const [items, setItems] = useState<PerpustakaanItem[]>(initialItems ?? PERPUSTAKAAN_DATA_INITIAL);
+  const [items, setItems] = useState<PerpustakaanItem[]>(initialItems ?? []);
+  const [totalCount, setTotalCount] = useState(initialTotalCount ?? 0);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+
+  const totalPagesCalculated = Math.ceil(totalCount / PAGE_SIZE);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef(true);
 
+  // Handle dropdown click outside
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (
@@ -144,6 +157,51 @@ export function CmsPerpustakaan({ initialItems }: { initialItems?: PerpustakaanI
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Fetch data when page or filter changes (skip initial mount — server already fetched page 1)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const fetchPage = async () => {
+      setIsLoadingPage(true);
+      try {
+        const kategoriParam =
+          selectedCategory === "Semua Kategori" ? undefined : selectedCategory;
+        const data = await getCmsPerpustakaanList(
+          currentPage,
+          PAGE_SIZE,
+          kategoriParam,
+        );
+        setItems(
+          data.items.map((item) => ({
+            id: item.id,
+            slug: item.slug,
+            thumbnail: item.thumbnailUrl ?? "",
+            judul: item.judul,
+            penulis: item.penulis,
+            kategori: item.kategori,
+            tahun: String(item.tahun ?? ""),
+            status: item.isPublished ? "Published" : "Draft",
+          })),
+        );
+        setTotalCount(data.totalCount);
+      } catch (error) {
+        console.error("Failed to fetch page:", error);
+      } finally {
+        setIsLoadingPage(false);
+      }
+    };
+
+    fetchPage();
+  }, [currentPage, selectedCategory]);
+
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
+    setCurrentPage(1);
+  };
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Hapus koleksi ini?")) return;
@@ -214,7 +272,7 @@ export function CmsPerpustakaan({ initialItems }: { initialItems?: PerpustakaanI
                       key={category}
                       type="button"
                       onClick={() => {
-                        setSelectedCategory(category);
+                        handleCategoryChange(category);
                         setShowCategoryDropdown(false);
                       }}
                       className={`w-full text-left px-4 py-3 text-sm border-b border-[#E8ECF2] last:border-b-0 transition-colors hover:bg-blue-50 ${
@@ -330,8 +388,20 @@ export function CmsPerpustakaan({ initialItems }: { initialItems?: PerpustakaanI
           <div className="px-6 py-4 border-t border-[#E8ECF2] flex items-center justify-between">
             <p className="text-sm text-[#6B7A99]">
               Menampilkan{" "}
-              <span className="font-semibold text-[#1A2340]">1-6</span> dari{" "}
-              <span className="font-semibold text-[#1A2340]">6</span> koleksi
+              <span className="font-semibold text-[#1A2340]">
+                {(() => {
+                  const startItem =
+                    totalCount === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+                  const endItem = Math.min(currentPage * PAGE_SIZE, totalCount);
+                  const displayStart = Math.min(startItem, endItem);
+                  return totalCount === 0
+                    ? "0–0"
+                    : `${displayStart}–${endItem}`;
+                })()}
+              </span>{" "}
+              dari{" "}
+              <span className="font-semibold text-[#1A2340]">{totalCount}</span>{" "}
+              koleksi
             </p>
 
             <div className="flex items-center gap-2">

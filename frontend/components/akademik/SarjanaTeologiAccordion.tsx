@@ -97,7 +97,8 @@ const COURSE_CATEGORIES: CourseCategory[] = [
       },
       {
         id: "biblika-7",
-        title: "Studi Perjanjian Baru 2: Kisah Para Rasul dan Surat Paulus (3 SKS)",
+        title:
+          "Studi Perjanjian Baru 2: Kisah Para Rasul dan Surat Paulus (3 SKS)",
         content:
           "Studi komprehensif terhadap Kitab Kisah Para Rasul dan Surat-Surat Paulus. Penekanan diberikan pada aspek historis, teologis, eksegesis, keunikan masing-masing kitab, dan aplikasi praktis bagi kehidupan rohani dan pelayanan.",
       },
@@ -202,7 +203,10 @@ function AccordionItem({
   onToggle: () => void;
 }) {
   return (
-    <div className="border-b last:border-b-0" style={{ borderColor: "#E8ECF2" }}>
+    <div
+      className="border-b last:border-b-0"
+      style={{ borderColor: "#E8ECF2" }}
+    >
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between py-5 px-6 text-left transition-all hover:bg-gray-50"

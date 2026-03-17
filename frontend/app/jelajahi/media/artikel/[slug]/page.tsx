@@ -6,43 +6,10 @@ import { notFound } from "next/navigation";
 import { getMediaArtikelDetail, getMediaList } from "@/lib/api";
 import { BackButton } from "@/components/shared/BackButton";
 import { formatDate } from "@/lib/utils";
-import type { MediaArtikelDetail } from "@/types/api";
+import type { MediaArtikelDetail, MediaListItem } from "@/types/api";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1736066330610-c102cab4e942?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjbGFzc3Jvb20lMjBsZWN0dXJlJTIwdGVhY2hpbmd8ZW58MXx8fHwxNzczMjkwODkwfDA&ixlib=rb-4.1.0&q=80&w=1080";
-
-const relatedArticles = [
-  {
-    category: "MONOGRAF",
-    date: "Agustus 2024",
-    title: "Buku Penulisan Ilmiah Bidang Teologi",
-    excerpt:
-      "Panduan penulisan untuk bidang studi teologi dari perspektif akademis...",
-    image:
-      "https://images.unsplash.com/photo-1626118711692-716dae857f6d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhY2FkZW1pYyUyMHdyaXRpbmclMjBib29rc3xlbnwxfHx8fDE3NzMyOTA4ODd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    slug: "buku-penulisan-ilmiah-bidang-teologi",
-  },
-  {
-    category: "MONOGRAF",
-    date: "Juli 2024",
-    title: "Buku Misi Allah dan Tugas Gereja",
-    excerpt:
-      "Memahami misi Allah dalam konteks tugas dan panggilan gereja masa kini...",
-    image:
-      "https://images.unsplash.com/photo-1626118711692-716dae857f6d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhY2FkZW1pYyUyMHdyaXRpbmclMjBib29rc3xlbnwxfHx8fDE3NzMyOTA4ODd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    slug: "buku-misi-allah-dan-tugas-gereja",
-  },
-  {
-    category: "BULETIN",
-    date: "Agustus 2024",
-    title: "Buletin STTB #56 Agustus 2024",
-    excerpt:
-      "Edisi terbaru buletin STTB membahas perkembangan terkini kampus...",
-    image:
-      "https://images.unsplash.com/photo-1693011142814-aa33d7d1535c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHVkZW50cyUyMGNhbXB1cyUyMGxpZmV8ZW58MXx8fHwxNzczMjkwODkwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-    slug: "buletin-sttb-56-agustus-2024",
-  },
-];
 
 export async function generateStaticParams() {
   try {
@@ -83,6 +50,16 @@ export default async function ArtikelDetailPage({
     notFound();
   }
   if (!data) notFound();
+
+  let relatedArticles: MediaListItem[] = [];
+  try {
+    const relatedData = await getMediaList(1, 9, "artikel");
+    relatedArticles = relatedData.items
+      .filter((item) => item.slug !== slug)
+      .slice(0, 3);
+  } catch {
+    // keep empty on error
+  }
 
   const heroImage = data.thumbnailUrl ?? FALLBACK_IMAGE;
   const nameParts = data.penulis
@@ -141,7 +118,7 @@ export default async function ArtikelDetailPage({
                 color: "#6B7280",
               }}
             >
-              • {formatDate(data.tanggalPublish)}
+              • {data.tanggalPublish ? formatDate(data.tanggalPublish) : "—"}
             </span>
           </div>
 
@@ -250,7 +227,7 @@ export default async function ArtikelDetailPage({
               color: "#1F2937",
               lineHeight: 1.9,
             }}
-            dangerouslySetInnerHTML={{ __html: data.konten }}
+            dangerouslySetInnerHTML={{ __html: data.konten ?? "" }}
           />
 
           {/* Tags Row */}
@@ -326,129 +303,133 @@ export default async function ArtikelDetailPage({
       </section>
 
       {/* SECTION 4 — ARTIKEL TERKAIT */}
-      <section className="py-16 lg:py-20" style={{ background: "#F8F7F4" }}>
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
-          {/* Section Header */}
-          <div className="mb-12">
-            <p
-              className="uppercase font-bold mb-4"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "13px",
-                color: "#C41E3A",
-                letterSpacing: "0.12em",
-              }}
-            >
-              BACA JUGA
-            </p>
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(2rem, 5vw, 3rem)",
-                fontWeight: 700,
-                color: "#00276B",
-              }}
-            >
-              Artikel Terkait
-            </h2>
-          </div>
-
-          {/* 3-Column Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedArticles.map((card, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-lg overflow-hidden"
+      {relatedArticles.length > 0 && (
+        <section className="py-16 lg:py-20" style={{ background: "#F8F7F4" }}>
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
+            {/* Section Header */}
+            <div className="mb-12">
+              <p
+                className="uppercase font-bold mb-4"
                 style={{
-                  boxShadow: "0 4px 16px rgba(0, 39, 107, 0.08)",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "13px",
+                  color: "#C41E3A",
+                  letterSpacing: "0.12em",
                 }}
               >
-                {/* Image Area */}
-                <div className="relative aspect-video overflow-hidden">
-                  <Image
-                    src={card.image}
-                    alt={card.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                  {/* Category Badge */}
-                  <div
-                    className="absolute bottom-4 left-4 px-3 py-1 rounded-md"
-                    style={{
-                      background: "#C41E3A",
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      color: "#FFFFFF",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.08em",
-                    }}
-                  >
-                    {card.category}
+                BACA JUGA
+              </p>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(2rem, 5vw, 3rem)",
+                  fontWeight: 700,
+                  color: "#00276B",
+                }}
+              >
+                Artikel Terkait
+              </h2>
+            </div>
+
+            {/* 3-Column Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {relatedArticles.map((card) => (
+                <div
+                  key={card.id}
+                  className="bg-white rounded-lg overflow-hidden"
+                  style={{
+                    boxShadow: "0 4px 16px rgba(0, 39, 107, 0.08)",
+                  }}
+                >
+                  {/* Image Area */}
+                  <div className="relative aspect-video overflow-hidden">
+                    <Image
+                      src={card.thumbnailUrl ?? FALLBACK_IMAGE}
+                      alt={card.judul}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                    {/* Category Badge */}
+                    <div
+                      className="absolute bottom-4 left-4 px-3 py-1 rounded-md"
+                      style={{
+                        background: "#C41E3A",
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "10px",
+                        fontWeight: 700,
+                        color: "#FFFFFF",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                      }}
+                    >
+                      {card.kategori}
+                    </div>
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="p-5">
+                    <p
+                      className="mb-2"
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "12px",
+                        color: "#6B7280",
+                      }}
+                    >
+                      {card.tanggalPublish
+                        ? formatDate(card.tanggalPublish)
+                        : "—"}
+                    </p>
+                    <h3
+                      className="mb-3"
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "18px",
+                        fontWeight: 700,
+                        color: "#00276B",
+                        lineHeight: 1.3,
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                      }}
+                    >
+                      {card.judul}
+                    </h3>
+                    <p
+                      className="mb-4"
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "14px",
+                        color: "#6B7280",
+                        lineHeight: 1.6,
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                      }}
+                    >
+                      {card.excerpt}
+                    </p>
+                    <Link
+                      href={`/jelajahi/media/artikel/${card.slug}`}
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "13px",
+                        fontWeight: 600,
+                        color: "#C41E3A",
+                      }}
+                    >
+                      Baca Selengkapnya →
+                    </Link>
                   </div>
                 </div>
-
-                {/* Card Body */}
-                <div className="p-5">
-                  <p
-                    className="mb-2"
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "12px",
-                      color: "#6B7280",
-                    }}
-                  >
-                    {card.date}
-                  </p>
-                  <h3
-                    className="mb-3"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: "18px",
-                      fontWeight: 700,
-                      color: "#00276B",
-                      lineHeight: 1.3,
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {card.title}
-                  </h3>
-                  <p
-                    className="mb-4"
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "14px",
-                      color: "#6B7280",
-                      lineHeight: 1.6,
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {card.excerpt}
-                  </p>
-                  <Link
-                    href={`/jelajahi/media/artikel/${card.slug}`}
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "13px",
-                      fontWeight: 600,
-                      color: "#C41E3A",
-                    }}
-                  >
-                    Baca Selengkapnya →
-                  </Link>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* SECTION 5 — BACK NAVIGATION */}
       <BackButton label="Kembali ke Media" bgSection="#FFFFFF" />

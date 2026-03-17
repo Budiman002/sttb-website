@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CmsBerita } from "@/components/admin/CmsBerita";
-import { getBeritaList } from "@/lib/api";
+import { getCmsBeritaList } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function AdminBeritaPage() {
   try {
-    const data = await getBeritaList(1, 10);
+    const data = await getCmsBeritaList(1, 10);
     const initialItems = data.items.map((item) => ({
       id: item.id,
       slug: item.slug,
@@ -21,7 +21,7 @@ export default async function AdminBeritaPage() {
       tanggalPublish: formatDate(item.tanggalPublish),
       status: item.isPublished ? "Published" : "Draft",
     }));
-    return <CmsBerita initialItems={initialItems} />;
+    return <CmsBerita initialItems={initialItems} totalCount={data.totalCount} />;
   } catch {
     return <CmsBerita />;
   }

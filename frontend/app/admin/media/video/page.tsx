@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CmsMediaVideo } from "@/components/admin/CmsMediaVideo";
-import { getMediaList } from "@/lib/api";
+import { getCmsMediaVideoList } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function AdminMediaVideoPage() {
   try {
-    const data = await getMediaList(1, 10, "video");
+    const data = await getCmsMediaVideoList(1, 10);
     const initialItems = data.items.map((item) => ({
       id: item.id,
       slug: item.slug,
@@ -19,9 +19,9 @@ export default async function AdminMediaVideoPage() {
       durasi: "",
       videoUrl: "",
       tanggal: formatDate(item.tanggalPublish),
-      status: "",
+      status: item.isPublished ? "Published" : "Draft",
     }));
-    return <CmsMediaVideo initialItems={initialItems} />;
+    return <CmsMediaVideo initialItems={initialItems} totalCount={data.totalCount} />;
   } catch {
     return <CmsMediaVideo />;
   }
