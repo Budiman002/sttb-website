@@ -36,8 +36,11 @@ const slides = [
 const filterCategories = [
   "Semua",
   "Institusi",
-  "Kegiatan",
+  "Kegiatan Kampus",
   "Akademik",
+  "Rohani",
+  "Pengumuman",
+  "Alumni",
   "LEAD",
   "Pelayanan",
 ];
@@ -59,7 +62,9 @@ export function BeritaListClient({ items, totalCount }: Props) {
     const matchesSearch =
       searchQuery === "" ||
       item.judul.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+      (item.deskripsi ?? item.excerpt ?? "")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
@@ -253,78 +258,82 @@ export function BeritaListClient({ items, totalCount }: Props) {
         </section>
 
         {/* SECTION 3 — BERITA UNGGULAN */}
-        <section className="py-12 lg:py-16" style={{ background: "#F8F7F4" }}>
-          <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
-            <div
-              className="grid lg:grid-cols-[55%_45%] rounded-2xl overflow-hidden"
-              style={{ boxShadow: "0 4px 16px rgba(0,39,107,0.12)" }}
-            >
-              <div className="relative aspect-video lg:aspect-auto min-h-[300px]">
-                <Image
-                  src="/images/jelajahi-berita/Grand%20Templeton%20untuk%20Proyek%20ECLAS%20International.png"
-                  alt="STTB Bandung Terima Grand Templeton untuk Proyek ECLAS International"
-                  fill
-                  className="object-cover"
-                />
-                <div
-                  className="absolute top-4 left-4 px-4 py-2 rounded-md text-white text-xs font-bold uppercase"
-                  style={{
-                    background: "#C41E3A",
-                    fontFamily: "var(--font-sans)",
-                    letterSpacing: "0.08em",
-                  }}
-                >
-                  UNGGULAN
+        {items.length > 0 && items[0] && (
+          <section className="py-12 lg:py-16" style={{ background: "#F8F7F4" }}>
+            <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
+              <div
+                className="grid lg:grid-cols-[55%_45%] rounded-2xl overflow-hidden"
+                style={{ boxShadow: "0 4px 16px rgba(0,39,107,0.12)" }}
+              >
+                <div className="relative aspect-video lg:aspect-auto min-h-[300px]">
+                  <Image
+                    src={items[0].thumbnailUrl ?? FALLBACK_IMAGE}
+                    alt={items[0].judul}
+                    fill
+                    className="object-cover"
+                  />
+                  <div
+                    className="absolute top-4 left-4 px-4 py-2 rounded-md text-white text-xs font-bold uppercase"
+                    style={{
+                      background: "#C41E3A",
+                      fontFamily: "var(--font-sans)",
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    UNGGULAN
+                  </div>
+                </div>
+
+                <div className="bg-white p-8 lg:p-10 flex flex-col justify-center">
+                  <p
+                    className="mb-4 uppercase text-xs font-semibold"
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      color: "#C41E3A",
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    {items[0].kategori} &bull;{" "}
+                    {items[0].tanggalPublish
+                      ? formatDate(items[0].tanggalPublish)
+                      : "—"}
+                  </p>
+                  <h2
+                    className="mb-4"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "28px",
+                      fontWeight: 700,
+                      color: "#00276B",
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {items[0].judul}
+                  </h2>
+                  {(items[0].deskripsi ?? items[0].excerpt) && (
+                    <p
+                      className="mb-6 text-sm leading-relaxed"
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        color: "#00276B",
+                        lineHeight: 1.7,
+                      }}
+                    >
+                      {items[0].deskripsi ?? items[0].excerpt}
+                    </p>
+                  )}
+                  <Link
+                    href={`/jelajahi/berita/${items[0].slug}`}
+                    className="text-sm font-semibold"
+                    style={{ fontFamily: "var(--font-sans)", color: "#C41E3A" }}
+                  >
+                    Baca Selengkapnya &rarr;
+                  </Link>
                 </div>
               </div>
-
-              <div className="bg-white p-8 lg:p-10 flex flex-col justify-center">
-                <p
-                  className="mb-4 uppercase text-xs font-semibold"
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    color: "#C41E3A",
-                    letterSpacing: "0.08em",
-                  }}
-                >
-                  INSTITUSI &bull; 15 Maret 2026
-                </p>
-                <h2
-                  className="mb-4"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "28px",
-                    fontWeight: 700,
-                    color: "#00276B",
-                    lineHeight: 1.3,
-                  }}
-                >
-                  STTB Bandung Terima Grand Templeton untuk Proyek ECLAS
-                  International
-                </h2>
-                <p
-                  className="mb-6 text-sm leading-relaxed"
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    color: "#00276B",
-                    lineHeight: 1.7,
-                  }}
-                >
-                  STT Bandung dipercaya mendapatkan Grand dari Templeton untuk
-                  mengerjakan project ECLAS (Equipping Christian Leadership in
-                  an Age of Science)...
-                </p>
-                <a
-                  href="#"
-                  className="text-sm font-semibold"
-                  style={{ fontFamily: "var(--font-sans)", color: "#C41E3A" }}
-                >
-                  Baca Selengkapnya &rarr;
-                </a>
-              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* SECTION 4 — GRID BERITA TERBARU */}
         <section className="py-16 lg:py-24 bg-white">
@@ -410,7 +419,7 @@ export function BeritaListClient({ items, totalCount }: Props) {
                       className="mb-4 text-sm text-gray-500 leading-relaxed line-clamp-2"
                       style={{ fontFamily: "var(--font-sans)" }}
                     >
-                      {item.excerpt}
+                      {item.deskripsi ?? item.excerpt}
                     </p>
                     <Link
                       href={`/jelajahi/berita/${item.slug}`}

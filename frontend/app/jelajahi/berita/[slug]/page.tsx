@@ -135,7 +135,7 @@ export default async function BeritaDetailPage({
                   maxWidth: "700px",
                 }}
               >
-                {data.excerpt}
+                {data.deskripsi ?? data.excerpt}
               </p>
             </div>
 
@@ -312,7 +312,7 @@ export default async function BeritaDetailPage({
                         className="mb-4 text-sm text-gray-500 leading-relaxed line-clamp-2"
                         style={{ fontFamily: "var(--font-sans)" }}
                       >
-                        {card.excerpt}
+                        {card.deskripsi ?? card.excerpt}
                       </p>
                       <Link
                         href={`/jelajahi/berita/${card.slug}`}
