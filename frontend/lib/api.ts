@@ -34,7 +34,7 @@ async function apiFetch<T>(
 ): Promise<T> {
   const res = await fetch(`${BASE_URL}${endpoint}`, {
     ...options,
-    next: { revalidate: 60 },
+    cache: "no-store",
     headers: {
       "Content-Type": "application/json",
       ...options?.headers,
@@ -235,14 +235,16 @@ export function loginAdmin(
 export function getAuthHeaders(): { Authorization: string } {
   const token =
     typeof window !== "undefined"
-      ? localStorage.getItem("sttb_admin_token") ?? ""
+      ? (localStorage.getItem("sttb_admin_token") ?? "")
       : "";
   return { Authorization: `Bearer ${token}` };
 }
 
 // ─── Berita mutations ─────────────────────────────────────────────────────────
 
-export function createBerita(data: CreateBeritaPayload): Promise<BeritaDetailItem> {
+export function createBerita(
+  data: CreateBeritaPayload,
+): Promise<BeritaDetailItem> {
   return apiMutate("/api/cms/Berita", {
     method: "POST",
     headers: getAuthHeaders(),

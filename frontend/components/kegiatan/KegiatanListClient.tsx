@@ -133,7 +133,7 @@ export function KegiatanListClient({ items, totalCount }: Props) {
             className="relative flex items-center justify-center py-20 lg:py-28"
             style={{ background: "#003F8A" }}
           >
-            <div className="relative w-64 h-64" style={{ opacity: 0.3 }}>
+            <div className="relative w-96 h-96" style={{ opacity: 0.3 }}>
               <Image
                 src="/images/Image (STTB Logo).png"
                 alt="STTB Logo"
