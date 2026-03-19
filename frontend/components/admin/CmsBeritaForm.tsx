@@ -22,11 +22,14 @@ import UnderlineExtension from "@tiptap/extension-underline";
 import { createBerita, updateBerita, getBeritaDetail } from "@/lib/api";
 
 const CATEGORIES = [
+  "Institusi",
   "Kegiatan Kampus",
   "Akademik",
   "Rohani",
   "Pengumuman",
   "Alumni",
+  "LEAD",
+  "Pelayanan",
 ];
 
 interface CmsBeritaFormProps {
@@ -57,6 +60,12 @@ export function CmsBeritaForm({
     immediatelyRender: false,
     extensions: [StarterKit, UnderlineExtension],
     content: "",
+    onCreate: ({ editor }) => {
+      if (pendingKonten.current) {
+        editor.commands.setContent(pendingKonten.current);
+        pendingKonten.current = null;
+      }
+    },
     onUpdate: ({ editor }) => {
       setKonten(editor.getHTML());
     },
@@ -77,6 +86,13 @@ export function CmsBeritaForm({
     }
   }, [editor]);
 
+  // Fallback: fires when either editor or konten changes — whichever resolves last wins
+  useEffect(() => {
+    if (editor && konten) {
+      editor.commands.setContent(konten);
+    }
+  }, [editor, konten]);
+
   useEffect(() => {
     if (mode === "edit" && editSlug) {
       getBeritaDetail(editSlug)
@@ -87,7 +103,7 @@ export function CmsBeritaForm({
           setKategori(data.kategori ?? "");
           setPenulis(data.penulis ?? "");
           setKonten(data.konten ?? "");
-          setDeskripsi(data.excerpt ?? "");
+          setDeskripsi(data.deskripsi ?? data.excerpt ?? "");
           setTanggalPublish(data.tanggalPublish?.split("T")[0] ?? "");
           setThumbnail(data.thumbnailUrl ?? null);
           setStatus(data.isPublished ? "published" : "draft");
@@ -273,13 +289,53 @@ export function CmsBeritaForm({
               {/* Toolbar */}
               <div className="px-6 py-3 border-t border-b border-[#E8ECF2] bg-[#F5F7FA] flex items-center gap-1">
                 {[
-                  { icon: Bold, label: "Bold", action: () => editor?.chain().focus().toggleBold().run(), isActive: editor?.isActive("bold") },
-                  { icon: Italic, label: "Italic", action: () => editor?.chain().focus().toggleItalic().run(), isActive: editor?.isActive("italic") },
-                  { icon: Underline, label: "Underline", action: () => editor?.chain().focus().toggleUnderline().run(), isActive: editor?.isActive("underline") },
-                  { icon: Heading1, label: "Heading 1", action: () => editor?.chain().focus().toggleHeading({ level: 1 }).run(), isActive: editor?.isActive("heading", { level: 1 }) },
-                  { icon: Heading2, label: "Heading 2", action: () => editor?.chain().focus().toggleHeading({ level: 2 }).run(), isActive: editor?.isActive("heading", { level: 2 }) },
-                  { icon: List, label: "Bullet List", action: () => editor?.chain().focus().toggleBulletList().run(), isActive: editor?.isActive("bulletList") },
-                  { icon: ListOrdered, label: "Numbered List", action: () => editor?.chain().focus().toggleOrderedList().run(), isActive: editor?.isActive("orderedList") },
+                  {
+                    icon: Bold,
+                    label: "Bold",
+                    action: () => editor?.chain().focus().toggleBold().run(),
+                    isActive: editor?.isActive("bold"),
+                  },
+                  {
+                    icon: Italic,
+                    label: "Italic",
+                    action: () => editor?.chain().focus().toggleItalic().run(),
+                    isActive: editor?.isActive("italic"),
+                  },
+                  {
+                    icon: Underline,
+                    label: "Underline",
+                    action: () =>
+                      editor?.chain().focus().toggleUnderline().run(),
+                    isActive: editor?.isActive("underline"),
+                  },
+                  {
+                    icon: Heading1,
+                    label: "Heading 1",
+                    action: () =>
+                      editor?.chain().focus().toggleHeading({ level: 1 }).run(),
+                    isActive: editor?.isActive("heading", { level: 1 }),
+                  },
+                  {
+                    icon: Heading2,
+                    label: "Heading 2",
+                    action: () =>
+                      editor?.chain().focus().toggleHeading({ level: 2 }).run(),
+                    isActive: editor?.isActive("heading", { level: 2 }),
+                  },
+                  {
+                    icon: List,
+                    label: "Bullet List",
+                    action: () =>
+                      editor?.chain().focus().toggleBulletList().run(),
+                    isActive: editor?.isActive("bulletList"),
+                  },
+                  {
+                    icon: ListOrdered,
+                    label: "Numbered List",
+                    action: () =>
+                      editor?.chain().focus().toggleOrderedList().run(),
+                    isActive: editor?.isActive("orderedList"),
+                  },
                 ].map(({ icon: Icon, label, action, isActive }) => (
                   <button
                     key={label}
