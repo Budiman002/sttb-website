@@ -16,6 +16,7 @@ export interface BeritaListItem {
   judul: string;
   kategori: string;
   excerpt: string;
+  deskripsi?: string;
   thumbnailUrl: string | null;
   tanggalPublish: string;
   penulis: string;
@@ -30,6 +31,7 @@ export interface BeritaDetailItem {
   kategori: string;
   konten: string;
   excerpt: string;
+  deskripsi?: string;
   thumbnailUrl: string | null;
   tanggalPublish: string;
   penulis: string;
