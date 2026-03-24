@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
-import { Play, BookOpen, Users, Building } from "lucide-react";
+import { Play, BookOpen, Users, Building, ArrowRight } from "lucide-react";
 
 export function CampusTour() {
   const facilities = [
@@ -198,6 +199,21 @@ export function CampusTour() {
               </div>
             );
           })}
+        </div>
+
+        {/* See More Link */}
+        <div className="mt-12 text-center animate-in fade-in duration-700 delay-300">
+          <Link href="/kehidupan-kampus/fasilitas">
+            <button
+              className="px-8 py-4 rounded-lg text-white flex items-center gap-2 mx-auto transition-all hover:shadow-2xl hover:gap-4 group font-body font-semibold"
+              style={{
+                background: "var(--blue-main)",
+              }}
+            >
+              Lihat Selengkapnya
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            </button>
+          </Link>
         </div>
       </div>
     </section>

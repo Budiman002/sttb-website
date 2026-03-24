@@ -3,55 +3,105 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, ArrowRight, Clock } from "lucide-react";
+import type { KegiatanListItem } from "@/types/api";
 
-export function EventsNews() {
-  const events = [
-    {
-      id: 1,
-      category: "Symposium",
-      title: "Christian Bioethics Symposium: Dignity, Suffering, and Hope",
-      date: "Apr 18, 2026",
-      time: "09:00 - 16:00",
-      location: "Jl. Dr Djundjunan 105",
-      image:
-        "https://images.unsplash.com/photo-1760420940953-3958ad9f6287?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhY2FkZW1pYyUyMGNvbmZlcmVuY2UlMjBzZW1pbmFyJTIwcHJlc2VudGF0aW9ufGVufDF8fHx8MTc3MzAxNzU0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      featured: true,
-    },
-    {
-      id: 2,
-      category: "Webinar",
-      title:
-        "Leadership Transition: Cultivating Intergenerational Discipleship",
-      date: "Apr 24 - 25, 2026",
-      time: "10:30 - 16:00",
-      location: "Online via Zoom",
-      image:
-        "https://images.unsplash.com/photo-1635990210239-5d6de53f09ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHxcIndvcnNoaXAlMjBtdXNpYyUyMGNoChVyY2glMjBzZXJ2aWNlfGVufDF8fHx8MTc3MzA5OTE2M3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      featured: false,
-    },
-    {
-      id: 3,
-      category: "Acara Kampus",
-      title: "SENAT DOM Cup STTB 2026",
-      date: "Feb 18, 2026",
-      time: "13:00 - 20:00",
-      location: "STTB Campus",
-      image:
-        "https://images.unsplash.com/photo-1591218214141-45545921d2d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxncmFkdWF0aW9uJTIwY2VyZW1vbnklMjBjZWxlYnJhdGlvbiUyMHN0dWRlbnRzfGVufDF8fHx8MTc3MzA0MDIzMXww&ixlib=rb-4.1.0&q=80&w=1080",
-      featured: false,
-    },
-    {
-      id: 4,
-      category: "Pelayanan",
-      title: "Monograf Vocational Calling: Panggilan Kerja sebagai Pelayanan",
-      date: "Oct 14, 2026",
-      time: "09:00 - 12:00",
-      location: "Ruang Seminar A",
-      image:
-        "https://images.unsplash.com/photo-1760992003987-efc5259bcfbf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBzZXJ2aWNlJTIwdm9sdW50ZWVycyUyMGhlbHBpbmd8ZW58MXx8fHwxNzczMDk5MTY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      featured: false,
-    },
-  ];
+interface EventsNewsProps {
+  kegiatanList: KegiatanListItem[];
+}
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+function formatTime(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleTimeString("id-ID", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+export function EventsNews({ kegiatanList }: EventsNewsProps) {
+  // Format the API data to match the component's expected structure
+  const events = kegiatanList.map((kegiatan) => ({
+    id: kegiatan.id,
+    slug: kegiatan.slug,
+    category: kegiatan.kategori,
+    title: kegiatan.judul,
+    date: formatDate(kegiatan.tanggalMulai),
+    time: kegiatan.tanggalSelesai
+      ? `${formatTime(kegiatan.tanggalMulai)} - ${formatTime(kegiatan.tanggalSelesai)}`
+      : formatTime(kegiatan.tanggalMulai),
+    location: kegiatan.lokasi,
+    image:
+      kegiatan.thumbnailUrl ||
+      "https://images.unsplash.com/photo-1760420940953-3958ad9f6287?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhY2FkZW1pYyUyMGNvbmZlcmVuY2UlMjBzZW1pbmFyJTIwcHJlc2VudGF0aW9ufGVufDF8fHx8MTc3MzAxNzU0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    featured: false,
+  }));
+
+  // Empty state when no events
+  if (events.length === 0) {
+    return (
+      <section className="py-24 lg:py-32 bg-white">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
+            <div>
+              <div
+                className="inline-block px-4 py-1.5 rounded-full mb-4"
+                style={{
+                  background: "var(--blue-pale)",
+                  color: "var(--blue-main)",
+                }}
+              >
+                <span
+                  className="text-xs tracking-widest uppercase font-body font-semibold"
+                  style={{
+                    letterSpacing: "0.1em",
+                  }}
+                >
+                  Kegiatan & Acara
+                </span>
+              </div>
+
+              <h2
+                className="font-heading font-semibold"
+                style={{
+                  fontSize: "clamp(32px, 5vw, 48px)",
+                  color: "var(--gray-900)",
+                  lineHeight: 1.2,
+                }}
+              >
+                Bergabung dalam
+                <br />
+                <span className="italic" style={{ color: "var(--red-main)" }}>
+                  Komunitas
+                </span>{" "}
+                Kami
+              </h2>
+            </div>
+          </div>
+
+          <div
+            className="text-center py-16 rounded-2xl"
+            style={{
+              background: "var(--blue-pale)",
+              color: "var(--gray-500)",
+            }}
+          >
+            <p className="text-lg font-body">
+              Belum ada kegiatan yang tersedia saat ini. Silakan cek kembali
+              nanti.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-24 lg:py-32 bg-white">
@@ -112,7 +162,7 @@ export function EventsNews() {
         <div className="grid lg:grid-cols-12 gap-6">
           {/* Featured Event - Large */}
           <div className="lg:col-span-7 group cursor-pointer animate-in fade-in zoom-in-95 duration-700">
-            <Link href={`/jelajahi/kegiatan/${events[0].id}`}>
+            <Link href={`/jelajahi/kegiatan/${events[0].slug}`}>
               <div className="relative h-full rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500">
                 <div className="aspect-[16/10] lg:aspect-auto lg:h-96 relative">
                   <Image
@@ -187,7 +237,7 @@ export function EventsNews() {
                   animationDelay: `${(index + 1) * 100}ms`,
                 }}
               >
-                <Link href={`/jelajahi/kegiatan/${event.id}`}>
+                <Link href={`/jelajahi/kegiatan/${event.slug}`}>
                   <div
                     className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 flex gap-4 p-4"
                     style={{ boxShadow: "0 4px 16px rgba(0, 39, 107, 0.08)" }}

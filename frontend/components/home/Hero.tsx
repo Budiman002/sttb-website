@@ -100,7 +100,7 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4">
-              <Link href="/admisi">
+              <Link href="/admisi/pendaftaran-online">
                 <button
                   className="px-8 py-4 rounded-lg text-white flex items-center gap-2 transition-all hover:shadow-2xl hover:scale-105 font-body font-semibold"
                   style={{
@@ -112,7 +112,7 @@ export function Hero() {
                   <ArrowRight className="w-5 h-5" />
                 </button>
               </Link>
-              <Link href="/jelajahi">
+              <Link href="/akademik">
                 <button className="px-8 py-4 rounded-lg text-white border-2 border-white/30 backdrop-blur-sm transition-all hover:bg-white/10 font-body font-semibold">
                   Jelajahi Program
                 </button>

@@ -32,10 +32,14 @@ export default async function AdminDashboardPage() {
     getKegiatanList(1, 3),
   ]);
 
-  if (results[0].status === "fulfilled") stats.berita = results[0].value.totalCount;
-  if (results[1].status === "fulfilled") stats.kegiatan = results[1].value.totalCount;
-  if (results[2].status === "fulfilled") stats.media = results[2].value.totalCount;
-  if (results[3].status === "fulfilled") stats.perpustakaan = results[3].value.totalCount;
+  if (results[0].status === "fulfilled")
+    stats.berita = results[0].value.totalCount;
+  if (results[1].status === "fulfilled")
+    stats.kegiatan = results[1].value.totalCount;
+  if (results[2].status === "fulfilled")
+    stats.media = results[2].value.totalCount;
+  if (results[3].status === "fulfilled")
+    stats.perpustakaan = results[3].value.totalCount;
 
   const combined: Array<{
     id: string;
@@ -73,9 +77,17 @@ export default async function AdminDashboardPage() {
   }
 
   recentActivities = combined
-    .sort((a, b) => new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime())
+    .sort(
+      (a, b) => new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime(),
+    )
     .slice(0, 5)
-    .map(({ id, judul, tipe, status, tanggal }) => ({ id, judul, tipe, status, tanggal }));
+    .map(({ id, judul, tipe, status, tanggal }) => ({
+      id,
+      judul,
+      tipe,
+      status,
+      tanggal,
+    }));
 
   return <CmsDashboard stats={stats} recentActivities={recentActivities} />;
 }
